@@ -1,0 +1,2293 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="keywords" content="zhangyao blog">
+<meta name="description" content="生死看淡，不服就干">
+<meta name="theme-color" content="#000">
+<title>关于 | will</title>
+<link rel="shortcut icon" href="/favicon.ico?v=1603444327869">
+<link rel="stylesheet" href="/media/css/pisces.css">
+<link rel="stylesheet" href="/media/fonts/font-awesome.css">
+<link
+  href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Rosario:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext"
+  rel="stylesheet" type="text/css">
+
+<link href="/media/hljs/styles/androidstudio.css"
+  rel="stylesheet">
+
+<link rel="stylesheet" href="/styles/main.css">
+
+<script src="/media/hljs/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.0/velocity.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.0/velocity.ui.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"
+  integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"
+  integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"
+  integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+  onload="renderMathInElement(document.body);"></script>
+
+
+
+
+
+  <meta name="description" content="关于" />
+  <meta name="keywords" content="" />
+</head>
+
+<body>
+  <div class="head-top-line"></div>
+  <div class="header-box">
+    
+<div class="pisces">
+  <header class="header  ">
+    <div class="blog-header box-shadow-wrapper bg-color " id="header">
+      <div class="nav-toggle" id="nav_toggle">
+        <div class="toggle-box">
+          <div class="line line-top"></div>
+          <div class="line line-center"></div>
+          <div class="line line-bottom"></div>
+        </div>
+      </div>
+      <div class="site-meta">       
+        <div class="site-title">
+          
+            <a href="/" class="brand">
+              <span>will</span>
+            </a>  
+          
+        </div>
+        
+          <p class="subtitle">生死看淡，不服就干</p>
+        
+      </div>
+      <nav class="site-nav" id="site_nav">
+        <ul id="nav_ul">
+          
+            
+            
+              
+            
+            <li class="nav-item ">
+              
+              
+                <a href="/" target="_self">
+                  <i class="fa fa-home"></i> 首页
+                </a>
+              
+            </li>
+          
+            
+            
+              
+            
+            <li class="nav-item ">
+              
+              
+                <a href="/archives/" target="_self">
+                  <i class="fa fa-archive"></i> 归档
+                </a>
+              
+            </li>
+          
+            
+            
+              
+            
+            <li class="nav-item ">
+              
+              
+                <a href="/tags/" target="_self">
+                  <i class="fa fa-tags"></i> 标签
+                </a>
+              
+            </li>
+          
+            
+            
+              
+            
+            <li class="nav-item ">
+              
+              
+                <a href="/post/about/" target="_self">
+                  <i class="fa fa-user"></i> 关于
+                </a>
+              
+            </li>
+          
+          
+            
+              <li class="nav-item ">
+                <a href="/friends/" target="_self">
+                  
+                    <i class="fa fa-address-book"></i> 友情链接
+                  
+                </a>
+              </li>
+            
+          
+          
+            <li id="fa_search" class="nav-item">
+              <a href="javascript:void(0);">
+                <i class="fa fa-search"></i> <span class="language" data-lan="search">搜索</span>
+              </a>
+            </li>
+          
+        </ul>
+      </nav>
+    </div>
+  </header>
+</div>
+
+<script type="text/javascript"> 
+ 
+  let showNav = true;
+
+  let navToggle = document.querySelector('#nav_toggle'),
+  siteNav = document.querySelector('#site_nav');
+  
+  function navClick() {
+    let sideBar = document.querySelector('.sidebar');
+    let navUl = document.querySelector('#nav_ul');
+    navToggle.classList.toggle('nav-toggle-active');
+    siteNav.classList.toggle('nav-menu-active');
+    if (siteNav.classList.contains('nav-menu-active')) {
+      siteNav.style = "height: " + (navUl.children.length * 42) +"px !important";
+    } else {
+      siteNav.style = "";
+    }
+  }
+
+  navToggle.addEventListener('click',navClick);  
+</script>
+  </div>
+  <div class="main-continer">
+    
+    <div
+      class="section-layout pisces ">
+      <div class="section-layout-wrapper">
+        
+
+<div class="sidebar">
+  
+    <div class="sidebar-box box-shadow-wrapper bg-color right-motion" id="sidebar">
+      
+        <div class="post-list-sidebar">
+          <div class="sidebar-title">
+            <span id="tocSideBar" class="sidebar-title-item sidebar-title-active language" data-lan="index">文章目录</span>
+            <span id="metaSideBar" class="sidebar-title-item language" data-lan="preview">站点概览</span>
+          </div>
+        </div>
+      
+      <div class="sidebar-body pisces" id="sidebar_body">
+        
+          
+            <div class="post-side-meta" id="post_side_meta">
+              
+<div class="sidebar-wrapper box-shadow-wrapper bg-color">
+  <div class="sidebar-item">
+    <img class="site-author-image right-motion" src="/images/avatar.png"/>
+    <p class="site-author-name">will</p>
+    
+  </div>
+  <div class="sidebar-item side-item-stat right-motion">
+    <div class="sidebar-item-box">
+      <a href="/archives/">
+        
+        <span class="site-item-stat-count">9</span>
+        <span class="site-item-stat-name language" data-lan="article">文章</span>
+      </a>
+    </div>
+    <div class="sidebar-item-box">
+      <a href="">
+        <span class="site-item-stat-count">7</span>
+        <span class="site-item-stat-name language" data-lan="category">分类</span>
+      </a>
+    </div>
+    <div class="sidebar-item-box">
+      <a href="/tags/">
+        <span class="site-item-stat-count">7</span>
+        <span class="site-item-stat-name language" data-lan="tag">标签</span>
+      </a>
+    </div>
+  </div>
+  
+    
+      <div class="sidebar-item">
+        <span class="site-item-rss">
+            <i class="fa fa-rss"></i>
+            <a href="https://zhangyaoo.github.io/atom.xml" target="_blank">RSS</a>
+        </span>
+      </div>
+    
+  
+  
+
+
+
+</div>
+            </div>
+            <div class="post-toc sidebar-body-active" id="post_toc" style="opacity: 1;">
+              <div class="toc-box right-motion">
+  <div class="toc-wrapper auto-number auto"
+    id="toc_wrapper">
+    <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E5%85%B3%E4%BA%8E%E6%9C%AC%E7%AB%99">🏠 关于本站</a></li>
+<li><a href="#%E5%8D%9A%E4%B8%BB%E6%98%AF%E8%B0%81">👨‍💻 博主是谁</a></li>
+<li><a href="#%E5%85%B4%E8%B6%A3%E7%88%B1%E5%A5%BD">⛹ 兴趣爱好</a></li>
+<li><a href="#%E8%81%94%E7%B3%BB%E6%88%91%E5%91%80">📬 联系我呀</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+</div>
+
+<script>
+
+  let lastTop = 0, lList = [], hList = [], postBody, lastIndex = -1;
+  let active = 'active-show', activeClass = 'active-current';
+  let tocWrapper = document.querySelector('#toc_wrapper');
+  let tocContent = tocWrapper.children[0];
+  let autoNumber = tocWrapper && tocWrapper.classList.contains('auto-number');
+
+  function addTocNumber(elem, deep) {
+    if (!elem) {
+      return;
+    }
+    let prop = elem.__proto__;
+
+    if (prop === HTMLUListElement.prototype) {
+      for (let i = 0; i < elem.children.length; i++) {
+        addTocNumber(elem.children[i], deep + (i + 1) + '.');
+      }
+    } else if (prop === HTMLLIElement.prototype) {
+      // 保存li元素
+      if (elem.children[0] && elem.children[0].__proto__ === HTMLAnchorElement.prototype) {
+        lList.push(elem);
+      }
+      for (let i = 0; i < elem.children.length; i++) {
+        let cur = elem.children[i];
+        if (cur.__proto__ === HTMLAnchorElement.prototype) {
+          if (autoNumber) {
+            cur.text = deep + ' ' + cur.text;
+          }
+        } else if (cur.__proto__ === HTMLUListElement.prototype) {
+          addTocNumber(cur, deep);
+        }
+      }
+    }
+  }
+
+  function removeParentActiveClass() {
+    let parents = tocContent.querySelectorAll('.' + active)
+    parents.forEach(function (elem) {
+      elem.classList.remove(active);
+    });
+  }
+
+  function addActiveClass(index) {
+    if (index >= 0 && index < hList.length) {
+      lList[index].classList.add(activeClass);
+    }
+  }
+
+  function removeActiveClass(index) {
+    if (index >= 0 && index < hList.length) {
+      lList[index].classList.remove(activeClass);
+    }
+  }
+
+  function addActiveLiElemment(elem, parent) {
+    if (!elem || elem === parent) {
+      return;
+    } else {
+      if (elem.__proto__ === HTMLLIElement.prototype) {
+        elem.classList.add(active);
+      }
+      addActiveLiElemment(elem.parentElement, parent);
+    }
+  }
+
+  function showToc() {
+    if (tocWrapper) {
+      postBody = document.querySelector('#post_body');
+      for (let i = 0; i < postBody.children.length; i++) {
+        if (postBody.children[i].__proto__ === HTMLHeadingElement.prototype) {
+          hList.push(postBody.children[i]);
+        }
+      }
+      if (tocWrapper.classList.contains('compress')) {
+        tocContent.classList.add('closed');
+      } else if (tocWrapper.classList.contains('no_compress')) {
+        tocContent.classList.add('expanded');
+      } else {
+        if (hList.length > 10) {
+          active = 'active-hidden'
+          tocContent.classList.add('closed');
+        } else {
+          tocContent.classList.add('expanded');
+        }
+      }
+    }
+  }
+
+  (function () {
+    // 处理不是从#一级标题开始目录
+    if (tocContent.children.length === 1 && tocContent.children[0].__proto__ === HTMLLIElement.prototype) {
+      let con = tocContent.children[0].children[0];
+      tocContent.innerHTML = con.innerHTML;
+    }
+    let markdownItTOC = document.querySelector('.markdownIt-TOC');
+    let innerHeight = window.innerHeight;
+    markdownItTOC.style = `max-height: ${innerHeight - 80 > 0 ? innerHeight - 80 : innerHeight}px`
+    addTocNumber(tocContent, '');
+  })();
+
+  document.addEventListener('scroll', function (e) {
+    if (lList.length <= 0) {
+      return;
+    }
+    let scrollTop = document.scrollingElement.scrollTop + 10;
+    let dir;
+
+    if (lastTop - scrollTop > 0) {
+      dir = 'up';
+    } else {
+      dir = 'down';
+    }
+
+    lastTop = scrollTop;
+    if (scrollTop <= 0) {
+      if (lastIndex >= 0 && lastIndex < hList.length) {
+        lList[lastIndex].classList.remove(activeClass);
+      }
+      return;
+    }
+
+    let current = 0, hasFind = false;
+    for (let i = 0; i < hList.length; i++) {
+      if (hList[i].offsetTop > scrollTop) {
+        current = i;
+        hasFind = true;
+        break;
+      }
+    }
+    if (!hasFind && scrollTop > lList[lList.length - 1].offsetTop) {
+      current = hList.length - 1;
+    } else {
+      current--;
+    }
+    if (dir === 'down') {
+      if (current > lastIndex) {
+        addActiveClass(current);
+        removeActiveClass(lastIndex)
+        lastIndex = current;
+        removeParentActiveClass();
+        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
+      }
+    } else {
+      if (current < lastIndex) {
+        addActiveClass(current);
+        removeActiveClass(lastIndex);
+        lastIndex = current;
+        removeParentActiveClass();
+        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
+      }
+    }
+  });
+
+
+  window.addEventListener('load', function () {
+    showToc();
+    document.querySelector('#sidebar').style = 'display: block;';
+    tocWrapper.classList.add('toc-active');
+    setTimeout(function () {
+      if ("createEvent" in document) {
+        let evt = document.createEvent("HTMLEvents");
+        evt.initEvent("scroll", false, true);
+        document.dispatchEvent(evt);
+      }
+      else {
+        document.fireEvent("scroll");
+      }
+    }, 500)
+  })
+
+</script>
+            </div>
+          
+        
+      </div>
+    </div>
+  
+</div>
+<script>
+  const SIDEBAR_TITLE_ACTIVE = 'sidebar-title-active';
+  const SIDEBAR_BODY_ACTIVE = 'sidebar-body-active';
+  const SLIDE_UP_IN = 'slide-up-in';
+
+  let sidebar = document.querySelector('#sidebar'),
+  tocSideBar = document.querySelector('#tocSideBar'),
+  metaSideBar = document.querySelector('#metaSideBar'),
+  postToc = document.querySelector('#post_toc'),
+  postSiteMeta = document.querySelector('#post_side_meta'),
+  sidebarTitle = document.querySelector('.sidebar-title'),
+  sidebarBody = document.querySelector('#sidebar_body');
+
+  tocSideBar && tocSideBar.addEventListener('click', (e) => {
+    toggleSidebar(e);
+  });
+
+  metaSideBar && metaSideBar.addEventListener('click', (e) => {
+    toggleSidebar(e);
+  });
+
+  function toggleSidebar(e) {
+    let currentTitle = document.querySelector("."+SIDEBAR_TITLE_ACTIVE);
+    if (currentTitle == e.srcElement) {
+      return ;
+    }
+    let current, showElement, hideElement;
+    if (e.srcElement == metaSideBar) {
+      showElement = postSiteMeta;
+      hideElement = postToc;
+    } else if (e.srcElement == tocSideBar){
+      showElement = postToc;
+      hideElement = postSiteMeta;
+    }
+    currentTitle.classList.remove(SIDEBAR_TITLE_ACTIVE);
+    e.srcElement.classList.add(SIDEBAR_TITLE_ACTIVE);
+
+    window.Velocity(hideElement, 'stop');
+    window.Velocity(hideElement, 'transition.slideUpOut', {
+      display: 'none',
+      duration: 200,
+      complete: function () {
+        window.Velocity(showElement, 'transition.slideDownIn', {
+          duration: 200
+        });
+      }
+    })
+    hideElement.classList.remove(SIDEBAR_BODY_ACTIVE);
+    showElement.classList.add(SIDEBAR_BODY_ACTIVE);
+  }
+
+  postToc && postToc.addEventListener('transitionend', function() {
+    this.classList.remove(SLIDE_UP_IN);
+  });
+
+  if (sidebarBody) {
+    if (sidebarBody.classList.contains('pisces') || sidebarBody.classList.contains('gemini')) {
+      let hasFix = false;
+      let scrollEl = document.querySelector('.main-continer');
+      let limitTop = document.querySelector('#nav_ul').children.length * 42 + 162;
+      window.addEventListener('scroll', function(e) {
+        if (document.scrollingElement.scrollTop >= limitTop) {
+          if (!hasFix) {
+            sidebar.classList.add('sidebar-fixed');
+            hasFix = true;
+          }
+        } else {
+          if (hasFix) {
+            sidebar.classList.remove('sidebar-fixed');
+            hasFix = false;
+          }
+        }
+      });
+    }
+  }
+  
+</script>
+        <div class="section-box box-shadow-wrapper">
+          <div class="section bg-color post post-page">
+            <header class="post-header">
+  <h1 class="post-title">
+    <a class="post-title-link" href="https://zhangyaoo.github.io/post/about/">
+      关于
+    </a>
+  </h1>
+  <div class="post-meta">
+    
+    <span class="meta-item pc-show">
+      <i class="fa fa-calendar-o"></i>
+      <span class="language" data-lan="publish">发布于</span>
+      <span>2019-01-25</span>
+      <span class="post-meta-divider pc-show">|</span>
+    </span>
+    
+    <span class="meta-item">
+      <i class="fa fa-clock-o"></i>
+      <span>1<span class="language" data-lan="minute">分钟</span></span>
+    </span>
+    <span class="meta-item">
+      <span class="post-meta-divider">|</span>
+      <i class="fa fa-file-word-o"></i>
+      <span>65<span class="pc-show language" data-lan="words">字数</span></span>
+    </span>
+    
+  </div>
+</header>
+            <div class="post-body next-md-body" id="post_body">
+              <blockquote>
+<p>欢迎来到我的小站呀，很高兴遇见你！🤝</p>
+</blockquote>
+<h2 id="关于本站">🏠 关于本站</h2>
+<p>一些技术博客和一些闲言碎语</p>
+<h2 id="博主是谁">👨‍💻 博主是谁</h2>
+<p>还在打怪升级的菜鸟</p>
+<h2 id="兴趣爱好">⛹ 兴趣爱好</h2>
+<p>二次元、骑行、篮球、LOL、编码</p>
+<h2 id="联系我呀">📬 联系我呀</h2>
+<p>QQ：1124826889</p>
+
+            </div>
+            
+            
+            
+  
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-box">
+  <footer class="footer">
+    <div class="copyright">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | © 2019-2020 Theme By <a
+        href="https://github.com/hsxyhao/gridea-theme-next" target="_blank">HsxyHao</a>
+    </div>
+    <div class="poweredby">
+      <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    </div>
+  </footer>
+  
+  
+  <div class="pisces back-to-top" id="back_to_top">
+    <i class="fa fa-arrow-up"></i>
+    
+    <span class="scrollpercent">
+      <span id="back_to_top_text">0</span>%
+    </span>
+    
+  </div>
+  
+  
+  
+</div>
+<script>
+
+  let sideBarOpen = 'sidebar-open';
+  let body = document.body;
+  let back2Top = document.querySelector('#back_to_top'),
+    back2TopText = document.querySelector('#back_to_top_text'),
+    drawerBox = document.querySelector('#drawer_box'),
+    rightSideBar = document.querySelector('.sidebar'),
+    viewport = document.querySelector('body');
+
+  function scrollAnimation(currentY, targetY) {
+
+    let needScrollTop = targetY - currentY
+    let _currentY = currentY
+    setTimeout(() => {
+      const dist = Math.ceil(needScrollTop / 10)
+      _currentY += dist
+      window.scrollTo(_currentY, currentY)
+      if (needScrollTop > 10 || needScrollTop < -10) {
+        scrollAnimation(_currentY, targetY)
+      } else {
+        window.scrollTo(_currentY, targetY)
+      }
+    }, 1)
+  }
+
+  back2Top.addEventListener("click", function (e) {
+    scrollAnimation(document.scrollingElement.scrollTop, 0);
+    e.stopPropagation();
+    return false;
+  });
+
+  window.addEventListener('scroll', function (e) {
+    let percent = document.scrollingElement.scrollTop / (document.scrollingElement.scrollHeight - document.scrollingElement.clientHeight) * 100;
+    if (percent > 1 && !back2Top.classList.contains('back-top-active')) {
+      back2Top.classList.add('back-top-active');
+    }
+    if (percent == 0) {
+      back2Top.classList.remove('back-top-active');
+    }
+    if (back2TopText) {
+      back2TopText.textContent = Math.floor(percent);
+    }
+  });
+
+
+  let hasCacu = false;
+  window.onresize = function () {
+    calcuHeight();
+  }
+
+  function calcuHeight() {
+    // 动态调整站点概览高度
+    if (!hasCacu && back2Top.classList.contains('pisces') || back2Top.classList.contains('gemini')) {
+      let sideBar = document.querySelector('.sidebar');
+      let navUl = document.querySelector('#site_nav');
+      sideBar.style = 'margin-top:' + (navUl.offsetHeight + navUl.offsetTop + 15) + 'px;';
+      hasCacu = true;
+    }
+  }
+  calcuHeight();
+
+  let open = false, MOTION_TIME = 300, RIGHT_MOVE_DIS = '320px';
+
+  if (drawerBox) {
+    let rightMotions = document.querySelectorAll('.right-motion');
+    let right = drawerBox.classList.contains('right');
+
+    let transitionDir = right ? "transition.slideRightIn" : "transition.slideLeftIn";
+
+    let openProp, closeProp;
+    if (right) {
+      openProp = {
+        paddingRight: RIGHT_MOVE_DIS
+      };
+      closeProp = {
+        paddingRight: '0px'
+      };
+    } else {
+      openProp = {
+        paddingLeft: RIGHT_MOVE_DIS
+      };
+      closeProp = {
+        paddingLeft: '0px'
+      };
+    }
+
+    drawerBox.onclick = function () {
+      open = !open;
+      window.Velocity(rightSideBar, 'stop');
+      window.Velocity(viewport, 'stop');
+      window.Velocity(rightMotions, 'stop');
+      if (open) {
+        window.Velocity(rightSideBar, {
+          width: RIGHT_MOVE_DIS
+        }, {
+          duration: MOTION_TIME,
+          begin: function () {
+            window.Velocity(rightMotions, transitionDir, {});
+          }
+        })
+        window.Velocity(viewport, openProp, {
+          duration: MOTION_TIME
+        });
+      } else {
+        window.Velocity(rightSideBar, {
+          width: '0px'
+        }, {
+          duration: MOTION_TIME,
+          begin: function () {
+            window.Velocity(rightMotions, {
+              opacity: 0
+            });
+          }
+        })
+        window.Velocity(viewport, closeProp, {
+          duration: MOTION_TIME
+        });
+      }
+      for (let i = 0; i < drawerBox.children.length; i++) {
+        drawerBox.children[i].classList.toggle('muse-line');
+      }
+      drawerBox.classList.toggle(sideBarOpen);
+    }
+  }
+
+  // 链接跳转
+  let newWindow = 'true'
+  if (newWindow === 'true') {
+    let links = document.querySelectorAll('.post-body a')
+    links.forEach(item => {
+      if (!item.classList.contains('btn')) {
+        item.setAttribute("target", "_blank");
+      }
+    })
+  }
+
+  let faSearch = document.querySelector('#fa_search');
+  faSearch.addEventListener('click', function () {
+    document.querySelector('#search_mask').style = ''
+  })
+
+  // 代码高亮
+  hljs.initHighlightingOnLoad();
+  
+  // 离开当前页title变化
+  var leaveTitle = '';
+  if (leaveTitle) {
+    document.addEventListener('visibilitychange', function () {
+      if (document.visibilityState == 'hidden') {
+        normal_title = document.title;
+        document.title = leaveTitle;
+      } else {
+        document.title = normal_title;
+      }
+    });
+  }
+
+</script>
+    <div class="light-box" id="light_box"></div>
+<script>
+  let imgs = document.querySelectorAll('.post-body img');
+  let lightBox = document.querySelector('#light_box');
+  lightBox.addEventListener('mousedown', (e) => {
+    e.preventDefault()
+  })
+  lightBox.addEventListener('mousewheel', (e) => {
+    e.preventDefault()
+  })
+  let width = window.innerWidth * 0.8;
+  lightBox.onclick = () => {
+    let img = lightBox.querySelector('img');
+    lightBox.style = '';
+    img && img.remove();
+  }
+  imgs.forEach(item => {
+    item.onclick = function (e) {
+      let lightImg = document.createElement('img');
+      lightImg.src = this.src;
+      lightBox.style = `height: 100%; opacity: 1; background-color: rgba(0, 0, 0, 0.5);cursor: zoom-out;`;
+      lightImg.style = `width: ${width}px; border: 1px solid #fff; border-radius: 2px;`;
+      lightImg.onclick = function () {
+        lightBox.style = '';
+        this.remove();
+      }
+      lightBox.append(lightImg);
+    }
+  })
+</script>
+    <div class="reward-mask" style="display: none;">
+  <div class="reward-relative">
+    <span class="close" aria-hidden="true">x</span>
+    <div class="reward-body">
+      <h2>感谢您的支持，我会继续努力的!</h2>
+      <div class="reward-img-box">
+        <div style="position: relative; width: 140px; height: 140px;">
+          
+          
+          
+        </div>
+      </div>
+      <p class="reward-word">扫码打赏，你说多少就多少</p>
+      <p class="reward-tip">打开微信扫一扫，即可进行扫码打赏哦</p>
+    </div>
+    <div class="bottom">
+      
+      
+    </div>
+  </div>
+</div>
+<style>
+  .reward-mask {
+    position: fixed;
+    z-index: 99999;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #00000054;
+  }
+
+  .reward-relative {
+    position: relative;
+    width: 480px;
+    text-align: center;
+    margin: 0 auto;
+    border-radius: 5px;
+    background-color: #fff;
+    top: 50%;
+    margin-top: -205px;
+  }
+
+  .reward-relative .close {
+    position: absolute;
+    right: 10px;
+    font-weight: normal;
+    font-size: 16px;
+    color: #929292;
+  }
+
+  .reward-body {
+    padding: 40px 20px 20px;
+  }
+
+  .bottom {
+    display: flex;
+  }
+
+  .reward-btn {
+    text-align: center;
+  }
+
+  .reward-btn-text {
+    display: inline-block;
+    cursor: pointer;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    border-radius: 50%;
+    background-color: #ff9734;
+    color: #FFF;
+    margin-top: 20px;
+  }
+
+  .pay-text {
+    margin-top: 10px;
+    padding: 10px;
+    flex: 1;
+    transition: all .2s linear;
+  }
+
+  .pay-text:hover {
+    background-color: #a5a5a536;
+  }
+
+  .reward-body h2 {
+    padding-top: 10px;
+    text-align: center;
+    color: #a3a3a3;
+    font-size: 16px;
+    font-weight: normal;
+    margin: 0 0 20px;
+  }
+
+  .reward-body h2:after,
+  .reward-body h2:before {
+    font-family: Arial, Helvetica, sans-serif;
+    background: 0 0;
+    width: 0;
+    height: 0;
+    font-style: normal;
+    color: #eee;
+    font-size: 80px;
+    position: absolute;
+    top: 20px;
+  }
+
+  .reward-body h2:before {
+    content: '\201c';
+    left: 50px;
+  }
+
+  .reward-body h2:after {
+    content: '\201d';
+    right: 80px;
+  }
+
+  .reward-img-box {
+    display: inline-block;
+    padding: 10px;
+    border: 6px solid #ea5f00;
+    margin: 0 auto;
+    border-radius: 3px;
+    position: relative;
+  }
+
+  .reward-img {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+  }
+
+  @media (max-width: 767px) {
+    .reward-relative {
+      height: 100%;
+      top: 0px;
+      margin-top: 0;
+      width: auto;
+    }
+
+    .reward-relative .bottom {
+      flex-direction: column;
+    }
+
+    .reward-relative .pay-text {
+      width: 80%;
+      margin: 5px auto;
+      border: 1px solid silver;
+      padding: 6px;
+      border-radius: 4px;
+    }
+
+    .reward-body h2:after {
+      right: 40px;
+    }
+
+    .reward-body h2:after,
+    .reward-body h2:before {
+      font-size: 60px;
+    }
+
+    .reward-body h2:before {
+      left: 20px;
+    }
+  }
+</style>
+<script>
+  !function () {
+    var mask = document.querySelector('.reward-mask');
+    let close = document.querySelector('.reward-relative .close');
+    let rewardBtn = document.querySelector('.reward-btn');
+
+    let zfb = document.querySelector('#zfb'),
+      wx = document.querySelector('#wx'),
+      zfbBtn = document.querySelector('#zfbBtn'),
+      wxBtn = document.querySelector('#wxBtn');
+
+    if (zfbBtn && wxBtn) {
+      zfbBtn.addEventListener('click', () => {
+        window.Velocity(zfb, 'transition.slideLeftIn', {
+          duration: 400
+        });
+        window.Velocity(wx, 'transition.slideRightOut', {
+          display: 'none',
+          duration: 400
+        });
+      });
+
+      wxBtn.addEventListener('click', () => {
+        window.Velocity(wx, 'transition.slideRightIn', {
+          duration: 400
+        });
+        window.Velocity(zfb, 'transition.slideLeftOut', {
+          display: 'none',
+          duration: 400
+        });
+      });
+    }
+
+    rewardBtn.addEventListener('click', (e) => {
+      window.Velocity(mask, 'transition.slideDownIn', {
+        duration: 400
+      })
+    });
+
+    close.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.Velocity(mask, 'transition.slideUpOut', {
+        duration: 400
+      })
+    })
+  }()
+</script>
+
+  </div>
+</body>
+
+  <div class="search-mask" id="search_mask" style="display: none;">
+  <div class="search-box">
+    <div class="search-title">
+      <i class="fa fa-search"></i>
+      <div class="input-box">
+        <input id="search" type="text" class="language" data-lan="search" placeholder="搜索">
+      </div>
+      <i id="close" class="fa fa-times-circle"></i>
+    </div>
+    <div class="stat-box">
+      <span id="stat_count">0</span><span class="language" data-lan="stat">条相关条目，使用了</span><span id="stat_times">0</span><span class="language" data-lan="stat-time">毫秒</span>
+      <hr>
+    </div>
+    <div class="result" id="result">
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://zhangyaoo.github.io/post/ji-yi-ci-cai-yong-fen-bu-shi-id-jie-jue-fen-ku-fen-biao-cai-de-keng/"" data-c="
+          &lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+&lt;h3 id=&#34;&#34;&gt;&lt;/h3&gt;
+">采用分布式ID解决分库分表踩的坑</a>
+      </div>
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://zhangyaoo.github.io/post/saas-xi-tong-duo-shu-ju-yuan-lu-you-you-ya-jie-jue-fang-an/"" data-c="
+          &lt;h2 id=&#34;背景&#34;&gt;背景&lt;/h2&gt;
+&lt;p&gt;在目前的SaaS系统中，业务开发者需要重点关注的一个问题就是数据隔离问题，这个是做SaaS系统必须要考虑的点，多租户数据隔离是每个SaaS系统都要遇到并且要解决的问题，笔者就分享下解决这种问题的思路、具体的解决方案以及优雅的解决思路。&lt;/p&gt;
+&lt;h2 id=&#34;一-解决方案介绍&#34;&gt;一、解决方案介绍&lt;/h2&gt;
+&lt;h3 id=&#34;目前业界数据隔离方案&#34;&gt;目前业界数据隔离方案&lt;/h3&gt;
+&lt;p&gt;1、独立数据库，通过动态切换数据源来实现多租户&lt;br&gt;
+2、共享数据库，隔离数据架构&lt;br&gt;
+3、共享数据库，共享数据表，使用字段来区分不同租户，此方案成本最低&lt;/p&gt;
+&lt;p&gt;以上方案从上到下，安全性逐渐降低。由于考虑到安全问题，故采用第一种方案解决数据隔离&lt;br&gt;
+优点：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;非常安全&lt;/li&gt;
+&lt;li&gt;数据互不影响，性能互不影响&lt;/li&gt;
+&lt;li&gt;数据迁移，数据扩展方便&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;缺点：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;需要维护大量的数据库&lt;/li&gt;
+&lt;li&gt;需要自行切换数据库，开发量多且实现复杂&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;具体技术实现&#34;&gt;具体技术实现&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;简单的架构图&lt;/strong&gt;&lt;br&gt;
+&lt;img src=&#34;https://zhangyaoo.github.io/post-images/1603179800053.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+如图所示，SaaS项目大概架构图，关键点是应用层传参，以及路由层的实现。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;实现&lt;/strong&gt;&lt;br&gt;
+1、应用层：项目中应用service层是dubbo服务，而且项目分多层，这里需要考虑到多层服务场景下，如何优雅传参问题，如下图所示&lt;br&gt;
+&lt;img src=&#34;https://zhangyaoo.github.io/post-images/1603181882775.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+我们考虑到租户ID是唯一标识，和业务参数绑定在一起不优雅，所以两种参数分开处理，业务参数直接参数透传，租户ID唯一标识通过隐式传参来处理（参考dubbo http://dubbo.apache.org/zh-cn/docs/user/demos/attachment.html），并且参数记录到服务本地的threadlocal中，以便后续其他业务需要。具体实现如下：&lt;br&gt;
+&lt;img src=&#34;https://zhangyaoo.github.io/post-images/1603183675071.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
+&lt;p&gt;2、路由层：路由层实现主要是自行实现spring框架中DataSource接口，自定义dynamicDataSource类，然后implement DataSource接口，实现getConnection方法。然后重新定义SqlSessionFactory的bean，将自定义DataSource类属性注入。&lt;br&gt;
+&lt;img src=&#34;https://zhangyaoo.github.io/post-images/1603183148592.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+&lt;img src=&#34;https://zhangyaoo.github.io/post-images/1603183156251.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+然后我们只需要关注getConnection方法根据租户ID，选择相对应的租户连接池就可以了。&lt;br&gt;
+如图中，我们只需要实现这个selectTenantCodeDataSource()这个方法就可以了，这个方法实现很简单，这里就不贴图了。selectTenantCodeDataSource()方法主要就是从threadlocal中拿租户ID，然后去缓存池map中拿出连接池信息。&lt;br&gt;
+&lt;img src=&#34;https://zhangyaoo.github.io/post-images/1603183509071.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+其中，dataSourceCachePool是在初始化配置时候，将所有的租户连接池直接创建，然后扔到dataSourceCachePool。key是租户的ID，value是连接池信息。&lt;/p&gt;
+&lt;p&gt;具体的初始化配置：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;/**
+ * 初始化数据源
+ */
+@Configuration
+public class DataSourceInit {
+    
+    @PostConstruct
+    public void InitDataSource()  {
+        log.info(&amp;quot;=====初始化数据源=====&amp;quot;);
+        TenantRoutingDataSource tenantRoutingDataSource = (TenantRoutingDataSource)ApplicationContextProvider.getBean(&amp;quot;tenantRoutingDataSource&amp;quot;);
+        Map&amp;lt;String, DataSourceCache&amp;gt; dataSourceCachePool = new HashMap&amp;lt;&amp;gt;();
+
+        List&amp;lt;TenantInfo&amp;gt; tenantList = tenantInfoService.InitTenantInfo();
+        for (TenantInfo tenantInfo : tenantList) {
+            log.info(tenantInfo.toString());
+            HikariDataSource dataSource = new HikariDataSource();
+            dataSource.setDriverClassName(tenantInfo.getDatasourceDriver());
+            dataSource.setJdbcUrl(tenantInfo.getDatasourceUrl());
+            dataSource.setUsername(tenantInfo.getDatasourceUsername());
+            dataSource.setPassword(tenantInfo.getDatasourcePassword());
+            dataSource.setDataSourceProperties(master.getDataSourceProperties());
+            dataSourceCachePool.put(tenantInfo.getTenantId(), dataSource);
+        }
+        //设置数据源
+        tenantRoutingDataSource.setDataSources(dataSourceCachePool);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;二-方案的隐藏缺点以及解决&#34;&gt;二、方案的隐藏缺点以及解决&lt;/h2&gt;
+&lt;h3 id=&#34;隐藏的缺陷&#34;&gt;隐藏的缺陷&lt;/h3&gt;
+&lt;p&gt;相信有一定开发经验的读者应该能想到，上述方案最大的缺点就是性能问题，对MySQL有非常大的影响。因为一开始初始化非常多的连接池，就会占用连接资源，比如租户从100个扩展到了1000个以及更多，那么连接池数量就线性增长，如果一个连接池保持15个活跃连接的话，那么连接数就是15*1000，此时如果MySQL的maxconntion的数量非常小，那么MySQL侧就会抛出”too many connctions“错误，在应用层方面就是MySQL不可用了。&lt;br&gt;
+没优化之前的架构：&lt;br&gt;
+&lt;img src=&#34;https://zhangyaoo.github.io/post-images/1603190851131.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;解决&#34;&gt;解决&lt;/h3&gt;
+&lt;p&gt;想保持数据库分离，又要考虑到MySQL性能问题，只能向连接池优化的方向去考虑，其实可以减少数量就可以了，这里实现方案就是一个数据库实例一个连接池，如下图所示：&lt;br&gt;
+&lt;img src=&#34;https://zhangyaoo.github.io/post-images/1603190889253.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+具体实现就是将上述方案中的dataSourceCachePool的key改为 “IP+端口”，作为key。然后再数据源路由层，多一层映射（租户ID——&amp;gt;数据库实例）就可以了。&lt;/p&gt;
+&lt;h2 id=&#34;三-更优雅方案解决企业内部开发痛点&#34;&gt;三、更优雅方案解决企业内部开发痛点&lt;/h2&gt;
+&lt;h3 id=&#34;现状&#34;&gt;现状&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;现状&lt;/strong&gt;：企业内部项目组开发数据源路由，各个人员开发水平不一，各种路由方案实现不同，自己组内的开发的方案只能自己组内使用，并且实现复杂，耗人力物力。&lt;br&gt;
+&lt;strong&gt;目标&lt;/strong&gt;：项目组使用直接引入maven包，任何配置都不要配置（自定义的话需要自行在自己项目中配置属性），开箱即用。&lt;/p&gt;
+&lt;h3 id=&#34;具体实现&#34;&gt;具体实现&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;原理&lt;/strong&gt;：直接采用springboot starter开发，将上述方案所有的逻辑和技术实现单独放入springboot starter工程中，采用外部配置的方式实现自定义配置。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;开发者实现&lt;/strong&gt;：网上有许多springboot starter开发的流程和开发案例，笔者这里就只贴出关键的代码&lt;br&gt;
+1、自动装配类：spring.factories中写入这个类DataSourceAutoConfigure，实现bean的自动装入，类里面主要是实现SqlSessionFactory和PlatformTransactionManager，然后在TenantRoutingDataSource的getconnection方法中自定义实现路由逻辑。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;@Configuration
+public class DataSourceAutoConfigure {
+
+    @Resource
+    private TenantRoutingDataSource tenantRoutingDataSource;
+
+    @Bean
+    @ConditionalOnMissingBean(SqlSessionFactory.class)
+    @ConditionalOnBean(TenantRoutingDataSource.class)
+    public SqlSessionFactory sqlSessionFactory() throws Exception{
+        SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
+        sqlSessionFactoryBean.setDataSource(tenantRoutingDataSource);
+        Objects.requireNonNull(sqlSessionFactoryBean.getObject()).getConfiguration().setMapUnderscoreToCamelCase(true);
+        return sqlSessionFactoryBean.getObject();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(PlatformTransactionManager.class)
+    @ConditionalOnBean(TenantRoutingDataSource.class)
+    public PlatformTransactionManager platformTransactionManager() {
+        return new DataSourceTransactionManager(tenantRoutingDataSource);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;2、dubbo filter扩展接口：获取租户ID，并且需要加@Activate注解，这样dubbo在初始化filter链的时候，自动将这个filter注册到filter链中，这样做的好处就是，用户在自己工程中不需要配置filter这个参数，无需增加任何的配置。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;@Activate(group = {&amp;quot;provider&amp;quot;})
+public class TenantCodeContextFilter implements Filter {
+    @Override
+    public Result invoke(Invoker&amp;lt;?&amp;gt; invoker, Invocation invocation) throws RpcException {
+        String tenantCode = RpcContext.getContext().getAttachment(&amp;quot;tenantCode&amp;quot;);
+        TenantCodeContextHolder.setTenantCode(tenantCode);
+        return invoker.invoke(invocation);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;3、检查用户侧自定义配置是否正确：检查用户的配置是否合理，不合理的话再容器就绪阶段就会抛出异常&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;@Component
+public class CheckConfigListener implements ApplicationListener&amp;lt;ApplicationReadyEvent&amp;gt; {
+
+    @Override
+    public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
+        ConfigurableApplicationContext applicationContext = applicationReadyEvent.getApplicationContext();
+        ConfigurableEnvironment environment = applicationContext.getEnvironment();
+        // 检查用户自定义配置是否正确，自行实现
+        checkDatasourceConfig(environment);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;用户使用&lt;/strong&gt;：直接引入相应的maven，方便快捷&lt;/p&gt;
+&lt;h2 id=&#34;四-todo后续优化&#34;&gt;四、TODO后续优化&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;目前多租户数据源通用工程只支持Dubbo的调用，未来可扩展支持多种协议如HTTP、gRPC&lt;/li&gt;
+&lt;li&gt;目前只支持Hikari数据源，后续支持多种数据源类型，比如Durid&lt;/li&gt;
+&lt;li&gt;如果租户数据非常大，可以考虑空间换时间思想，使用缓存存放租户的数据源配置，提升查询效率。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;参考&#34;&gt;参考&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;SaaS系统数据隔离方案——https://blog.arkency.com/comparison-of-approaches-to-multitenancy-in-rails-apps/&lt;/li&gt;
+&lt;/ul&gt;
+">Saas系统多数据源路由优雅解决方案</a>
+      </div>
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://zhangyaoo.github.io/post/mysql-lian-he-suo-yin-zai-bshu-de-cun-chu-he-cha-zhao/"" data-c="
+          &lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;在对MySQL开发中，联合索引是很常见的一种MySQL优化方式，本文解释了联合索引的存储以及查找过程，可以了解一下底层的原理以及加深对MySQL联合索引的理解。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;innodb-b树&#34;&gt;Innodb B+树&lt;/h2&gt;
+&lt;p&gt;先看一下Innodb B+树的主键索引和辅助索引。这里直接拿张洋大神的图：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;聚簇索引:&lt;br&gt;
+&lt;img src=&#34;https://zhangyaoo.github.io/post-images/1593425796639.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;/li&gt;
+&lt;li&gt;辅助非聚簇索引:&lt;br&gt;
+&lt;img src=&#34;https://zhangyaoo.github.io/post-images/1593425801180.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+&lt;strong&gt;结构&lt;/strong&gt;：当一个表T（id,name,age,sex,high）建一个普通索引  KEY(name)，name的索引结果就和上面辅助非聚簇索引结构一样。&lt;br&gt;
+&lt;strong&gt;查询&lt;/strong&gt;：当有一个select id,name,age from T where name = &amp;quot;&amp;quot; 辅助索引会根据name在B+树上进行二叉树查找，找出叶子节点数据后发现没有age这个数据，就会进行&lt;strong&gt;回表&lt;/strong&gt;操作到主键聚簇索引去查找，拿到聚簇索引叶子节点的age数据。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;联合索引存储以及寻址&#34;&gt;联合索引存储以及寻址&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;索引结构&lt;/strong&gt;：我们知道上述回表过程也会消耗性能，相当于多查一次，所以系统可以根据业务情况加上一个组合索引，当然并不是一直加组合索引就可以了，因为要考虑到索引存储空间的问题。例如给上述加上一个组合索引  KEY（name,age,sex）【 KEY（col1,col2,col3）】。那么这个组合索引的B+树非叶子节点数据结构和上述辅助非聚簇索引图一样，但是叶子节点是这样的：&lt;br&gt;
+&lt;img src=&#34;https://zhangyaoo.github.io/post-images/1593425790647.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+叶子节点存储col1,col2,col3这三列数据以及加上ID这一列数据。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;寻址过程：&lt;/strong&gt;&lt;br&gt;
+例如语句：select id,name,age from T where name = &amp;quot;张三&amp;quot; and age=25，先根据name字段从辅助聚簇索引定位到哪一个叶子节点数据中，然后根据age节点在上述表格的前6行中，寻找age= 25的数据，然后找出所有符合的数据以及其对应的ID，然后根据ID来进行回表操作查询。这里返回了三条数据，就回了三次表。&lt;br&gt;
+上述回表过程中，笔者引入一个&lt;strong&gt;索引下推&lt;/strong&gt;的一个功能，索引下推是MySQL在5.6版本后引入的一个查询优化。就拿上述的例子，在没有优化之前，据name字段查询“张三”后，会拿到6条结果，回表6次，然后从主键索引拿到6条数据后，根据age字段筛选数据；优化之后，先再辅助索引上面根据name字段和age字段筛选符合数据，也就是ID，然后再回表，这里回表了三次。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;组合索引注意事项&lt;/strong&gt;&lt;br&gt;
+当然，联合索引的最重要的是注意联合索引的使用问题，要遵循最左匹配原则，才可以优化到整个SQL了。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;总结&#34;&gt;总结&lt;/h3&gt;
+&lt;p&gt;以上，总结了MySQL的索引的基本原理，以及联合索引的存储和寻址过程，并且引入索引下推概念，还有使用联合索引的注意事项。&lt;/p&gt;
+&lt;h2 id=&#34;参考&#34;&gt;参考&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;MySQL索引背后的数据结构及算法原理——http://blog.codinglabs.org/articles/theory-of-mysql-index.html。&lt;/li&gt;
+&lt;/ul&gt;
+">MySQL联合索引在B+树的存储和查找</a>
+      </div>
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://zhangyaoo.github.io/post/guan-yu-zookeeper-qi-shu-jie-dian-yi-ji-nao-lie-wen-ti/"" data-c="
+          &lt;h3 id=&#34;前言&#34;&gt;前言&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Zookeeper作为微服务分布式协调中间件，了解它的原理以及日常开发中的注意事项和可能会出现的问题是有必要的。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;前置知识zab协议&#34;&gt;前置知识：ZAB协议&lt;/h3&gt;
+&lt;p&gt;ZAB：Zookeeper Atomic Broadcast（ZAB）崩坏恢复和原子广播协议&lt;br&gt;
+1）崩坏恢复：在master节点宕机情况下，其他集群节点会重新选举master节点，快速领导者选举机制：选举规则会参照最大的分代年龄epoch&amp;gt;最大的事务zxid&amp;gt;server id来进行选举，选举过程就是将自己节点投票信息发给其他集群节点，投票信息附带zxid和serverid，&lt;strong&gt;判断是否超过一半的投票选同一个节点&lt;/strong&gt;，那么这个节点就会选举为master。&lt;br&gt;
+2）选举完后，就会进行数据同步，将master节点数据同步到slave中，此时对外服务不可用。&lt;br&gt;
+3）原子广播：ZAB协议保证消息的一致性和有序性&lt;br&gt;
+ 一致性：leader发送propasal事务请求（包含zxid），master判断过半机制ack，就认为事务可以提交了，master会提交事务，然后广播提交事务消息，从节点开始提交本事务。一半ack机制，可以看zookeeper是CP，但是不是强一致性；从节点接收propasal后，会将事务写入磁盘。&lt;br&gt;
+ 有序性：zxid事务id保证全局有序性，每一个slave服务器维持一个FIFO队列，维持局部有序性。&lt;/p&gt;
+&lt;h3 id=&#34;zookeeper脑裂&#34;&gt;Zookeeper脑裂&lt;/h3&gt;
+&lt;p&gt; Zookeeper脑裂都是出现在集群环境中的。指的是一个集群环境中出现了多个master节点，导致严重数据同步和写入问题，数据不一致等等，如果这种情况出现在线上分布式环境下，会导致服务不可用。&lt;/p&gt;
+&lt;h3 id=&#34;出现原因&#34;&gt;出现原因&lt;/h3&gt;
+&lt;p&gt; 可能就是网络环境有问题导致节点之间断开，或者节点假死等等，导致一部分slave节点会重新进入崩坏恢复模式，重新选举新的master节点，然后对外提供事务服务。由于心跳超时（网络原因导致的）认为旧的master死了，但其实旧的master还存活着。&lt;/p&gt;
+&lt;h3 id=&#34;如何解决脑裂&#34;&gt;如何解决脑裂&lt;/h3&gt;
+&lt;p&gt;过半机制，如果集群中某个节点的投票数量大于集群有效节点的一半，就会选出master。这里拿出关键代码：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;// 验证是否符合过半机制，如果符合就会选举新的master节点
+public boolean containsQuorum(Set&amp;lt;Long&amp;gt; set){
+    // half是在构造方法里赋值的
+    // n表示集群中zkServer的个数（准确的说是参与者的个数，参与者不包括观察者节点）
+    half = n/2;
+    // set.size()表示某台zkServer获得的票数
+    return (set.size() &amp;gt; half);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;笔者介绍几种情况，来说明一下几种脑裂的场景&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;比如集群中有6个节点，一个master和5个slave，分两个机房，每个机房分别三台，发生了机房不可通信的情况，如下图：&lt;br&gt;
+&lt;img src=&#34;https://zhangyaoo.github.io/post-images/1593419532309.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+然后机房B就会产生新的master，如图&lt;br&gt;
+&lt;img src=&#34;https://zhangyaoo.github.io/post-images/1593419550068.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+这个时候Zookeeper为了防止这样的情况发生，利用了&lt;strong&gt;过半机制&lt;/strong&gt;的这个特性。&lt;br&gt;
+上图中，机房B节点为3 小于集群数量的一半，所以，最终上面图中机房B是不会选举出新的master节点的。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;我们再来看一种情况：比如集群中有5个节点，一个master和4个slave，分两个机房，如下图：&lt;br&gt;
+&lt;img src=&#34;https://zhangyaoo.github.io/post-images/1593419973725.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+如果发生了机房不能通信的情况，那么机房B因为节点是2个，没有超过一半，就不会产生出新的master节点了。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;再来看最后一种情况，比如集群中有5个节点，一个master和4个slave，分两个机房，不同的是master节点在机房B，如下图：&lt;br&gt;
+&lt;img src=&#34;https://zhangyaoo.github.io/post-images/1593420189914.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+如果发生了机房不能通信的情况，那么机房A节点是3个，超过了一半，就会进入崩坏恢复模式产生新的master节点，那么此时集群中就会出现两个master节点了。如下图所示&lt;br&gt;
+&lt;img src=&#34;https://zhangyaoo.github.io/post-images/1593420219104.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+那么遇到这种情况Zookeeper是如何处理的？答：旧的leader所有的写请求同步到其他followers节点是会被拒绝的。因为每当新leader产生时，会生成一个epoch，这个epoch是递增的，followers如果确认了新的leader存在，知道其epoch，就会拒绝epoch小于现任leader epoch的所有请求。这个时候旧的master进入恢复模式进行数据同步。&lt;br&gt;
+所以按照上面的情况，机房A的所有followers节点正常通信，机房B的所有节点重新进入恢复模式进行数据同步。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;总结：通过Quorums机制来防止脑裂，当leader挂掉之后，可以重新选举出新的leader节点使整个集群达成一致；当出现假死现象时，通过epoch大小来拒绝旧的leader发起的请求，当出现这种情况，旧的leader 进入恢复模式进行数据同步。&lt;/p&gt;
+&lt;h3 id=&#34;引出奇数节点&#34;&gt;引出奇数节点&lt;/h3&gt;
+&lt;p&gt; 知晓以上场景后，我们知道，2台机器也能选举出master，只不过只要有1个死了zookeeper就不能用了，因为1没有过半。所以2个zookeeper的死亡容忍度为0。同理，要是有3个zookeeper，一个死了，还剩下2个正常的，过半了，所以3个zookeeper的容忍度为1。如果按照这样的机制推理，那么得出2-&amp;gt;0;3-&amp;gt;1;4-&amp;gt;1;5-&amp;gt;2;6-&amp;gt;2  左边是数量，右边是容忍度，所以2n和2n-1的容忍度是一样的，所以可以得出，集群是&lt;strong&gt;奇数个能够节省资源&lt;/strong&gt;。&lt;/p&gt;
+&lt;!--下面的奇数节点的作用需要确认 TODO--&gt;
+&lt;h3 id=&#34;总结&#34;&gt;总结&lt;/h3&gt;
+&lt;p&gt;以上，笔者总结了ZAB协议，到Zookeeper防止脑裂的场景以及如何处理，以及结合例子，Zookeeper集群在奇数节点下的作用。&lt;/p&gt;
+&lt;h3 id=&#34;参考&#34;&gt;参考&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;ZooKeeper集群的脑裂问题——https://www.cnblogs.com/shoufeng/p/10591526.html&lt;/li&gt;
+&lt;/ul&gt;
+">关于Zookeeper奇数节点以及脑裂问题</a>
+      </div>
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://zhangyaoo.github.io/post/jin-rong-ji-ye-wu-xia-fen-bu-shi-shi-wu-bao-zheng-shu-ju-yi-zhi-xing/"" data-c="
+          &lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;随着分布式服务架构的流行与普及，原来在单体应用中执行的多个逻辑操作，现在被拆分成了多个服务之间的远程调用。微服务化后，随着带来的服务之间的分布式事务问题，尤其是在金融业务下，分布式事务是保证数据一致性的重要保证。本文着重会讲分布式事务场景和业界主流的解决方案。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;一-引入&#34;&gt;一、引入&lt;/h2&gt;
+&lt;p&gt; 资金转账在金融业务下是一个非常重要而且常见的场景，如果因为技术问题导致资金转账错误，导致数据不一致问题，那么就会造成无法预测的后果。&lt;br&gt;
+ 笔者这里拿银行转账的例子来说（这里的转账有很多场景比如银行卡之间充值提现、银行账户之间的转账等等），比如甲银行账户A向乙银行账户B转账1W：&lt;/p&gt;
+&lt;p&gt;同步调用：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;A银行对转出账户执行检查校验，进行账户金额扣减。&lt;/li&gt;
+&lt;li&gt;A银行同步调用B银行转账接口。&lt;/li&gt;
+&lt;li&gt;B银行对转入账户进行检查校验，进行账户金额增加。&lt;/li&gt;
+&lt;li&gt;B银行返回处理结果给A银行。&lt;br&gt;
+&lt;img src=&#34;https://zhangyaoo.github.io/post-images/1593745125729.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+同步调用问题：&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;如果B银行因为网络原因导致接口不通，那么A调用线程会长时间阻塞。&lt;/li&gt;
+&lt;li&gt;如果A扣减后，发送请求后，在网络中丢失了，B银行没有收到请求，导致账户A扣减了，账户B没有加&lt;/li&gt;
+&lt;li&gt;如果账户B扣减成功了，由于某种原因比如网络异常没有及时回调给甲银行，那么账户A就认为是异常请求，则会回滚事务，导致数据不一致。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;再来看一下异步调用：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;A银行对转出账户执行检查校验，进行账户金额扣减。&lt;/li&gt;
+&lt;li&gt;主线程将请求数据异步写入队列MQ&lt;/li&gt;
+&lt;li&gt;真正消费者程序对B银行进行远程调用&lt;/li&gt;
+&lt;li&gt;B银行对转入账户进行检查校验，进行账户金额增加。&lt;/li&gt;
+&lt;li&gt;B银行返回处理结果给A银行。&lt;br&gt;
+&lt;img src=&#34;https://zhangyaoo.github.io/post-images/1593743096206.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+异步调用问题：&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;如果账户A扣减本地事务成功了，但是消息发出后，因为网络原因或者其他宕机原因，导致消息未发送成功，没有进行B账户远程调用，导致本地事务和消息不一致性。&lt;/li&gt;
+&lt;li&gt;MQ消费端程序如果消费消息成功，请求银行成功了，但是回传ACK给MQ失败了，那么回导致消费端程序重复消费问题，那么就会出现重复转账的问题。&lt;/li&gt;
+&lt;li&gt;在B账户因为某些原因导致账户增加失败，在回调A银行接口通知回滚时网络异常或者宕机，会导致A银行转账无法完成回滚，从而导致数据不一致。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;异步调用解决了同步调用的主线程阻塞问题，但还是没有解决数据一致性问题。而且引入MQ中间后，还要考虑到本地事务和MQ消息一致性问题，还有其他的引入后的维护工作，比如消息丢失，消息重发等等问题。&lt;/p&gt;
+&lt;h2 id=&#34;二-分布式事务解决方案&#34;&gt;二、分布式事务解决方案&lt;/h2&gt;
+&lt;p&gt; 讲到了分布式事务，自然离不开分布式系统的一些基本原则和定理：CAP原则和BASE理论，相信读者应该都知道，这里不做过多阐述。业界根据这些规则和理论，衍生出了各种分布式事务解决方案：XA规范，2PC，3PC，本地消息表方案，基于消息中间件的最终一致性方案，TCC方案，阿里的SEATA，SAGA方案和最大努力通知等等。&lt;br&gt;
+ 以上每个方案都有自己的应用场景，就拿2PC来说，MySQL的事务型日志redolog二段提交（redolog(prepare)--》binlog--》redolog(commit)）保证binlog和redolog数据一致性，Zookeeper的proposal事务二段提交（半数以上ack返回成功表示写入数据成功）保证leader和foller的数据一致性，这些都是2PC的应用。&lt;br&gt;
+ 金融场景下类似资金业务需要保证最终一致性解决分布式事务，不需要保证转账实时性。所以本地消息表、基于MQ中间件的最终一致性等柔性方案是首选的方案。这些基于消息的分布式事务，本质上就是，本地事务+从事务，从事务从消息中获取信息进行本地提交，这里保持&lt;strong&gt;异步事务机制、只能保证最终一致性&lt;/strong&gt;。&lt;/p&gt;
+&lt;h3 id=&#34;21-利用本地消息表思想解决一致性问题&#34;&gt;2.1 利用本地消息表思想解决一致性问题&lt;/h3&gt;
+&lt;p&gt; 一般来说，跨行转账的原理，会存在一个中国人民银行的中间人角色来操作转账，但不在本次讨论的范围内。&lt;br&gt;
+ 业界银行转账大部分都是同步转账，异步获取转账结果，包括第三方支付平台对接银行都是这样玩的。这里笔者就利用本地消息表思想来具体叙述数据一致性是如何保证的，老规矩先放图：&lt;br&gt;
+&lt;img src=&#34;https://zhangyaoo.github.io/post-images/1603274563955.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+其中交易记录表大概长这个样子：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;字段&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;描述&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;id&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;自增ID，没有业务意义&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;trade_order_num&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;交易订单号，作为转账记录唯一标识&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;source_account_num&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;交易转出方账户ID&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;target_account_num&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;交易收款方账户ID&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;status&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;状态机，0=预创建，1=转账中，2=转账成功，3=转账失败&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;pay_success_time&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;记录转账成功时间&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;create_time&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;记录创建时间，可作为窗口时间内判断标准&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;update_time&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;记录 更新时间&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;账户表大概长这个样子：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;字段&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;描述&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;id&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;自增ID，没有业务意义&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;account_num&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;账户ID&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;current_amt&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;当前账户余额&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;lock_amt&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;冻结金额，用来记录临时状态的核心转账数据 。真实余额=current_amt-lock_amt&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;图中的步骤大致分为10步，分别是：&lt;br&gt;
+1.&lt;/p&gt;
+&lt;h3 id=&#34;22-事务消息解决本地事务和mq消息一致性问题&#34;&gt;2.2 事务消息解决本地事务和MQ消息一致性问题&lt;/h3&gt;
+&lt;h4 id=&#34;221-消费端重复消费&#34;&gt;2.2.1 消费端重复消费&lt;/h4&gt;
+&lt;h4 id=&#34;222-消费端消费失败&#34;&gt;2.2.2 消费端消费失败&lt;/h4&gt;
+&lt;h3 id=&#34;23-其他问题&#34;&gt;2.3 其他问题&lt;/h3&gt;
+&lt;h4 id=&#34;231-银行交易冲正&#34;&gt;2.3.1 银行交易冲正&lt;/h4&gt;
+&lt;h2 id=&#34;三-其他方式保证数据一致性&#34;&gt;三、 其他方式保证数据一致性&lt;/h2&gt;
+&lt;p&gt; 当然，保持数据一致性不光是分布式事务来保证，业务上还要配合其他的辅助来保证，这里笔者就列举几种&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;全链路幂等&lt;br&gt;
+全链路幂等保证不产生脏数据，保护核心流程正常执行。&lt;/li&gt;
+&lt;li&gt;业务对账&lt;br&gt;
+业务内部准实时对账，比如业务发生后充值提现，对比用户余额是否正确，用户业务流水是否正确。&lt;br&gt;
+T+1日对账，程序或者人工定时扫描核心业务数据，保证当日数据准确。对账后自动检测并且修复重试业务&lt;/li&gt;
+&lt;li&gt;业务指标监控&lt;br&gt;
+监控数据库中的订单预占资金没有释放，状态机是不是最终态监控，单位窗口时间内业务状态是否异常，账户中的预扣减金额是否释放，业务重试次数是否超过阈值等等业务监控。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;四-总结&#34;&gt;四、总结&lt;/h2&gt;
+&lt;p&gt; 分布式场景，要用分布式的思维去思考问题。要考虑任何的超时，断电，维护不同物理存储的数据的可能存在的状态不一致的场景，说白了要面向失败编程。&lt;/p&gt;
+&lt;h2 id=&#34;五-参考&#34;&gt;五、参考&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;有赞出金系统——https://tech.youzan.com/build-a-withdraw-sys/&lt;/li&gt;
+&lt;li&gt;分布式事务的思考——https://www.cnblogs.com/sujing/p/11006424.html&lt;/li&gt;
+&lt;/ul&gt;
+">金融级业务下分布式事务保证数据一致性</a>
+      </div>
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://zhangyaoo.github.io/post/er-jin-zhi-fan-zhuan/"" data-c="
+          &lt;h4 id=&#34;题目描述&#34;&gt;题目描述&lt;/h4&gt;
+&lt;p&gt;给定一个32位整数 . 输出二进制表示反转后的值.&lt;br&gt;
+例如 input 43261596（二进制 00000010100101000001111010011100）&lt;br&gt;
+返回 output 964176192（二进制 00111001011110000010100101000000）&lt;/p&gt;
+&lt;p&gt;目前笔者就想到了时间复杂度在O(N)的解决思路：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;循环判断输入数据的低位是0还是1，具体判断方法是和1进行与操作&lt;/li&gt;
+&lt;li&gt;如果判断是，返回的结果+1，不是1那么不做任何处理&lt;/li&gt;
+&lt;li&gt;每次循环，input的数据向左移一位，output数据向右移动一位&lt;/li&gt;
+&lt;li&gt;循环32次，返回结果&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;/**
+    *  二进制数据反转
+    */
+public class BitReverse {
+
+    public static int reverse(int n) {
+        int result = 0;
+        for (int i = 0; i &amp;lt; 32; i++) {
+            result = result &amp;lt;&amp;lt; 1;
+            if ((n &amp;amp; 1) == 1) {
+                result++;
+            }
+            n = n &amp;gt;&amp;gt; 1;
+        }
+        return result;
+    }
+
+    public static void main(String[] args){
+        System.out.println(reverse(1&amp;lt;&amp;lt;30));
+        System.out.println(1&amp;lt;&amp;lt;30);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+">O(N)时间复杂度下，二进制反转</a>
+      </div>
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://zhangyaoo.github.io/post/guan-yu-xi-tong-xing-neng-ping-jing-yu-ce-he-xi-tong-xing-neng-you-hua/"" data-c="
+          &lt;h3 id=&#34;前言&#34;&gt;前言&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;对于任何系统，都会存在系统性能瓶颈，这里笔者作为一名Java工程师列出了自己在工作中的优化思路，仅供参考。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;一-系统性能预测&#34;&gt;一、系统性能预测&lt;/h2&gt;
+&lt;p&gt; 任何一个系统都是从0到1慢慢发展的，当系统业务随着时间的推移，业务量和流量随之增大，系统性能就随着凸显出来。这个时候，开发人员和架构师要从架构层面、代码层面、产品业务层面等一一去演进业务系统来维持高流量下系统稳定性。&lt;/p&gt;
+&lt;p&gt; 现在服务都是微服务部署开发，如果要模拟服务压测的话要在本地开启相同的服务，前提是机器配置是一样的。而且需要将线上的持久化数据同样copy到本地数据库中，这样才能真正模拟线上的环境。拿单台机器进行压测，压测的对象可以是某个核心的接口或者业务模块（这个接口可以是日志服务中统计的访问量比较高的具体的接口API），压测的指标可以是吞吐量，平均响应时间，最大响应时间，TPS，QPS等等。&lt;/p&gt;
+&lt;p&gt; 通过性能指标可以度量目前存在的性能问题，同时作为性能优化的评估依据。具体的指标主要是要分析系统的QPS、TPS、平均响应时间以及最大响应时间，我们预测一个单体的应用能够承受多少的并发量，看这这些指标是否能够达到我们预期的值，比如作为一个健康的系统，最大响应时间不超过1s。后面进行压测时候，观察流量巅峰时刻观察系统的运行情况。以下就性能分析优化展开总结。&lt;br&gt;
+&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&#34;二-系统性能分析优化&#34;&gt;二、系统性能分析优化&lt;/h2&gt;
+&lt;h3 id=&#34;1-硬件方面&#34;&gt;1、硬件方面：&lt;/h3&gt;
+&lt;h5 id=&#34;cpu&#34;&gt;CPU：&lt;/h5&gt;
+&lt;p&gt; 在压测的时候观察CPU的占用情况，是否长期处于100%状态，正常来说80%以下是正常的。如果非常低，那么说明系统不是在做IO密集型运算动作，性能瓶颈是在其他方面，不是在CPU上面，具体的操作方法可以用top命令查看。&lt;br&gt;
+ 以笔者经验来看，一般CPU飙高的原因无非三种：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;第一种就是代码中存在死循环，并且循环中有大量的CPU计算操作；&lt;/li&gt;
+&lt;li&gt;第二种就是多线程并发下，竞争相同的资源导致大量线程获取不到资源，如果此时线程进行自旋操作，不释放CPU资源，那就导致CPU飙升；&lt;/li&gt;
+&lt;li&gt;第三种就是代码中有内存泄漏，导致内存一直处于阈值状态，GC线程会持续GC，导致CPU飙高。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt; 上面三种情况中第二种和第三种情况在日常开发工作中会遇到，对于第二种情况对于自旋锁情况，一般会用CAS乐观锁去实现，并且设置一定的超时时间和重试次数，然后返回失败或者进入阻塞队列释放CPU分片，防止线程一直占用CPU资源。&lt;br&gt;
+ 对于第三种情况，就是代码的BUG，开发过程中要注意泄漏的问题，就比如多线程操作链表，如果没有做同步的锁，那么很有可能导致链表的引用指针混乱，引起内存泄漏。&lt;br&gt;
+ 以上，如果我们开发工作中避免了上述几种情况，CPU就能够发挥它应该有的能力，提升系统性能。同时，开发人员做好硬件CPU监控是非常有必要的。&lt;/p&gt;
+&lt;h5 id=&#34;内存&#34;&gt;内存：&lt;/h5&gt;
+&lt;p&gt;  在Java中，内存JVM是一个很重要的指标，这个关乎到系统是否可以稳定运行。我们可以借助三方工具可以查看系统的JVM内存的运行情况，笔者提供几个通用的预测内存的运行情况的思路：&lt;br&gt;
+- 每秒占用多少内存？&lt;br&gt;
+- 多长时间触发一次Minor GC？&lt;br&gt;
+- 多长时间触发一次Major GC？&lt;br&gt;
+- Minor  GC耗时多久？Major  GC耗时多久？&lt;br&gt;
+- 会不会频繁因为Survivor放不下导致对象进入老年代？&lt;/p&gt;
+&lt;p&gt;在日常开发中，开发人员需要关注的就是，判断系统JVM是否有频繁FULL GC和频繁YOUNG GC，如果有，那么会严重影响系统性能。笔者就这两个方面去分析一下&lt;br&gt;
+   1、&lt;strong&gt;频繁FULL GC&lt;/strong&gt; ：首先我们应该要了解到频繁FULL GC危害，一般的中大型系统，系统的JVM会设置很大，比如会给堆内存分配4~8G的空间，因为遍历对象图的过程中堆越大，遍历时间就会长，而且如果垃圾越多，垃圾回收也会拉长整个GC的时间，这就导致每一次FULL GC会有长时间的STW，影响系统稳定性。然后我们要清楚导致触发Full GC的场景，这里列出了可能会导致的几个场景：&lt;br&gt;
+  1）大对象&lt;br&gt;
+  2）方法区meta space空间占满&lt;br&gt;
+  3）年轻代的存活的生命周期长对象一直汇入老年代，导致GC&lt;br&gt;
+  4）内存泄漏导致空间不足进而GC&lt;br&gt;
+这里笔者就拿内存泄漏（内存泄漏指的是有引用无法被回收但是没有用的对象持续增长）来说，一般如果有内存泄漏。大概的内存监控图长这个样子&lt;img src=&#34;https://zhangyaoo.github.io/post-images/1592463486063.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+这样导致的后果就是，频繁的FULL GC，最后内存一直持续增长到爆满，然后FULL GC执行间隔缩短，最终会导致GC线程持续GC，CPU使用率会直线飙升，导致系统瘫痪。&lt;br&gt;
+    2、 &lt;strong&gt;频繁 YOUNG GC&lt;/strong&gt;  ：YOUNG GC如果过于频繁的话，一般是短周期小对象较多，这时候可以从 Eden 区/新生代设置的太小了这个方面考虑，看能否通过调整-Xmn、-XX:SurvivorRatio 等参数设置来解决问题&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;这里笔者以自己开发经验，提供一些“简单的”JVM优化拙见&lt;/strong&gt;：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;尽量将新生代的垃圾回收掉，不让存活对象进入老年代，因为老年代的GC代价比年轻代高，这里可以设置分代年龄-XX:MaxTenuringThreshold=XX&lt;br&gt;
+  例子1：比如说业务上一分钟产生几百兆的数据，而且需要存活一分钟，如果一分钟YGC的次数少于默认分代年龄，那么对象会进去老年代引发FGC，FGC会引起更大的停顿时间&lt;br&gt;
+  例子2：如果说对象都是一些短期对象，那么可以设置分代年龄更小，因为长期对象肯定是大对象或者单例对象永驻内存的，这样可以腾出空间给新生代GC，避免新生代频繁GC&lt;/li&gt;
+&lt;li&gt;增加新生代内存的大小，防止导致频繁的minor GC，这样老年代的Major GC频率也会降低&lt;/li&gt;
+&lt;li&gt;尽量将大内存的服务，拆分成几个相同服务，也就是多实例部署，分散堆内存资源，避免堆大内存导致GC时间过长（这个和G1分区回收思想相似）&lt;/li&gt;
+&lt;li&gt;每个线程占用的内存不应过大或者过小，不然会导致OOM&lt;br&gt;
+  如果线程内存过小，会导致线程里面的栈内存小，临时变量如果超出这个阈值就会无法分配栈，导致栈溢出，出现stackoverflow&lt;br&gt;
+  如果线程内存过大，在多线程并发下，如果线程数量过多，会占用非常多JVM内存，有内存溢出的风险&lt;/li&gt;
+&lt;li&gt;合理设置垃圾回收器，在大内存或者在内存碎片化环境下，G1垃圾回收器会有很好的效果&lt;br&gt;
+  G1垃圾回收器是Java9默认回收器，G1能够在指定的停顿时间内，根据每个region的回收价值，选择可以去回收的region，并且存活对象移动复制是多线程进行的。这里要注意如果设置停顿时间的话，不能设置太小，因为太小会导致每次进行回收的region太少，导致垃圾回收速度更不上垃圾生产的速度，这样随着时间推移，系统垃圾对象会越来越多，占满JVM&lt;/li&gt;
+&lt;li&gt;对象生命周期的分布情况：如果应用存在大量的短期对象，应该适当增大年轻代 -Xmn；如果存在相对较多的持久对象，老年代应该适当增大。-Xms -Xmx&lt;/li&gt;
+&lt;li&gt;Xms和Xmx也设置为相同，这样可以减少内存自动扩容和收缩带来的性能损失&lt;/li&gt;
+&lt;li&gt;设置大对象对象的大小，一般系统中大对象大部分都是一些系统的缓存，像这些对象尽早让它们的进入老年代，避免占用新生代的空间。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;以上，合理分配JVM内存资源以及做好系统内存的监控机制是我们系统稳定性运行的保障。&lt;/p&gt;
+&lt;h5 id=&#34;网络负载和io&#34;&gt;网络负载和IO&lt;/h5&gt;
+&lt;p&gt;来一张IO发生场景图片：&lt;br&gt;
+&lt;img src=&#34;https://zhangyaoo.github.io/post-images/1593333928024.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+ 对于磁盘IO，我们可以用Linux下的iostat命令去查看当前IO负载的情况，比如r_wait和w_wait指标，这些指标较大则说明I/O负载较大，I/O等待比较严重，磁盘读写遇到瓶颈。这个时候我们要看压测的接口是否有文件读取和写入的操作，如果有说明接口性能瓶颈在于文件读写，这个时候可以利用文件buffer缓存API等功能进行优化，或者可以用异步的方式进行文件读写。&lt;br&gt;
+ 笔者在开发中就遇到因为IO问题带来的线程资源耗尽的线上问题：我们系统业务在借贷业务成功后，要生成借款协议，协议是一个PDF文件，当时主业务逻辑完成后同步调用生成PDF的逻辑，因为当时大流量并发，导致整个借贷业务性能瓶颈就在磁盘IO上，CPU处于空闲状态，借用网上的一个图，TOP命令可以看出IO花费的时间在76.6%，后面优化后就多线程异步处理。&lt;br&gt;
+&lt;img src=&#34;https://zhangyaoo.github.io/post-images/1593334249512.webp&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
+&lt;p&gt; 对于网络负载，因为网络负载或者网络堵塞是不受控制的，这个涉及到底层的TCP通信的优化（比如利用滑动窗口和拥塞控制），这个就不展开讨论。工程师可控范围可以是选择IO读写高效率的中间件，比如redis、tomcat、activeMq、nginx、dubbo、netty等，这些中间件的底层IO模型的是多路复用IO，多路复用IO指的是一个IO线程能够服务于多个socket连接，线程监听每个连接的资源描述符。如下图所示：&lt;img src=&#34;https://zhangyaoo.github.io/post-images/1593334346151.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
+&lt;p&gt; 分布式微服务环境下，服务之间的RPC同步调用会非常频繁，随之服务之间的网络负载会影响到整个系统的服务性能，因此，每个服务的机器放置到同一个局域网下性能效果会很好。而且，对于服务之间的调用，最好利用自研或者第三方中间件去监控服务链路调用的整体情况（比如Zipkin或者SkyWalking ）,并且要合理设置服务与服务之间的超时时间，避免因为网络原因导致服务线程池耗尽，导致OOM。&lt;/p&gt;
+&lt;h3 id=&#34;2-中间件层&#34;&gt;2、中间件层&lt;/h3&gt;
+&lt;p&gt;  这里中间件，泛指数据存储层，以笔者经验来看，大多数系统性能问题和瓶颈都是与数据存储相关，这里笔者就拿这方面展开讨论总结。&lt;/p&gt;
+&lt;h5 id=&#34;mysql&#34;&gt;MySQL&lt;/h5&gt;
+&lt;p&gt;一般来说MySQL在很多线程更新同一行的场景下，TPS性能曲线如图所示，参考丁奇的《秒杀场景下MySQL的低效》&lt;br&gt;
+&lt;img src=&#34;https://zhangyaoo.github.io/post-images/1592893242022.png&#34; alt=&#34;秒杀场景下MySQL的低效&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+图中我们可以看到，线程数在6的时候TPS达到巅峰2W，随着线程数的增长，TPS会随之降低。在高并发场景下，可以根据这个结论来进行优化，比如，当有瞬间大流量冲击数据库时候，我们可以进行数据缓冲，比如用队列削峰，开启6个线程消费，然后访问数据库。&lt;br&gt;
+当然这个看业务场景，如果是对同一个资源进行竞争的话，这个证削峰是可行的。但是，如果场景是每一个线程对不同资源进行访问修改时候，不涉及资源竞争的话，那么就不要进行削峰处理，直接访问数据库即可，当然这个也要考虑到MySQL的性能问题。&lt;br&gt;
+举个例子，就拿光插入数据的性能测试来说（没有建唯一索引），4核4G的7200转的机械硬盘机器配置，最高能够承受7500的并发插入数。[参考MySQL性能压测]&lt;/p&gt;
+&lt;p&gt;以上算是一种在特定场景下的优化的思路，下面笔者讨论一下日常开发中通用的MySQL优化：&lt;br&gt;
+1、避免长期的事务锁占用，避免锁范围过大，避免单个资源的并发竞争&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;首先我们知道数据库Innodb存储引擎的RR和RC隔离级别下，类似update语句，锁的释放时机是在事务提交之后，这个叫做两阶段锁协议。所以为了避免事务之间锁同一行数据出现长时间的互相等待的场景，&lt;strong&gt;要把最可能造成锁冲突、最可能影响并发度的锁尽量往后放&lt;/strong&gt;。&lt;br&gt;
+举个例子，个人账户A转账给公共账户B，流程是：开启事务——》给 B 的账户余额增加钱；从账户 A 账户余额中扣除钱；记录一条交易日志——》结束事务。因为公共账户B可能被多个线程修改，所以可以优化为：从账户 A 账户余额中扣除钱；记录一条交易日志；给 B 的账户余额增加钱。&lt;/li&gt;
+&lt;li&gt;然后，要尽量将锁细化，一个大锁可以分割为多个锁，类似&lt;strong&gt;分段锁机制&lt;/strong&gt;。拿笔者公司业务来说，比如APP上投资某一个产品标（包含了标的开始募集时间、结束时间、可投金额、年利率等等），在到达开始募集时间会有一段时间的高并发投标，这个时候会对具体标的行数据进行频繁的更新操作，就是扣减剩余可投金额，如果其他耗时操作中有对同一资源进行竞争的话，那么产品锁持有时间过长，导致性能低。如果有高并发秒杀下单等动作，会造成行锁抢占问题。&lt;br&gt;
+这个时候，优化思路是，将这个产品标在数据库分为10份，每一份的可投金额减少10倍，每一个投标请求进行随机路由分配到这10个小的产品标中。这样就减少锁的并发竞争问题，优化性能。&lt;br&gt;
+但是笔者因为遇到这种分段锁的问题导致的&lt;strong&gt;死锁&lt;/strong&gt;问题，场景是这样的，当一份投标的金额大于其中一份产品金额的话，会持有这份产品的锁，并且循环获取下一份小产品，这个时候如果有两个线程都大于小产品金额的话，有概率会产生死锁问题，笔者最终通过顺序加锁以及加上锁的过期时间解决了这个问题。&lt;/li&gt;
+&lt;li&gt;最后，对同一个资源的并发竞争，举个例子，像12306抢票、商城活动秒杀等都是对同一个有限资源进行竞争的场景，笔者认为，这种场景是非常难处理的，需要考虑到锁同步数据安全、并发竞争性能瓶颈、超卖等问题，都是会影响C端用户实际的体验的。&lt;br&gt;
+像这种场景，优化的思路就是——&amp;gt;&lt;strong&gt;能用分段锁的就不要用悲观锁，能用乐观锁的就不要用悲观锁，能用无锁编程的就不要用锁，能用异步的场景就不要用同步的场景，能在内存操作的就不要再放到数据库磁盘层面操作&lt;/strong&gt;。当然，有些对于数据安全性要求很高的场景，比如金融，加锁是必要的。这个就是业务一致性和并发的折中考虑，这个需要考虑具体的业务场景。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;2、关闭死锁检测&lt;br&gt;
+MySQL默认开启死锁检测，概念：每当一个事务被锁的时候，就要看看它所依赖的线程有没有被别人锁住，如此循环，最后判断是否出现了循环等待，也就是死锁。死锁检测对数据库有非常大的性能影响，会消耗CPU资源，最后会压垮数据库。&lt;br&gt;
+在这种并发场景下可以关闭死锁检测功能，会有明显的性能提升。当然关闭死锁检测也会带来问题，比如当死锁发生时，会一直持有锁资源，直至到超时时间后，释放，这段等待的时候可能会造成线程持续等待造成严重后果。所以为了避免死锁的发生，对行资源进行加锁的时候可以根据ID主键等进行&lt;strong&gt;顺序加锁&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;3、SQL优化&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;SQL避免多表连接查询、in和exits合理应用、考虑索引失效场景&lt;/li&gt;
+&lt;li&gt;在经常查询和排序的列上加索引，对离散度不高的不建议加锁，遵循索引规范&lt;/li&gt;
+&lt;li&gt;在写场景多余读场景的索引选择，唯一索引和普通索引的选择&lt;/li&gt;
+&lt;li&gt;尽量进行覆盖索引，避免回表查询&lt;/li&gt;
+&lt;li&gt;尽量建立联合索引，来进行索引复用&lt;/li&gt;
+&lt;li&gt;字符串的前缀索引的建立&lt;/li&gt;
+&lt;li&gt;用explain分析整个SQL的执行情况，包括执行计划、索引分析&lt;/li&gt;
+&lt;li&gt;修改数据比较多的字段场景尽量加索引，尽量使用行锁，避免表锁&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;4、在大数据量的情况下（一般单表超2000W）的优化思路：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;加缓存，对于高并发读场景用缓存，一级缓存Redis或者二级缓存Cache&lt;/li&gt;
+&lt;li&gt;架构层面MySQL就做主从复制或主主复制，读写分离，可以在应用层做，效率高&lt;/li&gt;
+&lt;li&gt;垂直拆分，根据你模块的耦合度，将一个大的系统分为多个小的系统，也就是分布式系统；&lt;/li&gt;
+&lt;li&gt;水平切分，因为水平切分会增加代码开发复杂度，所以能尽量避免就不要做。针对数据量大的表，对于日志流水、配置型等类型数据，进行归档操作；对于状态业务数据进行分库分表，这里就不展开讨论。其次，要选择一个合理的sharding key，为了有好的查询效率，表结构也要改动，做一定的冗余；&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h5 id=&#34;redis&#34;&gt;Redis&lt;/h5&gt;
+&lt;p&gt;Redis作为开发人员接触最频繁的中间件，首先，笔者先拿出官网给出的Redis性能测试结果：从下图可以得出结论：redis单机测试结果是TPS是7W,QPS只能比这个数据更高。&lt;br&gt;
+&lt;img src=&#34;https://zhangyaoo.github.io/post-images/1592983835284.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+当使用了管道pipline后性能大约提升了6倍，如下图所示&lt;br&gt;
+&lt;img src=&#34;https://zhangyaoo.github.io/post-images/1592986207480.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
+&lt;p&gt;根据官网的文档，影响Redis性能有以下因素，笔者认为开发人员做一些基准测试压测以及日常开发中使用Redis的时候，注意这些优化点，就能高效使用Redis：&lt;br&gt;
+1、网络延迟和网络带宽，作为运维人员，最好将服务器和Redis服务部署到同一个局域网内，降低网络延迟。作为开发人员，尽量不要使用大key和大value，因为随着这种数据越来越多，在网络传输的时候会占用大部分网络宽带，举个例子，如果一个redis对象大小超过1KB，当你的QPS达到100万，会把你的千兆路由器的带宽打满，因此网络带宽可能就会成为性能瓶颈。&lt;br&gt;
+2、使用pipline，当使用以太网访问Redis时，保据大小保持在以太网数据包大小（约1500字节）以下时，使用流水线进行聚合的命令特别有效。&lt;br&gt;
+3、延时删除，当某一个redisObject很大的时候，做删除操作会长时间占有线程持有时间，影响性能，redis新版本有延迟删除的功能。&lt;br&gt;
+4、使用scan代替keys，keys会造成严重的性能问题&lt;br&gt;
+5、设置内存的大小阈值并且设置好内存缓存淘汰的策略，线上设置LRU策略来淘汰缓存这样做是为了避免物理内存使用完后，造成卡顿的情况。并且线上要避免大量key同时失效的场景，因为redis删除失效的key是循环删除的，并且频繁的删除会促使内存管理器回收内存页，这样也会导致卡顿的现象。&lt;br&gt;
+6、connection客户端连接数量，Redis作为一个事件驱动模型，因为base epoll能够实现O(1)时间复杂度的响应操作，因此能够提供很好性能。Redis已经以超过60000个连接为基准，并且在这些条件下仍能够维持50000 q / s的吞吐量，而且具有30000个连接的实例只能处理100个连接可达到的吞吐量的一半，可参考下图（来源官网）：&lt;br&gt;
+&lt;img src=&#34;https://zhangyaoo.github.io/post-images/1592991673063.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
+&lt;h5 id=&#34;elasticsearch&#34;&gt;ElasticSearch&lt;/h5&gt;
+&lt;p&gt;ElasticSearch可以解决大数据量下的搜索慢问题，这里笔者就拿 死磕ElasticSearch社区作者的优化建议，给出几点在日常开发ElasticSearch的优化方案：&lt;br&gt;
+1、尽量将所有数据的一半都缓存在内存当中file cache system 当中&lt;br&gt;
+2、将少量（查询字段比较频繁）字段放入ES，其他全量字段放入Hbase中，采用ES + Hbase方式提升查询效率，节省ES存储空间，file cache system的数据就会存的更多&lt;br&gt;
+3、缓存预热，可以做一个缓存预热系统，定时查询热点数据将其缓存在filesystem cache 中&lt;br&gt;
+4、冷热分离，将访问量高的和冷数据分别放置索引&lt;br&gt;
+5、ES ducoment设计，尽量避免连接、父子文档等连接操作，将数据准备好后再存入ES&lt;br&gt;
+6、不允许深度分页，页数越大，深度越深，从每一个shard返回的数据就越多，耗时越久。可以通过scroll api游标进行查询。&lt;br&gt;
+7、必须限制模糊搜索的长度，不然CPU会飙高，可参考 https://elasticsearch.cn/article/171&lt;/p&gt;
+&lt;h3 id=&#34;3-业务层方面&#34;&gt;3、业务层方面&lt;/h3&gt;
+&lt;p&gt;每个公司业务层面优化不相同，要根据具体业务场景去优化，别人的方案只能作为参考。&lt;br&gt;
+这里笔者就拿金融行业背景下，列举三个优化例子。&lt;br&gt;
+1、背景：企业借贷，会从用户的投的银行某个产品的资金池中匹配查找合适的资金，然后进行资金占有，银行真实转账后，生成终态的债权关系。&lt;br&gt;
+优化之前：使用同步锁，同一时间只能又一个线程去资金池中匹配资金，这种方案有严重的性能问题，其他线程没有拿到锁之前只能自旋尝试获取锁，损耗CPU资源。&lt;br&gt;
+优化之后：去掉同步锁，改成乐观锁，放到数据库做，资金表的字段增加一个标识表示是否占用，线程进来尝试匹配资金，乐观锁去预占资金表，成功表示匹配成功。这里要注意的是，尽量一个借贷匹配一比资金，这样资金池里面的资金锁行范围会减少（因为有多线程抢占资金资源），资金匹配的速度会加快，并且这样优化这样银行转账的次数会减少（如果匹配一批资金就要进行相同数量转账次数），防止多个投资人账户进行银行转账，减少整个借款业务线的耗时，避免其中一个转账出错导致全部要回滚这样的情况。&lt;br&gt;
+这里其实还可以进行优化，比如一笔一笔的占有资金，占有失败的continue继续下一笔资金含有，不用一次在一个事务里面占有大量资金，防止大事务执行失败以及出现其他会有死锁的可能性。这里优化的思想就是大事务拆成小事务，防止事务执行失败的概率。&lt;/p&gt;
+&lt;p&gt;2、背景：企业借贷，同步请求转异步&lt;br&gt;
+优化之前，三方企业借贷请求，是同步调用，因为一条完整的借贷业务线非常长，中间会RPC调用非常多的底层服务以及其他远程接口，这样的话请求到响应时间会拉的非常长，影响C端的用户体验。&lt;br&gt;
+优化之后，同步改异步，具体做法是，借贷请求进入系统后，会先生成一个进行中的状态借贷数据插入数据库，然后将唯一标识丢入MQ中，然后就返回成功。这样吞吐量会增加，用户端体验会非常好。&lt;br&gt;
+当然如果说要保证高可用，可以利用MQ的事务消息做，利用二阶段提交方式保证MQ能够收到消息。具体方案可以看笔者的这篇文章 &lt;a href=&#34;https://zhangyaoo.github.io/post/jie-jue-bing-fa-xia-ben-di-shi-wu-he-xiao-xi-tou-di-yi-zhi-xing/&#34;&gt;本地事务消息投递一致性&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;3、背景：C端用户在APP上，某一个标开启募集资金后进行投标，这里的标类似支付宝的理财产品，开始募集的时候会有高并发流量涌入，当APP端用户同时投标，会有大量请求，这就形成了抢购的动作，因为一个产品标的可投金额是有限的，只有少数人能投标成功&lt;br&gt;
+优化之前：笔者在上文中提到的，尽管说频繁将更新行锁的数据放到事务的最后， 会有性能提升，但是随着并发数增长，MySQL也会成为性能瓶颈。&lt;br&gt;
+优化之后：利用redis的纯内存操作高性能的优点，将产品的可投金额放入缓存redis（这里redis里面的金额比数据库中少保证不超卖），利用redis的decrby命令或者lua脚本，保证产品标剩余可投金额能够进行原子减少，每一次减少成功后，将用户这一次投标的数据丢入MQ中异步处理，消费端做的就是将插入预状态的借款数据、冻结用户金额和减少产品的可投金额放入同一个事务中处理。&lt;br&gt;
+上面做的优化能够保证C端用户的良好体验，但是引入各种中间件的话会出现各种问题需要去解决，比如重复投标怎么办，Redis挂了怎么？MQ挂了怎么办？消息丢失怎么办？等一系列问题。&lt;br&gt;
+重复投标，可以利用用户标识的唯一token做，短信生成token，设置token失效时间（短信失效时间60s），投标时候校验token是否过期和使用过。&lt;br&gt;
+Redis挂，这时候就要考虑持久化和集群哨兵保持redis高可用。&lt;br&gt;
+MQ挂了，消息丢失，重复消费等，这时候就要考虑broker的持久化，生产端和消费端的重试机制和ack机制。&lt;br&gt;
+以上需要开发人员去应对每一个可能出现问题的场景。&lt;/p&gt;
+&lt;h2 id=&#34;三-后续流量增长系统性能优化思路&#34;&gt;三、后续流量增长系统性能优化思路&lt;/h2&gt;
+&lt;p&gt;当流量激增的时候，首先要考虑到系统的稳定性和高可用，后续针对特定的场景，分析性能瓶颈，然后再去做并发的优化。这里笔者就&lt;strong&gt;简单的&lt;/strong&gt;列举一下业界的做法，下面每一条读者都可以自行扩展大篇幅深入去了解。&lt;/p&gt;
+&lt;h4 id=&#34;高可用&#34;&gt;高可用&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;使用反向代理和&lt;strong&gt;负载均衡&lt;/strong&gt;实现分流，并且实现动态切换主备机器， 网关负载均衡，DNS多机房负载均衡&lt;/li&gt;
+&lt;li&gt;通过&lt;strong&gt;限流&lt;/strong&gt;保护应用免受雪崩之灾&lt;/li&gt;
+&lt;li&gt;通过&lt;strong&gt;降级&lt;/strong&gt;实现核心服务服务可用，牺牲非核心服务&lt;/li&gt;
+&lt;li&gt;通过&lt;strong&gt;隔离&lt;/strong&gt;实现故障隔离和资源隔离，比如线程隔离，对方法或者类具体分配线程数量，防止相互影响&lt;/li&gt;
+&lt;li&gt;通过设置合理的&lt;strong&gt;超时&lt;/strong&gt;调用与重试机制避免请求堆积造成雪崩&lt;/li&gt;
+&lt;li&gt;通过&lt;strong&gt;回滚&lt;/strong&gt;机制快速修复错误版本&lt;/li&gt;
+&lt;li&gt;Redis&lt;strong&gt;集群&lt;/strong&gt;保证高可用，&lt;strong&gt;哨兵&lt;/strong&gt;模式保证故障转移&lt;/li&gt;
+&lt;li&gt;Redis MQ消息中间件开启&lt;strong&gt;持久化&lt;/strong&gt;，保证数据不丢；&lt;strong&gt;ack机制&lt;/strong&gt;和&lt;strong&gt;重试机制&lt;/strong&gt;保证数据的可靠性&lt;/li&gt;
+&lt;li&gt;分布式服务环境&lt;strong&gt;链路跟踪&lt;/strong&gt;，监控整个服务的服务质量&lt;/li&gt;
+&lt;li&gt;硬件资源&lt;strong&gt;监控&lt;/strong&gt;、CPU、内存、负载、IO、堆内存、JVM GC、线程池以及各种中间件监控等等&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;高并发&#34;&gt;高并发&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;利用MQ同步转异步，流量削峰，多线程异步消费&lt;/li&gt;
+&lt;li&gt;读场景比较多的接口可以利用缓存Redis，包括热点key缓存预热，多级缓存，比如分布式缓存，本地缓存和CDN缓存。还可以做集群、哨兵、高可用保证Redis性能&lt;/li&gt;
+&lt;li&gt;对于强一致的同步下单场景，可以将对MySQL的操作改为Redis，然后利用MQ做异步&lt;/li&gt;
+&lt;li&gt;优化JVM，包括新生代和老年代的大小、GC算法的选择等，尽可能减少GC频率和耗时&lt;/li&gt;
+&lt;li&gt;非核心业务逻辑、延迟任务逻辑、三方调用逻辑，可以做异步&lt;/li&gt;
+&lt;li&gt;对于架构方面，可以做负载均衡集群部署，MySQL主从、分库分表或者归档、Redis集群、多级缓存、分布式垂直拆分部署、搜索场景引入ES等多个方面考虑&lt;/li&gt;
+&lt;li&gt;对于程序方面，可以从For循环的计算逻辑优化、批处理机制减少IO、采用时间复杂度更小的数据结构和算法、乐观锁和分段锁和无锁编程减少锁冲突等方面考虑&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;四-总结&#34;&gt;四、总结&lt;/h2&gt;
+&lt;p&gt;以上，笔者从硬件层、代码层、中间件层、业务层等不同方向，简单的分析了影响系统性能各个因素，以及提供了简单的优化的思路和例子。因笔者工作经验能力有限，无法做到全面的分析，还望读者能够指正错误以及提供建议。&lt;/p&gt;
+&lt;h2 id=&#34;参考&#34;&gt;参考&lt;/h2&gt;
+&lt;p&gt;1、秒杀场景下MySQL的低效——丁奇&lt;br&gt;
+2、死磕ElasticSearch社区——ElasticSearch优化&lt;br&gt;
+3、MySQL性能压测——https://my.oschina.net/u/867417/blog/758690&lt;br&gt;
+4、高可用系统方案——https://blog.csdn.net/hustspy1990/article/details/78008324&lt;br&gt;
+5、Redis性能测试——https://redis.io/topics/benchmarks&lt;/p&gt;
+&lt;!--参考 --&gt;
+">系统性能优化的思考和总结</a>
+      </div>
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://zhangyaoo.github.io/post/o1shi-jian-fu-za-du-xia-shuang-xiang-lian-biao-shi-xian-lru/"" data-c="
+          &lt;h3 id=&#34;前言&#34;&gt;前言&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;笔者先从linkedHashMap源码中借鉴插入顺序访问的代码，然后然后自己实现了一个LRU&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;linkedhashmap底层的数据结构&#34;&gt;linkedHashMap底层的数据结构&lt;/h3&gt;
+&lt;p&gt;linkedHashMap底层结构（顺序访问）：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;1、linkedHashMap维护了每个node的双向链表，初始化时候维护了空的entry header头，新加入的节点放到entry的头部header的next&lt;/li&gt;
+&lt;li&gt;2、put还是get都会进行重排序，get entry1 还是put entry1都会先把Entry1从双向链表中删除，然后再把Entry1加入到双向链表的表尾。&lt;/li&gt;
+&lt;li&gt;3、遍历访问的时候，会访问header的下一个next节点，这就形成了顺序访问&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;1&#34;&gt;&lt;img src=&#34;https://zhangyaoo.github.io/post-images/1592968145044.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+&lt;h3 id=&#34;链表实现&#34;&gt;链表实现&lt;/h3&gt;
+&lt;p&gt;实现思路：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;1、数据是直接利用 HashMap 来存放的。&lt;/li&gt;
+&lt;li&gt;2、内部使用了一个双向链表来存放数据，所以有一个头结点 header，以及尾结点 tailer。&lt;/li&gt;
+&lt;li&gt;3、每次写入头结点，删除尾结点时都是依赖于 header tailer&lt;br&gt;
+&lt;img src=&#34;https://zhangyaoo.github.io/post-images/1592220507945.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;import com.google.common.collect.Maps;
+import java.util.Map;
+
+/**
+ * 线程不安全，同步机制自行控制。
+ */
+public class LRUCacheV2 {
+    /**
+     * 缓存map
+     */
+    private final Map&amp;lt;String, Node&amp;gt; cacheMap;
+
+    /**
+     * 头指针
+     */
+    private Node head;
+
+    /**
+     * 尾指针
+     */
+    private Node tail;
+
+    /**
+     * 容量
+     */
+    private final int cacheSize;
+
+    /**
+     * 当前容量
+     */
+    private int currentCacheSize;
+
+    LRUCacheV2(int capacity){
+        cacheMap = Maps.newHashMapWithExpectedSize(capacity);
+        cacheSize = capacity;
+        currentCacheSize = 0;
+    }
+
+    public Object get(String key){
+        Node node = cacheMap.get(key);
+        if(node != null){
+            // 移动到头指针
+            move2head(node);
+            return node.getData();
+        }
+        return null;
+    }
+
+    public void remove(String key){
+        Node node = cacheMap.get(key);
+        if(node != null){
+            Node pre = node.getPre();
+            Node next = node.getNext();
+            if(pre != null){
+                pre.setNext(next);
+            }
+            if(next != null){
+                next.setPre(pre);
+            }
+
+            // 如果删除刚好是头节点或者尾节点，也要移动指针
+            if(node.getKey().equals(head.getKey())){
+                head = pre;
+            }
+            if(node.getKey().equals(tail.getKey())){
+                tail = next;
+            }
+
+            cacheMap.remove(key);
+        }
+    }
+
+    public void put(String key, Object value){
+        Node node = cacheMap.get(key);
+        if(node != null){
+            // 存在节点的话，就覆盖，并且放到头
+            node.setData(value);
+            move2head(node);
+            cacheMap.put(key, node);
+        }else {
+            // 不存在节点，构造并且放到头
+            if(currentCacheSize == cacheSize){
+                // 删除尾node
+                String delKey = tail.getKey();
+                cacheMap.remove(delKey);
+
+                // 尾指针移动
+                Node next = tail.getNext();
+                if(next != null){
+                    next.setPre(null);
+                }
+                tail.setNext(null);
+                tail = next;
+
+            }else{
+                currentCacheSize++;
+            }
+            node = new Node();
+            node.setData(value);
+            node.setKey(key);
+            // 头指针移动
+            move2head(node);
+        }
+        cacheMap.put(key, node);
+    }
+
+    /**
+     * 节点移到头
+     */
+    private void move2head(Node node){
+        if(head == null){
+            // 初始化head 和 tail
+            head = node;
+            head.setNext(null);
+            head.setPre(null);
+            tail = node;
+        }else {
+            // 如果是相同的Key，啥都不用动，node就是最新的头
+            if(node.getKey().equals(head.getKey())){
+                return;
+            }
+
+            // 截取node
+            Node pre = node.getPre();
+            Node next = node.getNext();
+            if(pre != null){
+                pre.setNext(next);
+            }
+            if(next != null){
+                next.setPre(pre);
+            }
+
+            // 如果要截取的节点是尾节点，那么尾节点指针也要向前移动
+            if(node.getKey().equals(tail.getKey())){
+                tail = next;
+            }
+
+            // 放在头前面
+            head.setNext(node);
+            node.setPre(head);
+            // node下个指针指向null
+            node.setNext(null);
+            head = node;
+        }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder() ;
+        Node node = head;
+        while (node != null){
+            sb.append(node.getKey()).append(&amp;quot;:&amp;quot;)
+                    .append(node.getData())
+                    .append(&amp;quot;--&amp;gt;&amp;quot;) ;
+            node = node.getPre();
+        }
+        return sb.toString();
+    }
+
+    public static void main(String[] args) {
+        LRUCacheV2 lruCacheV2 = new LRUCacheV2(4);
+        lruCacheV2.put(&amp;quot;1&amp;quot;,&amp;quot;1&amp;quot;);
+        lruCacheV2.put(&amp;quot;2&amp;quot;,&amp;quot;2&amp;quot;);
+        lruCacheV2.put(&amp;quot;3&amp;quot;,&amp;quot;3&amp;quot;);
+        lruCacheV2.put(&amp;quot;4&amp;quot;,&amp;quot;4&amp;quot;);
+        lruCacheV2.put(&amp;quot;5&amp;quot;,&amp;quot;5&amp;quot;);
+        //lruCacheV2.get(&amp;quot;2&amp;quot;);
+        //lruCacheV2.put(&amp;quot;2&amp;quot;,&amp;quot;22&amp;quot;);
+        lruCacheV2.remove(&amp;quot;5&amp;quot;);
+        System.out.println(lruCacheV2.toString());
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;参考：&lt;br&gt;
+1、https://www.iteye.com/blog/gogole-692103&lt;br&gt;
+2、https://crossoverjie.top/2018/04/07/algorithm/LRU-cache/&lt;/p&gt;
+">O(1)时间复杂度下，双向链表实现LRU</a>
+      </div>
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://zhangyaoo.github.io/post/2019-nian-zong-jie/"" data-c="
+          &lt;p&gt;小提示：阅读此篇文章大约需要三分钟时间，以下都是个人一些生活工作上碎碎念念，唠叨碎语，请斟酌阅读~&lt;/p&gt;
+&lt;p&gt;目录&lt;br&gt;
+开头&lt;br&gt;
+学习&lt;br&gt;
+工作&lt;br&gt;
+运动&lt;br&gt;
+生活&lt;br&gt;
+游戏&lt;br&gt;
+美食&lt;br&gt;
+亲情&lt;br&gt;
+爱情&lt;br&gt;
+2020flag&lt;/p&gt;
+&lt;p&gt;————————我是分割线——————&lt;/p&gt;
+&lt;p&gt;开头&lt;br&gt;
+又过了一年，记得上一次写年终总结还是在我狗窝(出租房)里面写的，这一次是在南京南站开始写的。&lt;br&gt;
+深圳的天气就是这么神奇，一年到头穿短袖，曾和我朋友立下一个flag，说在深圳365天300天穿短袖，不然就洗一个月碗，似乎今年温度降的早，早早就穿上了短袖，(flag果然对于我来说就是打脸的)，所以明年来就给自己装逼行为付出代价（╯&#39; - &#39;)╯︵ ┻━┻&lt;br&gt;
+这里一直都是夏天，不能像家乡一样能感受到四季的变化，感觉时间过的特别快，有一次在公司敲代码时候，听到了鸟鸣声，瞬间就想起了家乡田野中的鸟叫虫鸣，脑海里就浮现了那年夏天，吃着冰棍，听着蝉鸣的旧时光。&lt;br&gt;
+这一年有许多值得写的东西，生活中的各个方面都有。用我老爹一句话，一年时间不管是进步多少，只要不是原地踏步走就可以。这次还是像2018年总结一样给自各做一些总结和一些（给自己打脸的）flag&lt;/p&gt;
+&lt;p&gt;学习&lt;br&gt;
+说起学习，这里放在最开始写，自认为学习是自己提升自己的最直接最有效的方式。从小学到高中以至于大学的知识，都是皮毛。重要是培养了快速学习能力和自学的习惯，这个可以说是自各学业生涯中获得最有价值的东西了。但是这是不够的，对于生活中认知和工作的方面，自我独立思考也是必不可少的。自各也在特意去注重，培养自各的独立思考的能力。&lt;br&gt;
+在这感谢云智惠IPO所有后台同学，以及@陈秦圆 同学，让自己认识到独立思考和团队合作的重要性。&lt;/p&gt;
+&lt;p&gt;这一年有学习到东西有：&lt;br&gt;
+极客时间的数据结构和算法之美&lt;br&gt;
+设计模式之美(只看了一章)&lt;br&gt;
+牛客网的剑指offer(只刷了30道)&lt;br&gt;
+力扣leetcode(只刷了60道)&lt;br&gt;
+《netty实战》&lt;br&gt;
+搭建开源项目fast-im脚手架&lt;br&gt;
+金融业务知识&lt;br&gt;
+沈剑的架构师之路（只看了二十篇）&lt;/p&gt;
+&lt;p&gt;来年目标：&lt;br&gt;
+继续完成开源项目&lt;br&gt;
+经营好个人博客&lt;br&gt;
+架构师之路学习&lt;br&gt;
+《redis进阶》&lt;br&gt;
+《剑指offer》&lt;br&gt;
+大数据相关知识&lt;/p&gt;
+&lt;p&gt;看了其他书籍：&lt;br&gt;
+《亮剑》&lt;br&gt;
+《寻路中国》&lt;/p&gt;
+&lt;p&gt;画外音：一年时间学的这么少，还贴出来（脸皮有点厚😂，手动狗头）&lt;/p&gt;
+&lt;p&gt;工作&lt;br&gt;
+在云智惠的一年半时间里，自各学习了许多和工作相关的知识，认识了许多优秀的同学，成长了并且收获了许多，感谢云智惠提供的职场平台。虽然现在已经快要解散了，但是还是表示衷心感谢。江湖再见！&lt;/p&gt;
+&lt;p&gt;运动&lt;br&gt;
+唯一一个在2019年立得没有被打脸的flag，就是运动。每周一次篮球或者跑步。&lt;br&gt;
+跑步呢，一般跑个4公里一次。大概跑了二十次，100公里左右，这里只记录了一半，另外一半没有记录（这句是真的）「哭笑:-D」&lt;/p&gt;
+&lt;p&gt;篮球呢，现在投篮不准，运球辣眼睛，已然一副老年篮球的样子。但是还是阻挡不了我喜欢这一项运动，就像灌篮高手动漫中一句话“教练，我想打篮球”这样，源自于内心的热爱。&lt;/p&gt;
+&lt;p&gt;生活&lt;br&gt;
+这一年我想了很久，得到了什么失去了什么。。我想了很久，突然想起来，&lt;br&gt;
+得到的当然是肚子的肥肉赘肉咯，，失去的你们也知道，肯定是我稀薄的头发。。&lt;/p&gt;
+&lt;p&gt;当自各发际线越来越高的时候，就在思考人生，为什么长得这么帅，到要掉头发&lt;/p&gt;
+&lt;p&gt;从此菊花茶➕枸杞已是标配，早睡早起已是人生箴言😂，狗命要紧&lt;/p&gt;
+&lt;p&gt;游戏&lt;br&gt;
+平常鸭梨大时候偶尔打打游戏放松放松，&lt;br&gt;
+今年凭借自己的天赋(装一下B)和不懈努力，打到白金一。离自己的小目标又近了一步，争取今年上砖石，让我当个砖石守门员也行🤐。&lt;/p&gt;
+&lt;p&gt;在这写上最喜欢英雄皇子的台词：“所到之处，无人能挡！”&lt;/p&gt;
+&lt;p&gt;美食&lt;/p&gt;
+&lt;p&gt;什么最重要，当然是吃。&lt;br&gt;
+想想这一年做的美食，和同学一起做的，此处@肉和杨丽丽，感谢一起相处一年，学到了很多美食是如何做的，我身边的隐藏大厨😂。&lt;br&gt;
+今年学到了有红烧鲫鱼，糖醋排骨，葱花饼，可乐鸡翅，红烧肉，自制凉菜，水煮肉片，自制烤鱼，回锅肉等等等等，就放一张和同学一起做饺子的图片，不多放了，免得晚上中毒太深。。。&lt;/p&gt;
+&lt;p&gt;画外音：上面饺子（看起来像）真的不是我包的&lt;/p&gt;
+&lt;p&gt;亲情&lt;br&gt;
+特别喜欢《请回答1988》里面家庭亲情，整部片虽然不乏爱情友情等，但是我觉得核心是亲情，最有印象还是宝拉妈妈下雨天护着宝拉那段。&amp;quot;人真正变强大，不是因为守护着自尊心，而是抛开自尊心的时候，因为有需要守护的人&amp;quot;&lt;br&gt;
+这句话还是需要自己去经历体会的。&lt;br&gt;
+以前觉得，出省上学，出省工作，可以离家人远一点，就像是春天的燕子，长大了都想看看外面的世界，去闯荡去经历，去丰富自己的生活增长自己见识。可到了一定的年龄或者认知，会意识到，有家人在的地方，都觉得很知足。特别喜欢《四个春天》纪录片里面燕子归来之时，那种感觉，纪录片中父母看到燕子归来，心里念叨着，咱家小燕子也该回家了。&lt;/p&gt;
+&lt;p&gt;爱情&lt;br&gt;
+感谢党感谢国家给我发了一个女朋友，免费滴。&amp;lt;( ˘ ³˘)/💯&lt;br&gt;
+今年最大收货，当然是遇到方小皮同学啦，（默默撒一下新鲜狗粮）希望在以后的日子里，你能够早睡早起，吃好喝好，身体棒棒。&lt;/p&gt;
+&lt;p&gt;最后肯定是写一些打脸的东西。。&lt;br&gt;
+2020年flag&lt;br&gt;
+自信&lt;br&gt;
+一周一次跑步或者篮球&lt;br&gt;
+看完剩余书籍&lt;br&gt;
+经营好个人博客&lt;br&gt;
+洗脚城洗一次脚(有什么东西渗入进来了)&lt;br&gt;
+体重不超130&lt;br&gt;
+早睡早起，11点之前睡（虽然是不可能的）&lt;br&gt;
+学习大数据相关知识&lt;br&gt;
+保护眼睛&lt;/p&gt;
+&lt;p&gt;以上，完&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://zhangyaoo.github.io/post-images/1593268924481.jpg&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+最后贴上自各最喜欢的照片，2015年于西藏拍&lt;/p&gt;
+">2019年总结</a>
+      </div>
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://zhangyaoo.github.io/post/about/"" data-c="
+          &lt;blockquote&gt;
+&lt;p&gt;欢迎来到我的小站呀，很高兴遇见你！🤝&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;关于本站&#34;&gt;🏠 关于本站&lt;/h2&gt;
+&lt;p&gt;一些技术博客和一些闲言碎语&lt;/p&gt;
+&lt;h2 id=&#34;博主是谁&#34;&gt;👨‍💻 博主是谁&lt;/h2&gt;
+&lt;p&gt;还在打怪升级的菜鸟&lt;/p&gt;
+&lt;h2 id=&#34;兴趣爱好&#34;&gt;⛹ 兴趣爱好&lt;/h2&gt;
+&lt;p&gt;二次元、骑行、篮球、LOL、编码&lt;/p&gt;
+&lt;h2 id=&#34;联系我呀&#34;&gt;📬 联系我呀&lt;/h2&gt;
+&lt;p&gt;QQ：1124826889&lt;/p&gt;
+">关于</a>
+      </div>
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://zhangyaoo.github.io/post/2018-nian-zong-jie/"" data-c="
+          &lt;h2 id=&#34;写给自己的2018年总结&#34;&gt;写给自己的2018年总结&lt;/h2&gt;
+&lt;h2 id=&#34;题记&#34;&gt;题记&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;https://img-blog.csdnimg.cn/20181231115831927.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3p5MTUxMTIzNDI0NDk=,size_16,color_FFFFFF,t_70&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+不觉中，2018年就快过了，在这之前从来没有写过一些总结性的文章，从小学初中日志作业，到高中的日复一夜的学习再到大学的浑浑噩噩的僵硬式的学习，一直都在进行流水账式的学习输入，从没有写过关于一年的计划甚至是一个月的小目标。&lt;/p&gt;
+&lt;p&gt;至于为什么要做这个总结，我想是因为，年复一年的度过，有时候自己都不知道在这一年干过什么事情、收获了什么和失去了什么，包括对友情、亲情和事业等等。是因为我记性太差，还是说在这个娱乐信息爆炸的时代，我注意力都集中在快餐式的的认知上，很难有精力或者集中注意力去汲取自己想要的高质量的信息上，不得而知。所以今年我觉得有必要去总结自己的这一年。&lt;/p&gt;
+&lt;p&gt;总结目录：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;关于技术&lt;/li&gt;
+&lt;li&gt;关于认知&lt;/li&gt;
+&lt;li&gt;关于为人处事&lt;/li&gt;
+&lt;li&gt;关于友情爱情亲情&lt;/li&gt;
+&lt;li&gt;2019展望&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;1-关于技术&#34;&gt;1、关于技术&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;https://img-blog.csdnimg.cn/20181231120336118.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3p5MTUxMTIzNDI0NDk=,size_16,color_FFFFFF,t_70&#34; alt=&#34;在这里插入图片描述&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+1、技术积累&lt;br&gt;
+师范专业毕业的我从大三开始接触计算机，大三那年学的网络工程，还考了个CCNA，目前发现没有什么用，对于现在的我来说。然后被住在上铺的兄弟67代入坑里学习code搬砖，从那开始便一发不可收拾，埋头苦学，连教师资格证都不考，跑出去公司里面当小弟实习。至此就开始技术积累之路了。&lt;/p&gt;
+&lt;p&gt;当小弟那一段时间，就像刚萌发的种子一样疯狂吸收营养，学些了python爬虫、python web开发、Java公众号开发，SSM Java全家桶开发。这些都是在学校学不到的东西，当时感觉自己很牛逼，直到毕业找工作。&lt;/p&gt;
+&lt;p&gt;毕业那一刻起，因为技术发展瓶颈，我又背上行囊横跨大半个中国从山东去南方一线城市漂。拿这自以为高大上的简历去投递，然后面试，惨遭面试官的啪啪打脸，连一个hashmap的底层原理都不知道，最有印象的是Java 循环删除list怎么删除，回答完后别面试官一脸嫌弃-。-&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;只会拿着现成的框架和应用去用，而不知道底层的实现方式和原理，那么工作性质就和网管差不多&lt;/strong&gt;。&lt;br&gt;
+不会举一反三，如果又有新的框架出来又必须要学习一遍，如果说掌握了底层工作原理，那么用起来会舒服很多。&lt;/p&gt;
+&lt;p&gt;2、技术分享&lt;br&gt;
+&lt;img src=&#34;https://img-blog.csdnimg.cn/20181231124820725.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3p5MTUxMTIzNDI0NDk=,size_16,color_FFFFFF,t_70&#34; alt=&#34;在这里插入图片描述&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+&lt;strong&gt;分享的乐趣，从一开始就停不下来。&lt;/strong&gt;&lt;br&gt;
+公司会周期性的选一些当下热门的技术让我们去研究，然后去把自己研究的内容分享出来。我认为这是非常棒的一种学习方式。为什么这么说。因为这个是非常具体挑战性的，你理解了是一个层次，如果说要给别人将明白又是另外一个层次，这是两个不同层次的概念。如果说你的语言表达性不行，那么这个就是更加难上加难了。&lt;/p&gt;
+&lt;p&gt;分享的乐趣不仅是这个，当你给别人讲完后，你还可以通过别人提供的问题和建议方案，和你自己的理解进行碰撞，然后产生新的认知元素，到下一次分享就可以融入上次分享的认知进来。&lt;/p&gt;
+&lt;p&gt;到现在为止，我还在想，怎么在给别人讲解分享的时候能够更能让别人听懂，而且愿意去听。我最怕还是在分享的时候别人在玩手机。因为有了这个现象就表明你的分享做的不够好。&lt;/p&gt;
+&lt;p&gt;3、书籍&lt;br&gt;
+&lt;strong&gt;在这个手机万能的时代，能够静下心来看完一本书并理解是非常不容易的&lt;/strong&gt;。&lt;br&gt;
+或许你们都说哪有时间看书，都忙工作任务了，甚至有时候我自己都不敢说一个月看完一本书，不管是文学还是专业技术性书籍。&lt;/p&gt;
+&lt;p&gt;今年，我看了以下几本书，有的只看了一本书中的一部分，大部分都是涉及专业技术的：Netty权威指南、深入理解Java多线程、JavaEE互联网轻量级技术整合开发、Java高并发程序设计。还有其他的一些非技术书就不一一列举了。一年才看这几本书真是有点丢人-。-&lt;/p&gt;
+&lt;p&gt;自认为网络技术博客和纸质书还是有各有各自的存在的意义的。就拿纸质书来说，它能够通过一系列的目录，能够从基本来源、基本原理、使用场景、底层原理技术、工作应用场景来一一进行有顺序的给人以真正理解和掌握。不需要自己从网上搜分散的知识点。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;不是看完书后就完了，还需要自己通过实践去证明你自己的理解是否正确&lt;/strong&gt;，这也是个不可欠缺的过程。&lt;/p&gt;
+&lt;p&gt;为什么还需要读书呢，我认为网上一句话还是不错的，是《物演通论》作者王东岳说的：“因为通过电视或者其他方式搜集的信息，即那种通过直观方式接受的知识，是最浅显、最粗疏且没有经过精密逻辑证明的东西”。&lt;/p&gt;
+&lt;p&gt;4、思考&lt;br&gt;
+&lt;img src=&#34;https://img-blog.csdnimg.cn/20181231141547586.png&#34; alt=&#34;在这里插入图片描述&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+关于程序员技术深度和广度的选择，也是从网上看的一句话，Oracle技术大牛杨晓峰指出：“&lt;strong&gt;技术人免不了要构建广泛的知识体系，但终究还是要克制住诱惑，将某个领域做到精深&lt;/strong&gt;。水桶的水量取决于最短板，但是大多数情况下，我们在工作中的回报，更多的源自于自身的长处，甚至某种程度上还决定了我们是拥有自己选择的自由，还是疲于奔命，必经我们每个人的体力、经历有现实的上限的”。&lt;br&gt;
+自认为还是很有道理的，先建立自己广度网，然后专门找一项自己喜欢的方向，然后放开手脚去研究。至少要有一个非常深的领域知识，所谓知识体系的搭建是基于多个扎实的知识点汇集而成，点不扎实不深入。&lt;/p&gt;
+&lt;h2 id=&#34;2-关于认知&#34;&gt;2、关于认知&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;https://img-blog.csdnimg.cn/20181231154812245.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3p5MTUxMTIzNDI0NDk=,size_16,color_FFFFFF,t_70&#34; alt=&#34;在这里插入图片描述&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+1、&lt;strong&gt;人与人最大的不同：认知不同&lt;/strong&gt;&lt;br&gt;
+我认为的成长就是认知成长，是对一间事物的理解和处理方法。由于每个人的出生家境不同，生活环境不同，也就影响了每个人的认知，所以人才会有各自的想法，做事准则和处世方式。&lt;/p&gt;
+&lt;p&gt;2、&lt;strong&gt;不断学习，使自己更值钱。&lt;/strong&gt;&lt;br&gt;
+都说2018年是互联网寒冬，但是对我们技术人来说，难以构成影响，因为只要你有足够的技术底子，在哪都可以养活自己。用我们家乡话来说，”学好技术，走到天下都不怕“，这里我私自把物理化改成技术，哈哈。&lt;br&gt;
+经常都能在网上看到一句话，”&lt;strong&gt;人生最重要的投资是自己。使自己更值钱才是立身之本。&lt;/strong&gt;“&lt;/p&gt;
+&lt;p&gt;3、&lt;strong&gt;高质量的输入重要，输出比输入更重要&lt;/strong&gt;&lt;br&gt;
+就拿看书写文章来说，当我们要写类似高考那种作文题目时候，如果这时读武侠小说，那么肯定是对于写作文是无益的，这就是低质量的输入，如果看一些文学方面的书的话，那么对于写作是非常有好处的。&lt;br&gt;
+但是一味的输入，提升的意义不高，个人观点。比如我从小学到大，到现在都没写过文章的话，以前在高中学习的写文章的能力都没有了。所以如果不去输出，那么学习到的东西将在以后某个时刻都会忘记。&lt;/p&gt;
+&lt;h2 id=&#34;3-关于为人处事&#34;&gt;3、关于为人处事&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;https://img-blog.csdnimg.cn/20181231150512794.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3p5MTUxMTIzNDI0NDk=,size_16,color_FFFFFF,t_70&#34; alt=&#34;在这里插入图片描述&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+我这举两个例子：&lt;br&gt;
+例1：上学那会，我爸送我去火车站，到了马路上准备叫出租车。这时对面马路上来了一辆空车，司机师傅看到我们招手，就准备到不远处掉头，然后这时候另外一辆出租车就刚好停在我们面前，我准备上眼前这辆车的时候，我爸就把我拉住叫我等之前那一辆车掉头坐那辆车，而且那辆车已经拐弯马上到我们这边来了。之后结果就是，我和我爸坐上了之前一辆车，而且和停在我们面前的后一辆车师傅说“不好意思我们已经叫了马路对面那一辆车了“。&lt;/p&gt;
+&lt;p&gt;这件事到现在我还有记忆深刻，这里我想说的是，&lt;strong&gt;我们在方便自己的同时，也要换位思考考虑别人的感受&lt;/strong&gt;。&lt;br&gt;
+或许对于你来说是一件小事情，直接图方便坐上离自己最近的车。那也无可厚非，换作以前的我也是，没有换位思考过。但是现在我觉得换位思考也是一个成年人应具备的素质。&lt;/p&gt;
+&lt;p&gt;例2：上一次公司技术联调，我这边需要远程和另一个分公司同事联调，我这边完事后需要通知他那边，他那边才能继续完成工作，由于自己的原因，这边做完，没有及时通知到他们，导致他们那边延期。&lt;/p&gt;
+&lt;p&gt;这件事我想说的是，&lt;strong&gt;我们在做事的时候，无论是工作还是生活，都不能去因为自己耽搁别人&lt;/strong&gt;，因为别人的时间也是时间，和我们自己是一样的。&lt;/p&gt;
+&lt;h2 id=&#34;4-关于友情爱情亲情&#34;&gt;4、关于友情爱情亲情&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;https://img-blog.csdnimg.cn/20181231151002819.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3p5MTUxMTIzNDI0NDk=,size_16,color_FFFFFF,t_70&#34; alt=&#34;在这里插入图片描述&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+关于友情：想对远方的朋友说 &lt;strong&gt;当你辉煌时候，我祝贺你，当你落魄的时候，我随时帮助你&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;关于爱情：到现在我还在想自己真正想去拥有的是什么。&lt;/p&gt;
+&lt;p&gt;关于亲情：只有别人关心你飞的高不高，没有人会关心你飞的累不累，除了家人。&lt;/p&gt;
+&lt;h2 id=&#34;5-2019年展望&#34;&gt;5、2019年展望&lt;/h2&gt;
+&lt;p&gt;立个flag，毕竟是未来的事&lt;br&gt;
+1、一周一次跑步+篮球&lt;br&gt;
+2、两个月至少看完一本书&lt;br&gt;
+3、保护好视力&lt;br&gt;
+4、熟悉金融核心业务&lt;br&gt;
+5、体重不超140&lt;/p&gt;
+&lt;h2 id=&#34;总结一下&#34;&gt;总结一下&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;https://img-blog.csdnimg.cn/20181231162952878.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3p5MTUxMTIzNDI0NDk=,size_16,color_FFFFFF,t_70&#34; alt=&#34;在这里插入图片描述&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+人的成长是不断认识到以前的自己是一个傻X的过程，希望明年的我认为今年的我是一个傻X。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;2018-12-31 于张遥出租屋写&lt;/em&gt;&lt;/p&gt;
+">2018年总结</a>
+      </div>
+      
+    </div>
+    <div class="page">
+      <div id="page_ul"></div>
+    </div>
+  </div>
+</div>
+<script>
+  !function () {
+    let searchMask = document.querySelector('#search_mask');
+    let result = document.querySelector('#result');
+    let items = document.querySelectorAll('.item');
+    let searchBox = document.querySelector('#search');
+    let statCount = document.querySelector('#stat_count');
+    let statTimes = document.querySelector('#stat_times');
+    let pageUl = document.querySelector('#page_ul');
+    let close = document.querySelector('#close');
+    
+    close.addEventListener('click', function() {
+      searchMask.style = 'display: none;'
+    })
+
+    let finds = [];
+    let contents = [];
+    let pageSize = 10;
+    items.forEach(item => {
+      let a = item.querySelector('a');
+      contents.push({
+        title: a.innerText,
+        details: a.dataset.c,
+        link: a.href
+      })
+      item.remove();
+    })
+
+    function insertStr(soure, start, count) {
+      let newStr = soure.substr(start, count);
+      return soure.slice(0, start) + '<em>' + newStr + '</em>' + soure.slice(start + count);
+    }
+
+    pageUl.addEventListener('click', function(event) {
+      let target = event.target;
+      if (target.__proto__ === HTMLSpanElement.prototype) {
+        appendResults(parseInt(target.dataset.i));
+      }
+    })
+
+    function appendResults(index) {
+      let htmlResult = '';
+      let start = index || 0;
+      let end = Math.min(start + pageSize, finds.length);
+      for (let i = start; i < end; i++) {
+        const current = finds[i];
+        let html = current.title;
+        let sum = 0;
+        let positions = current.positions;
+        positions.forEach(position => {
+          html = insertStr(html, position.start + sum, position.count);
+          sum += 9;
+        })
+        htmlResult += `<div class="item"><a class="result-title" href="${current.link}">${html}</a></div>`;
+      }
+      result.innerHTML = htmlResult;
+      pageUl.innerHTML = '';
+      let count = finds.length / pageSize;
+      let lis = '';
+      if (start !== 0) {
+        lis += `<span class="fa fa-angle-left" data-i='${start - 1}'></span>`;
+      }
+      for (let i = 0; i < count; i++) {
+        lis += `<span class='${i === start?'current':''}' data-i='${i}'>${i+1}</span>`;     
+      }
+      if (start+1 < count) {
+        lis += `<span class="fa fa-angle-right" data-i='${start+1}'></span>`;  
+      }
+      pageUl.innerHTML = lis;
+    }
+
+    function search(delay) {
+      let timer = null
+      return function () {
+        clearTimeout(timer)
+        timer = setTimeout(() => {
+          let start = Date.now();
+          let segments = searchBox.value.split(' ').filter(c => c != '');
+          if (segments.length <= 0) {
+            return;
+          }
+          finds = [];
+          let htmlResult = '';
+          contents.forEach(content => {
+            let title = content.title;
+            let positions = [];
+            let find = false;
+            segments.forEach((segment) => {
+              if (content.title.includes(segment)) {
+                find = true;
+                positions.push({
+                  start: content.title.indexOf(segment),
+                  count: segment.length
+                })
+              } else if (content.details.includes(segment)) {
+                find = true;
+              }
+            });
+            if (find) {
+              finds.push({
+                title: content.title,
+                link: content.link,
+                positions
+              });
+            }
+          })
+          appendResults(0);
+          statCount.textContent = finds.length;
+          statTimes.textContent = Date.now() - start;
+        }, delay)
+      }
+    }
+    searchBox.addEventListener('input', search(200));
+  }()
+</script>
+
+<input hidden id="copy" />
+<script>
+  let language = '';
+  if (language !== '') {
+    let map = new Map();
+    if (language === 'en') {
+      map.set('search', 'Search');
+      map.set('category', 'Categories');
+      map.set('article', 'Articles');
+      map.set('tag', 'Tags');
+      map.set('top', 'Top');
+      map.set('publish', 'published');
+      map.set('minute', ' minutes');
+      map.set('read-more', 'Read More');
+      map.set('view', 'View');
+      map.set('words', ' words');
+      map.set('category-in', 'category in');
+      map.set('preview', 'Meta');
+      map.set('index', 'Toc');
+      map.set('no-archives', "You haven't created yet");
+      map.set('archives', " articles in total");
+      map.set('cloud-tags', " tags in total");
+      map.set('copyright', "Copyright: ");
+      map.set('author', "Author: ");
+      map.set('link', "Link: ");
+      map.set('leave-message', "Leave a message");
+      map.set('format', "Links Format");
+      map.set('site-name', "Name: ");
+      map.set('site-link', "Link: ");
+      map.set('site-desc', "Desc: ");
+      map.set('stat', " related results, taking ");
+      map.set('stat-time', " ms");
+      map.set('site-img', "Image: ");
+    }
+
+    if (map.size > 0) {
+      let lanElems = document.querySelectorAll('.language');
+      lanElems.forEach(elem => {
+        let lan = elem.dataset.lan, text = map.get(lan);
+        if (elem.__proto__ === HTMLInputElement.prototype) {
+          elem.placeholder = text
+        } else {
+          if (elem.dataset.count) {
+            text = elem.dataset.count + text;
+          }
+          elem.textContent = text;
+        }
+      })
+    }
+  }
+  //拿来主义(真香)^_^，Clipboard 实现摘自掘金 https://juejin.im/post/5aefeb6e6fb9a07aa43c20af
+  window.Clipboard = (function (window, document, navigator) {
+    var textArea,
+      copy;
+
+    // 判断是不是ios端
+    function isOS() {
+      return navigator.userAgent.match(/ipad|iphone/i);
+    }
+    //创建文本元素
+    function createTextArea(text) {
+      textArea = document.createElement('textArea');
+      textArea.value = text;
+      textArea.style.width = 0;
+      textArea.style.height = 0;
+      textArea.clientHeight = 0;
+      textArea.clientWidth = 0;
+      document.body.appendChild(textArea);
+    }
+    //选择内容
+    function selectText() {
+      var range,
+        selection;
+
+      if (isOS()) {
+        range = document.createRange();
+        range.selectNodeContents(textArea);
+        selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+        textArea.setSelectionRange(0, 999999);
+      } else {
+        textArea.select();
+      }
+    }
+
+    //复制到剪贴板
+    function copyToClipboard() {
+      try {
+        document.execCommand("Copy")
+      } catch (err) {
+        alert("复制错误！请手动复制！")
+      }
+      document.body.removeChild(textArea);
+    }
+
+    copy = function (text) {
+      createTextArea(text);
+      selectText();
+      copyToClipboard();
+    };
+
+    return {
+      copy: copy
+    };
+  })(window, document, navigator);
+
+  function copyCode(e) {
+    if (e.srcElement.tagName === 'SPAN' && e.srcElement.classList.contains('copy-code')) {
+      let code = e.currentTarget.querySelector('code');
+      var text = code.innerText;
+      if (e.srcElement.textContent === '复制成功') {
+        console.log('复制操作频率过高');
+        return;
+      }
+      e.srcElement.textContent = '复制成功';
+      (function (elem) {
+        setTimeout(() => {
+          if (elem.textContent === '复制成功') {
+            elem.textContent = '复制代码'
+          }
+        }, 1000);
+      })(e.srcElement)
+      Clipboard.copy(text);
+    }
+  }
+
+  let pres = document.querySelectorAll('pre');
+  pres.forEach(pre => {
+    let code = pre.querySelector('code');
+    let copyElem = document.createElement('span');
+    copyElem.classList.add('copy-code');
+    copyElem.textContent = '复制代码';
+    pre.appendChild(copyElem);
+    pre.onclick = copyCode
+  })
+
+</script>
+<script src="/media/js/motion.js"></script>
+
+<script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
+<script>
+  var scroll = new SmoothScroll('a[href*="#"]', {
+    speed: 200
+  });
+</script>
+
+
+<script src="/media/js/mouse/love.js"></script>
+
+
+</html>
