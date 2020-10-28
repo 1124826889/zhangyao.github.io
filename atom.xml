@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://zhangyaoo.github.io</id>
     <title>will</title>
-    <updated>2020-10-28T03:50:18.893Z</updated>
+    <updated>2020-10-28T08:40:08.744Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://zhangyaoo.github.io"/>
     <link rel="self" href="https://zhangyaoo.github.io/atom.xml"/>
@@ -10,16 +10,6 @@
     <logo>https://zhangyaoo.github.io/images/avatar.png</logo>
     <icon>https://zhangyaoo.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, will</rights>
-    <entry>
-        <title type="html"><![CDATA[采用分布式ID解决分库分表踩的坑]]></title>
-        <id>https://zhangyaoo.github.io/post/ji-yi-ci-cai-yong-fen-bu-shi-id-jie-jue-fen-ku-fen-biao-cai-de-keng/</id>
-        <link href="https://zhangyaoo.github.io/post/ji-yi-ci-cai-yong-fen-bu-shi-id-jie-jue-fen-ku-fen-biao-cai-de-keng/">
-        </link>
-        <updated>2020-10-16T02:55:39.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="背景">背景</h3>
-<h3 id=""></h3>
-]]></content>
-    </entry>
     <entry>
         <title type="html"><![CDATA[SaaS系统多数据源路由优雅解决方案]]></title>
         <id>https://zhangyaoo.github.io/post/saas-xi-tong-duo-shu-ju-yuan-lu-you-you-ya-jie-jue-fang-an/</id>
@@ -420,7 +410,7 @@ public boolean containsQuorum(Set&lt;Long&gt; set){
 <p>总结起来，利用本地消息表思想能够解决上面第一部分文章的同步调用的缺点，能够解决第二个第三 个问题，但是第一个问题就无法解决了，只要是同步调用都会出现这个问题，不过有其他方式去解决这个问题。以笔者认知来说，银行转账的业务都是同步调用的。出现接口阻塞这个问题，需要设置超时时间，如果超过超时时间，就记录下这条交易，异步放入<strong>重试队列</strong>，一段时间后进行<strong>重试</strong>。</p>
 <h3 id="22-事务消息解决本地事务和mq消息一致性问题">2.2 事务消息解决本地事务和MQ消息一致性问题</h3>
 <p> 转账业务，如果用异步的话，当出现MQ问题或者消费也者程序出现消息挤压或者消费者端出现问题 的话，那么整个业务时间线会拉的非常长。所以笔者认为异步不适合这种业务，异步<strong>本质上</strong>是对下游服务的一个缓冲，适合在自己系统中使用，不适合跨系统或者三方调用。当然不是所有的场景都不合适，如果流量非常大话，对方系统有限流机制，使用MQ也算是一种解决方案，这还是看具体业务。</p>
-<p> 所以还是拿上面的图，图中标框的部分业务适合用MQ来解决<br>
+<p> 什么样的场景适合使用MQ？一般来说在需要限流削峰、异步解耦等场景使用，所以还是拿上面的图，图中标框的部分业务适合用MQ来解决<br>
 <img src="https://zhangyaoo.github.io/post-images/1603790962781.png" alt="" loading="lazy"></p>
 <p> 如果用MQ来做的话，那么会有如下图步骤：<br>
 <img src="https://zhangyaoo.github.io/post-images/1603792233049.png" alt="" loading="lazy"><br>
@@ -434,9 +424,26 @@ public boolean containsQuorum(Set&lt;Long&gt; set){
 <li>MQ删除消息</li>
 </ol>
 <p> 以上为一条正常的消息从生产到消费的过程，每一步都是不可或缺的。而且我们可以看到，当引入中间件MQ后，消费端业务需要保持幂等。</p>
-<p> 回到上面文章最开始的部分，并没有解决异步调用问题一。没有彻底解决本地事务和消息不一致性。所以这个时候，就需要事务消息解决本地事务和MQ消息一致性问题了。</p>
-<h4 id="221-消费端重复消费">2.2.1 消费端重复消费</h4>
-<h4 id="222-消费端消费失败">2.2.2 消费端消费失败</h4>
+<p> 回到上面文章最开始的部分，并没有解决异步调用问题一。没有彻底解决本地事务和消息不一致性。所以这个时候，就需要事务消息解决本地事务和MQ消息一致性问题了，笔者重新画了一张图来说明一下事务消息是如何做的：<br>
+<img src="https://zhangyaoo.github.io/post-images/1603873494446.png" alt="" loading="lazy"><br>
+图中的步骤大致分为几步，分别是：</p>
+<ol>
+<li>生产者发送一条prepare消息</li>
+<li>MQ接受到消息后，先进行持久化,状态为待确认的消息</li>
+<li>返回ACK给消息生产者</li>
+<li>执行本地事务：扣减账户余额，插入交易流水。如果这个事务执行失败，那么相当于业务执行失败，抛给用户交易失败</li>
+<li>执行完成后，将结果发送执行结果给MQ</li>
+<li>根据结果将消息commit或者rollback  commit：将消息状态置为已确认  rollback：将消息删除</li>
+<li>采用pull或者push消费已确认的消息 ，后面流程大致和普通的流程都一样</li>
+</ol>
+<p> 这里还没有体现另外一个流程，就是如果消息待确认状态在一定时间内没有转换为已确认，那么MQ会回查本地事务执行状态是否成功。这个是为了保证在第五步发送的消息在网络中丢失或者消费者宕机等情况下，能够回滚。<br>
+ 以上是事务消息大致的流程，能够解决本地事务和MQ消息一致性问题，这里强调的是，不管是是事务消息还是普通的消息，消费端都需要做幂等处理。<br>
+ 总结来说，<strong>ack+补偿+重试+幂等</strong>是保证一致性的关键。</p>
+<h4 id="221-事务消息常见问题">2.2.1 事务消息常见问题</h4>
+<ol>
+<li>如果consumer消费失败，是否需要producer做回滚呢？<br>
+不需要，MQ作用要保证的就是<strong>最终一致性</strong>，如果consumer消费失败，就让它进行重试直至成功。如果重试超过一定次数的话，那么就人工介入。</li>
+</ol>
 <h2 id="三-其他方式保证数据一致性">三、 其他方式保证数据一致性</h2>
 <p> 当然，保持数据一致性不光是分布式事务来保证，业务上还要配合其他的辅助来保证，这里笔者就列举几种</p>
 <ol>
@@ -456,6 +463,7 @@ T+1日对账，程序或者人工定时扫描核心业务数据，保证当日�
 <ul>
 <li>有赞出金系统——https://tech.youzan.com/build-a-withdraw-sys/</li>
 <li>分布式事务的思考——https://www.cnblogs.com/sujing/p/11006424.html</li>
+<li>阿里云RocketMQ文档——https://help.aliyun.com/document_detail/43348.html</li>
 </ul>
 ]]></content>
     </entry>

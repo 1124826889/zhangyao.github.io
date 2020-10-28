@@ -9,7 +9,7 @@
 <meta name="description" content="生死看淡，不服就干">
 <meta name="theme-color" content="#000">
 <title>金融级业务下分布式事务保证数据一致性 | will</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1603857012122">
+<link rel="shortcut icon" href="/favicon.ico?v=1603874403734">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
 <link
@@ -202,7 +202,7 @@
     <div class="sidebar-item-box">
       <a href="/archives/">
         
-        <span class="site-item-stat-count">9</span>
+        <span class="site-item-stat-count">8</span>
         <span class="site-item-stat-name language" data-lan="article">文章</span>
       </a>
     </div>
@@ -249,8 +249,7 @@
 <li><a href="#21-%E5%88%A9%E7%94%A8%E6%9C%AC%E5%9C%B0%E6%B6%88%E6%81%AF%E8%A1%A8%E6%80%9D%E6%83%B3%E8%A7%A3%E5%86%B3%E4%B8%80%E8%87%B4%E6%80%A7%E9%97%AE%E9%A2%98">2.1 利用本地消息表思想解决一致性问题</a></li>
 <li><a href="#22-%E4%BA%8B%E5%8A%A1%E6%B6%88%E6%81%AF%E8%A7%A3%E5%86%B3%E6%9C%AC%E5%9C%B0%E4%BA%8B%E5%8A%A1%E5%92%8Cmq%E6%B6%88%E6%81%AF%E4%B8%80%E8%87%B4%E6%80%A7%E9%97%AE%E9%A2%98">2.2 事务消息解决本地事务和MQ消息一致性问题</a>
 <ul>
-<li><a href="#221-%E6%B6%88%E8%B4%B9%E7%AB%AF%E9%87%8D%E5%A4%8D%E6%B6%88%E8%B4%B9">2.2.1 消费端重复消费</a></li>
-<li><a href="#222-%E6%B6%88%E8%B4%B9%E7%AB%AF%E6%B6%88%E8%B4%B9%E5%A4%B1%E8%B4%A5">2.2.2 消费端消费失败</a></li>
+<li><a href="#221-%E4%BA%8B%E5%8A%A1%E6%B6%88%E6%81%AF%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98">2.2.1 事务消息常见问题</a></li>
 </ul>
 </li>
 </ul>
@@ -553,12 +552,12 @@
     
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>12<span class="language" data-lan="minute">分钟</span></span>
+      <span>14<span class="language" data-lan="minute">分钟</span></span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>3445<span class="pc-show language" data-lan="words">字数</span></span>
+      <span>3920<span class="pc-show language" data-lan="words">字数</span></span>
     </span>
     
   </div>
@@ -697,7 +696,7 @@
 <p>总结起来，利用本地消息表思想能够解决上面第一部分文章的同步调用的缺点，能够解决第二个第三 个问题，但是第一个问题就无法解决了，只要是同步调用都会出现这个问题，不过有其他方式去解决这个问题。以笔者认知来说，银行转账的业务都是同步调用的。出现接口阻塞这个问题，需要设置超时时间，如果超过超时时间，就记录下这条交易，异步放入<strong>重试队列</strong>，一段时间后进行<strong>重试</strong>。</p>
 <h3 id="22-事务消息解决本地事务和mq消息一致性问题">2.2 事务消息解决本地事务和MQ消息一致性问题</h3>
 <p> 转账业务，如果用异步的话，当出现MQ问题或者消费也者程序出现消息挤压或者消费者端出现问题 的话，那么整个业务时间线会拉的非常长。所以笔者认为异步不适合这种业务，异步<strong>本质上</strong>是对下游服务的一个缓冲，适合在自己系统中使用，不适合跨系统或者三方调用。当然不是所有的场景都不合适，如果流量非常大话，对方系统有限流机制，使用MQ也算是一种解决方案，这还是看具体业务。</p>
-<p> 所以还是拿上面的图，图中标框的部分业务适合用MQ来解决<br>
+<p> 什么样的场景适合使用MQ？一般来说在需要限流削峰、异步解耦等场景使用，所以还是拿上面的图，图中标框的部分业务适合用MQ来解决<br>
 <img src="https://zhangyaoo.github.io/post-images/1603790962781.png" alt="" loading="lazy"></p>
 <p> 如果用MQ来做的话，那么会有如下图步骤：<br>
 <img src="https://zhangyaoo.github.io/post-images/1603792233049.png" alt="" loading="lazy"><br>
@@ -711,9 +710,26 @@
 <li>MQ删除消息</li>
 </ol>
 <p> 以上为一条正常的消息从生产到消费的过程，每一步都是不可或缺的。而且我们可以看到，当引入中间件MQ后，消费端业务需要保持幂等。</p>
-<p> 回到上面文章最开始的部分，并没有解决异步调用问题一。没有彻底解决本地事务和消息不一致性。所以这个时候，就需要事务消息解决本地事务和MQ消息一致性问题了。</p>
-<h4 id="221-消费端重复消费">2.2.1 消费端重复消费</h4>
-<h4 id="222-消费端消费失败">2.2.2 消费端消费失败</h4>
+<p> 回到上面文章最开始的部分，并没有解决异步调用问题一。没有彻底解决本地事务和消息不一致性。所以这个时候，就需要事务消息解决本地事务和MQ消息一致性问题了，笔者重新画了一张图来说明一下事务消息是如何做的：<br>
+<img src="https://zhangyaoo.github.io/post-images/1603873494446.png" alt="" loading="lazy"><br>
+图中的步骤大致分为几步，分别是：</p>
+<ol>
+<li>生产者发送一条prepare消息</li>
+<li>MQ接受到消息后，先进行持久化,状态为待确认的消息</li>
+<li>返回ACK给消息生产者</li>
+<li>执行本地事务：扣减账户余额，插入交易流水。如果这个事务执行失败，那么相当于业务执行失败，抛给用户交易失败</li>
+<li>执行完成后，将结果发送执行结果给MQ</li>
+<li>根据结果将消息commit或者rollback  commit：将消息状态置为已确认  rollback：将消息删除</li>
+<li>采用pull或者push消费已确认的消息 ，后面流程大致和普通的流程都一样</li>
+</ol>
+<p> 这里还没有体现另外一个流程，就是如果消息待确认状态在一定时间内没有转换为已确认，那么MQ会回查本地事务执行状态是否成功。这个是为了保证在第五步发送的消息在网络中丢失或者消费者宕机等情况下，能够回滚。<br>
+ 以上是事务消息大致的流程，能够解决本地事务和MQ消息一致性问题，这里强调的是，不管是是事务消息还是普通的消息，消费端都需要做幂等处理。<br>
+ 总结来说，<strong>ack+补偿+重试+幂等</strong>是保证一致性的关键。</p>
+<h4 id="221-事务消息常见问题">2.2.1 事务消息常见问题</h4>
+<ol>
+<li>如果consumer消费失败，是否需要producer做回滚呢？<br>
+不需要，MQ作用要保证的就是<strong>最终一致性</strong>，如果consumer消费失败，就让它进行重试直至成功。如果重试超过一定次数的话，那么就人工介入。</li>
+</ol>
 <h2 id="三-其他方式保证数据一致性">三、 其他方式保证数据一致性</h2>
 <p> 当然，保持数据一致性不光是分布式事务来保证，业务上还要配合其他的辅助来保证，这里笔者就列举几种</p>
 <ol>
@@ -733,6 +749,7 @@ T+1日对账，程序或者人工定时扫描核心业务数据，保证当日�
 <ul>
 <li>有赞出金系统——https://tech.youzan.com/build-a-withdraw-sys/</li>
 <li>分布式事务的思考——https://www.cnblogs.com/sujing/p/11006424.html</li>
+<li>阿里云RocketMQ文档——https://help.aliyun.com/document_detail/43348.html</li>
 </ul>
 
             </div>
@@ -1626,7 +1643,7 @@ public boolean containsQuorum(Set&amp;lt;Long&amp;gt; set){
 &lt;p&gt;总结起来，利用本地消息表思想能够解决上面第一部分文章的同步调用的缺点，能够解决第二个第三 个问题，但是第一个问题就无法解决了，只要是同步调用都会出现这个问题，不过有其他方式去解决这个问题。以笔者认知来说，银行转账的业务都是同步调用的。出现接口阻塞这个问题，需要设置超时时间，如果超过超时时间，就记录下这条交易，异步放入&lt;strong&gt;重试队列&lt;/strong&gt;，一段时间后进行&lt;strong&gt;重试&lt;/strong&gt;。&lt;/p&gt;
 &lt;h3 id=&#34;22-事务消息解决本地事务和mq消息一致性问题&#34;&gt;2.2 事务消息解决本地事务和MQ消息一致性问题&lt;/h3&gt;
 &lt;p&gt; 转账业务，如果用异步的话，当出现MQ问题或者消费也者程序出现消息挤压或者消费者端出现问题 的话，那么整个业务时间线会拉的非常长。所以笔者认为异步不适合这种业务，异步&lt;strong&gt;本质上&lt;/strong&gt;是对下游服务的一个缓冲，适合在自己系统中使用，不适合跨系统或者三方调用。当然不是所有的场景都不合适，如果流量非常大话，对方系统有限流机制，使用MQ也算是一种解决方案，这还是看具体业务。&lt;/p&gt;
-&lt;p&gt; 所以还是拿上面的图，图中标框的部分业务适合用MQ来解决&lt;br&gt;
+&lt;p&gt; 什么样的场景适合使用MQ？一般来说在需要限流削峰、异步解耦等场景使用，所以还是拿上面的图，图中标框的部分业务适合用MQ来解决&lt;br&gt;
 &lt;img src=&#34;https://zhangyaoo.github.io/post-images/1603790962781.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
 &lt;p&gt; 如果用MQ来做的话，那么会有如下图步骤：&lt;br&gt;
 &lt;img src=&#34;https://zhangyaoo.github.io/post-images/1603792233049.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
@@ -1640,9 +1657,26 @@ public boolean containsQuorum(Set&amp;lt;Long&amp;gt; set){
 &lt;li&gt;MQ删除消息&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt; 以上为一条正常的消息从生产到消费的过程，每一步都是不可或缺的。而且我们可以看到，当引入中间件MQ后，消费端业务需要保持幂等。&lt;/p&gt;
-&lt;p&gt; 回到上面文章最开始的部分，并没有解决异步调用问题一。没有彻底解决本地事务和消息不一致性。所以这个时候，就需要事务消息解决本地事务和MQ消息一致性问题了。&lt;/p&gt;
-&lt;h4 id=&#34;221-消费端重复消费&#34;&gt;2.2.1 消费端重复消费&lt;/h4&gt;
-&lt;h4 id=&#34;222-消费端消费失败&#34;&gt;2.2.2 消费端消费失败&lt;/h4&gt;
+&lt;p&gt; 回到上面文章最开始的部分，并没有解决异步调用问题一。没有彻底解决本地事务和消息不一致性。所以这个时候，就需要事务消息解决本地事务和MQ消息一致性问题了，笔者重新画了一张图来说明一下事务消息是如何做的：&lt;br&gt;
+&lt;img src=&#34;https://zhangyaoo.github.io/post-images/1603873494446.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+图中的步骤大致分为几步，分别是：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;生产者发送一条prepare消息&lt;/li&gt;
+&lt;li&gt;MQ接受到消息后，先进行持久化,状态为待确认的消息&lt;/li&gt;
+&lt;li&gt;返回ACK给消息生产者&lt;/li&gt;
+&lt;li&gt;执行本地事务：扣减账户余额，插入交易流水。如果这个事务执行失败，那么相当于业务执行失败，抛给用户交易失败&lt;/li&gt;
+&lt;li&gt;执行完成后，将结果发送执行结果给MQ&lt;/li&gt;
+&lt;li&gt;根据结果将消息commit或者rollback  commit：将消息状态置为已确认  rollback：将消息删除&lt;/li&gt;
+&lt;li&gt;采用pull或者push消费已确认的消息 ，后面流程大致和普通的流程都一样&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt; 这里还没有体现另外一个流程，就是如果消息待确认状态在一定时间内没有转换为已确认，那么MQ会回查本地事务执行状态是否成功。这个是为了保证在第五步发送的消息在网络中丢失或者消费者宕机等情况下，能够回滚。&lt;br&gt;
+ 以上是事务消息大致的流程，能够解决本地事务和MQ消息一致性问题，这里强调的是，不管是是事务消息还是普通的消息，消费端都需要做幂等处理。&lt;br&gt;
+ 总结来说，&lt;strong&gt;ack+补偿+重试+幂等&lt;/strong&gt;是保证一致性的关键。&lt;/p&gt;
+&lt;h4 id=&#34;221-事务消息常见问题&#34;&gt;2.2.1 事务消息常见问题&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;如果consumer消费失败，是否需要producer做回滚呢？&lt;br&gt;
+不需要，MQ作用要保证的就是&lt;strong&gt;最终一致性&lt;/strong&gt;，如果consumer消费失败，就让它进行重试直至成功。如果重试超过一定次数的话，那么就人工介入。&lt;/li&gt;
+&lt;/ol&gt;
 &lt;h2 id=&#34;三-其他方式保证数据一致性&#34;&gt;三、 其他方式保证数据一致性&lt;/h2&gt;
 &lt;p&gt; 当然，保持数据一致性不光是分布式事务来保证，业务上还要配合其他的辅助来保证，这里笔者就列举几种&lt;/p&gt;
 &lt;ol&gt;
@@ -1662,6 +1696,7 @@ T+1日对账，程序或者人工定时扫描核心业务数据，保证当日�
 &lt;ul&gt;
 &lt;li&gt;有赞出金系统——https://tech.youzan.com/build-a-withdraw-sys/&lt;/li&gt;
 &lt;li&gt;分布式事务的思考——https://www.cnblogs.com/sujing/p/11006424.html&lt;/li&gt;
+&lt;li&gt;阿里云RocketMQ文档——https://help.aliyun.com/document_detail/43348.html&lt;/li&gt;
 &lt;/ul&gt;
 ">金融级业务下分布式事务保证数据一致性</a>
       </div>
