@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://zhangyaoo.github.io</id>
     <title>will</title>
-    <updated>2021-01-04T07:42:27.087Z</updated>
+    <updated>2021-01-04T07:54:46.322Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://zhangyaoo.github.io"/>
     <link rel="self" href="https://zhangyaoo.github.io/atom.xml"/>
@@ -81,6 +81,7 @@
 1分钱处理：判断相邻间隔的大小</p>
 <p>###4、 代码实现：<br>
 利用treeMap的顺序有序性</p>
+<p>直接上代码（笔者已经调试过没有问题，可以运行）</p>
 <pre><code class="language-java">public class RedPackage {
    /**
     * 红包最小金额
@@ -90,12 +91,12 @@
    /**
     * 最大的红包是平均值的N倍
     */
-   //private static final long N = 2;
+   private static final long N = 2;
 
    /**
     * 红包最大金额
     */
-   //private long maxAmount;
+   private long maxAmount;
 
    /**
     * 红包金额 分
@@ -173,14 +174,16 @@
        RedPackage redPackage = new RedPackage(1500L, 10, 10L);
        long result = 0;
        for (int i = 0; i &lt; 15; i++) {
-           result = result + redPackage.nextAmount();
+           long amount = redPackage.nextAmount()；
+           System.out.println(amount);
+           result = result + amount;
        }
        System.out.println(result);
    }
 }
 </code></pre>
 <h3 id="5-todo-设置单个红包最大限额值">5、TODO 设置单个红包最大限额值</h3>
-<p>目前还没有实现思路，微信算法里面没有设置最大额度</p>
+<p>目前还没有实现思路</p>
 ]]></content>
     </entry>
     <entry>

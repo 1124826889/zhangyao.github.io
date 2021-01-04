@@ -9,7 +9,7 @@
 <meta name="description" content="生死看淡，不服就干">
 <meta name="theme-color" content="#000">
 <title>低频率大数据量强一致性场景下解决思路 | will</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1609746135427">
+<link rel="shortcut icon" href="/favicon.ico?v=1609746875082">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
 <link
@@ -1106,6 +1106,7 @@
 1分钱处理：判断相邻间隔的大小&lt;/p&gt;
 &lt;p&gt;###4、 代码实现：&lt;br&gt;
 利用treeMap的顺序有序性&lt;/p&gt;
+&lt;p&gt;直接上代码（笔者已经调试过没有问题，可以运行）&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;public class RedPackage {
    /**
     * 红包最小金额
@@ -1115,12 +1116,12 @@
    /**
     * 最大的红包是平均值的N倍
     */
-   //private static final long N = 2;
+   private static final long N = 2;
 
    /**
     * 红包最大金额
     */
-   //private long maxAmount;
+   private long maxAmount;
 
    /**
     * 红包金额 分
@@ -1198,14 +1199,16 @@
        RedPackage redPackage = new RedPackage(1500L, 10, 10L);
        long result = 0;
        for (int i = 0; i &amp;lt; 15; i++) {
-           result = result + redPackage.nextAmount();
+           long amount = redPackage.nextAmount()；
+           System.out.println(amount);
+           result = result + amount;
        }
        System.out.println(result);
    }
 }
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&#34;5-todo-设置单个红包最大限额值&#34;&gt;5、TODO 设置单个红包最大限额值&lt;/h3&gt;
-&lt;p&gt;目前还没有实现思路，微信算法里面没有设置最大额度&lt;/p&gt;
+&lt;p&gt;目前还没有实现思路&lt;/p&gt;
 ">概率相等的拼手气红包算法实现</a>
       </div>
       
