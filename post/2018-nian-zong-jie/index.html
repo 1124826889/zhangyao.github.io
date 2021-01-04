@@ -9,7 +9,7 @@
 <meta name="description" content="生死看淡，不服就干">
 <meta name="theme-color" content="#000">
 <title>2018年总结 | will</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1609518564177">
+<link rel="shortcut icon" href="/favicon.ico?v=1609746135427">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
 <link
@@ -1174,21 +1174,121 @@
       
       <div class="item">
         <a class="result-title" style="opacity: 0;" href="https://zhangyaoo.github.io/post/shou-lu-yi-ge-hong-bao-suan-fa/"" data-c="
-          &lt;h3 id=&#34;要求&#34;&gt;要求&lt;/h3&gt;
+          &lt;h3 id=&#34;1-要求&#34;&gt;1、要求&lt;/h3&gt;
 &lt;p&gt;红包算法 function：拼手气红包&lt;br&gt;
 1、每个红包获得的数学概率要一样&lt;br&gt;
-2、红包最小值：1分钱&lt;br&gt;
-TODO 根据红包金额自动设置一个上限&lt;/p&gt;
-&lt;h3 id=&#34;思路&#34;&gt;思路：&lt;/h3&gt;
+2、红包最小值：1分钱&lt;/p&gt;
+&lt;h3 id=&#34;2-思路&#34;&gt;2、思路：&lt;/h3&gt;
 &lt;p&gt;利用切片的思想，比如有5个红包，20分，就从0-20的范围内获取四个随机数，就被分成5份，然后顺序抽取。这样保证每个红包的的概率一样&lt;br&gt;
 这种方案需要考虑到几个注意点：&lt;br&gt;
-重复的随机切片如何处理；需要考虑1分钱如何处理；&lt;/p&gt;
-&lt;h3 id=&#34;实现&#34;&gt;实现：&lt;/h3&gt;
+1）重复的随机切片如何处理；&lt;br&gt;
+2）需要考虑1分钱如何处理；&lt;/p&gt;
+&lt;h3 id=&#34;3-实现&#34;&gt;3、实现：&lt;/h3&gt;
 &lt;p&gt;遇到随机切片重复:重新生成切片直至不重复&lt;br&gt;
 1分钱处理：判断相邻间隔的大小&lt;/p&gt;
-&lt;h3 id=&#34;代码实现&#34;&gt;代码实现：&lt;/h3&gt;
-&lt;p&gt;利用treeMap的顺序有序性&lt;/p&gt;
-">拼手气红包算法实现</a>
+&lt;p&gt;###4、 代码实现：&lt;br&gt;
+利用treeMap的顺序有序性&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;public class RedPackage {
+   /**
+    * 红包最小金额
+    */
+   private long minAmount = 1L;
+
+   /**
+    * 最大的红包是平均值的N倍
+    */
+   //private static final long N = 2;
+
+   /**
+    * 红包最大金额
+    */
+   //private long maxAmount;
+
+   /**
+    * 红包金额 分
+    */
+   private long packageAmount;
+
+   /**
+    * 红包个数
+    */
+   private long packageSize;
+
+   /**
+    * 是否抢完
+    */
+   private boolean finish;
+
+   /**
+    * 存储红包的金额顺序
+    */
+   private final TreeMap&amp;lt;Long, Long&amp;gt; treeMap = Maps.newTreeMap((o1, o2) -&amp;gt; o1 &amp;gt; o2 ? 1 : o1.equals(o2) ? 0 : -1);
+
+   /**
+    * 构造函数不写业务逻辑
+    */
+   public RedPackage(long packageAmount, int packageSize){
+       this.packageAmount = packageAmount;
+       this.packageSize = packageSize;
+       maxAmount = (packageAmount * N)/ packageSize;
+   }
+
+   public RedPackage(long packageAmount, int packageSize, long minAmount){
+       this.packageAmount = packageAmount;
+       this.packageSize = packageSize;
+       this.minAmount = minAmount;
+   }
+
+   /**
+    * 获取金额
+    */
+   public synchronized long nextAmount(){
+       // 前置校验，初始化
+       if(!finish &amp;amp;&amp;amp; treeMap.size() == 0){
+           treeMap.put(packageAmount, 0L);
+           for (int i = 0; i &amp;lt; packageSize - 1; i++) {
+               // 随机抽取切片
+               long splitNum = RandomUtils.nextLong(minAmount, packageAmount);
+               Long higher = treeMap.higherKey(splitNum);
+               higher = higher == null ? packageAmount : higher;
+               Long lower = treeMap.lowerKey(splitNum);
+               lower = lower == null ? 0 : lower;
+               // 相同切片重新生成,和上一个或者下一个切片间隔小于minAmount的重新生成
+               while (higher - splitNum &amp;lt;= minAmount
+                       || splitNum - lower &amp;lt;= minAmount
+                       || treeMap.containsKey(splitNum)){
+                   splitNum = RandomUtils.nextLong(minAmount, packageAmount);
+               }
+               // value放入上一个entry的key,组成链条，防止再次循环
+               treeMap.put(splitNum, lower);
+               treeMap.put(higher, splitNum);
+           }
+           System.out.println(&amp;quot;init finish&amp;quot;);
+       }
+       Map.Entry&amp;lt;Long, Long&amp;gt; entry = treeMap.pollFirstEntry();
+       if(treeMap.size() == 0){
+           // 用完红包
+           this.finish = true;
+           if(entry == null){
+               return 0L;
+           }
+       }
+       return entry.getKey() - entry.getValue();
+   }
+
+   public static void main(String[] args) {
+       RedPackage redPackage = new RedPackage(1500L, 10, 10L);
+       long result = 0;
+       for (int i = 0; i &amp;lt; 15; i++) {
+           result = result + redPackage.nextAmount();
+       }
+       System.out.println(result);
+   }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;5-todo-设置单个红包最大限额值&#34;&gt;5、TODO 设置单个红包最大限额值&lt;/h3&gt;
+&lt;p&gt;目前还没有实现思路，微信算法里面没有设置最大额度&lt;/p&gt;
+">概率相等的拼手气红包算法实现</a>
       </div>
       
       <div class="item">
