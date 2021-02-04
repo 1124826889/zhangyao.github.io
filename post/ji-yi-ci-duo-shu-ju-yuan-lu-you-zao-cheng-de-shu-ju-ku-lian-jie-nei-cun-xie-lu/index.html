@@ -8,7 +8,7 @@
 <meta name="keywords" content="zhangyao blog">
 <meta name="description" content="生死看淡，不服就干">
 <meta name="theme-color" content="#000">
-<title>关于 | will</title>
+<title>记一次多数据源路由造成的数据库连接泄露排查过程 | will</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1612427475879">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
@@ -38,7 +38,7 @@
 
 
 
-  <meta name="description" content="关于" />
+  <meta name="description" content="记一次多数据源路由造成的数据库连接泄露排查过程" />
   <meta name="keywords" content="" />
 </head>
 
@@ -242,10 +242,18 @@
     <ul class="markdownIt-TOC">
 <li>
 <ul>
-<li><a href="#%E5%85%B3%E4%BA%8E%E6%9C%AC%E7%AB%99">🏠 关于本站</a></li>
-<li><a href="#%E5%8D%9A%E4%B8%BB%E6%98%AF%E8%B0%81">👨‍💻 博主是谁</a></li>
-<li><a href="#%E5%85%B4%E8%B6%A3%E7%88%B1%E5%A5%BD">⛹ 兴趣爱好</a></li>
-<li><a href="#%E8%81%94%E7%B3%BB%E6%88%91%E5%91%80">📬 联系我呀</a></li>
+<li>
+<ul>
+<li><a href="#%E5%89%8D%E8%A8%80">前言</a></li>
+<li><a href="#%E4%B8%80-%E6%A1%88%E5%8F%91%E5%BD%93%E6%97%B6%E7%9A%84%E6%83%85%E5%86%B5">一、案发当时的情况：</a></li>
+<li><a href="#%E4%BA%8C-%E7%B4%A7%E6%80%A5%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F">二、紧急处理方式：</a></li>
+<li><a href="#%E4%B8%89-%E7%AC%AC%E4%B8%80%E6%AC%A1%E6%9F%A5%E6%89%BE%E9%97%AE%E9%A2%98%E5%B9%B6%E4%B8%94%E8%A7%A3%E5%86%B3%E7%9A%84%E8%BF%87%E7%A8%8B">三、第一次查找问题并且解决的过程：</a></li>
+<li><a href="#%E5%9B%9B-%E7%AC%AC%E4%BA%8C%E6%AC%A1%E6%9F%A5%E6%89%BE%E9%97%AE%E9%A2%98%E5%B9%B6%E4%B8%94%E8%A7%A3%E5%86%B3%E7%9A%84%E8%BF%87%E7%A8%8B">四、第二次查找问题并且解决的过程：</a></li>
+<li><a href="#%E4%BA%94-%E6%A0%B9%E6%9C%AC%E5%8E%9F%E5%9B%A0">五、根本原因</a></li>
+<li><a href="#%E5%85%AD-%E6%9C%80%E7%BB%88%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F">六、最终处理方式：</a></li>
+<li><a href="#%E4%B8%83-%E6%80%BB%E7%BB%93">七、总结</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -513,8 +521,8 @@
           <div class="section bg-color post post-page">
             <header class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://zhangyaoo.github.io/post/about/">
-      关于
+    <a class="post-title-link" href="https://zhangyaoo.github.io/post/ji-yi-ci-duo-shu-ju-yuan-lu-you-zao-cheng-de-shu-ju-ku-lian-jie-nei-cun-xie-lu/">
+      记一次多数据源路由造成的数据库连接泄露排查过程
     </a>
   </h1>
   <div class="post-meta">
@@ -522,37 +530,190 @@
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span class="language" data-lan="publish">发布于</span>
-      <span>2019-01-25</span>
+      <span>2021-02-02</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>1<span class="language" data-lan="minute">分钟</span></span>
+      <span>9<span class="language" data-lan="minute">分钟</span></span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>69<span class="pc-show language" data-lan="words">字数</span></span>
+      <span>2128<span class="pc-show language" data-lan="words">字数</span></span>
     </span>
     
   </div>
 </header>
             <div class="post-body next-md-body" id="post_body">
-              <blockquote>
-<p>欢迎来到我的小站呀，很高兴遇见你！🤝</p>
-</blockquote>
-<h2 id="关于本站">🏠 关于本站</h2>
-<p>一些技术博客和一些闲言碎语</p>
-<h2 id="博主是谁">👨‍💻 博主是谁</h2>
-<p>还在打怪升级的菜鸟</p>
-<h2 id="兴趣爱好">⛹ 兴趣爱好</h2>
-<p>撸码、二次元、骑行、篮球、LOL</p>
-<h2 id="联系我呀">📬 联系我呀</h2>
-<p>手机（微信同）：15112342449</p>
+              <h3 id="前言">前言</h3>
+<p>之前一篇文章讲了自己写了一个多数据源路由组件给公司内部使用，进行快速迭代。文章URL是 <a href="https://zhangyaoo.github.io/post/saas-xi-tong-duo-shu-ju-yuan-lu-you-you-ya-jie-jue-fang-an">SaaS系统多数据源路由优雅解决方案</a><br>
+随着时间推移，某一天运维找上门说数据库连接打满，就刚好这一台机器上装了Java服务导致的。<br>
+下面文章就是讲的这次连接泄露导致的数据库hang住问题以及后面的解决过程。</p>
+<h3 id="一-案发当时的情况">一、案发当时的情况：</h3>
+<p>线上MySQL session 逐渐增加，不活跃的的数量逐渐增加，导致的后果：占用链接，导致链接满了无法分配新的连接<br>
+<img src="https://zhangyaoo.github.io/post-images/1612261925869.jpg" alt="" loading="lazy"></p>
+<h3 id="二-紧急处理方式">二、紧急处理方式：</h3>
+<p>用自研的应用层网关将流量切换为旧的版本中，并且不停机切换，然后将当前的版本的服务停调，然后观察阿里云的数据库连接数量变回正常。</p>
+<p>目前线上存在多个版本存在docker，然后用K8s部署，实现快速不停机切换上线。<br>
+自研网关这篇文章有介绍： <a href="ying-yong-ceng-wang-guan-she-ji-yu-shi-xian">应用层网关设计和实现</a></p>
+<h3 id="三-第一次查找问题并且解决的过程">三、第一次查找问题并且解决的过程：</h3>
+<p>1、开启本地服务，让它飞一会，或者多线程并且切租户查询数据库，dump内存快照进行分析<br>
+<img src="https://zhangyaoo.github.io/post-images/1612253583270.png" alt="" loading="lazy"></p>
+<p>2、然后查看本地服务相关数据库连接的对象<br>
+1）分析sqlsession 对象，发现sqlsession对象为0，而且日志中有打印及时关闭sqlsession。结论：sqlsession正常，说明正常关闭了sqlsession<br>
+<img src="https://zhangyaoo.github.io/post-images/1612237357285.png" alt="" loading="lazy"><br>
+2）分析datasource 对象，发现datasource对象和数据库连接配置中的max-pool-size一致。结论：datasource正常，说明正常关闭了datasource<br>
+<img src="https://zhangyaoo.github.io/post-images/1612237380060.png" alt="" loading="lazy"><br>
+3）分析connection对象，发现HikariProxyConnection对象和数据库配置一致。结论：HikariProxyConnection正常<br>
+<img src="https://zhangyaoo.github.io/post-images/1612237411657.png" alt="" loading="lazy"></p>
+<p>3、在分析本地内存快照，发现一个类随着时间的推移，逐渐增多，并且没有被回收，正是connectionImpl对象，这个对象是MySQL底层连接的实现，来自com.mysql.cj.jdbc<br>
+<img src="https://zhangyaoo.github.io/post-images/1612237433473.png" alt="" loading="lazy"><br>
+（图片中指的类有100多个对象）</p>
+<p>4、跟踪了一波源码，发现HikariProxyConnection对象，实质上底层就是new了一个并管理connectionImpl对象，猜测某个因为参数原因导致HikariProxyConnection及时释放，而connectionImpl没有释放，积累没有及时清除导致的。</p>
+<p>5、经过Google查找问题，怀疑是max_lifetime导致的问题。max_lifetime官网解释：一个连接的生命时长（毫秒），超时而且没被使用则被释放（retired）。建议比数据库的wait_timeout小几分钟。默认30分钟<br>
+<img src="https://zhangyaoo.github.io/post-images/1612237640791.png" alt="" loading="lazy"></p>
+<p>6、查看线上配置和测试环境配置，果然是只配置了1分钟。<img src="https://zhangyaoo.github.io/post-images/1612262047685.jpg" alt="" loading="lazy"><br>
+随后将其改成30分钟，然后继续多线程并发跑测试用例。测试环境验证，dump内存，观察connectionImpl对象并没有随着时间的推移增加。发现connectionImpl对象并没有随着时间的推移增加。验证了个人的猜想。<br>
+<img src="https://zhangyaoo.github.io/post-images/1612237699007.png" alt="" loading="lazy"></p>
+<p>7、最终将配置更新后上线，过了没2个小时，连接数又飙升。初步观察还是connectionImpl对象增多，连接没有释放。所以认为，不是max_lifetime配置的问题。还是得从源码中入手和线上的dump入手看。</p>
+<p>第一次查找问题并<strong>没有解决根本问题</strong>，对此总结了一下：</p>
+<ol>
+<li>自己的猜想缺少实际的数据支持和多方位的有力证明</li>
+<li>对源码研究不够深入，只是停留在表明</li>
+<li>对官网的配置参数理解不够透彻</li>
+</ol>
+<h3 id="四-第二次查找问题并且解决的过程">四、第二次查找问题并且解决的过程：</h3>
+<p>本地环境观察没有问题，正式环境观察就有问题。像这种问题算是比较难解决的，为了快速解决问题，避免把线上数据copy到本地进行测试，直接down线上的dump文件下来进行仔细分析。</p>
+<p>1、查找线上的内存，dump数量，刚好100个，并且随着时间偏移，这个类对象越来越多，个人猜想就是这个对象没有被回收导致连接数未释放。有强引用引用这个对象。<br>
+<img src="https://zhangyaoo.github.io/post-images/1612420897419.png" alt="" loading="lazy"></p>
+<p>2、查找这个对象GC root对象，右键选择Merge Shortest Paths to GC roots -&gt; exclude all phantom/weak/soft etc.reference(排除所有虚弱软引用)，发现这100个对象大部分被一个名字叫做housekeeper线程所强引用，如下图。个人验证猜想是线程没有及时回收关闭或者是没有关闭线程池。<br>
+<img src="https://zhangyaoo.github.io/post-images/1612423498302.png" alt="" loading="lazy"></p>
+<p>3、这个时候dump文件里面就没法发现更多有用的信息了，然后就去看源码看这个housekeeper线程为什么一直强引用。查找源码发现在获取datasource 的 getConnetcion方法，会初始化HikariPool连接池。<br>
+<img src="https://zhangyaoo.github.io/post-images/1612423896839.png" alt="" loading="lazy"></p>
+<p>初始化连接池里面会初始化housekeeper连接池，刚好对应了上面在根引用的对象。<br>
+<img src="https://zhangyaoo.github.io/post-images/1612423966034.png" alt="" loading="lazy"><br>
+<img src="https://zhangyaoo.github.io/post-images/1612425624943.png" alt="" loading="lazy"></p>
+<p>看了下这个housekeeper对象的作用，目的是为了维持最少的空闲的连接，说白了就是根据配置参数idleTimeout和minIdle来维持最小的空闲连接数。<br>
+<img src="https://zhangyaoo.github.io/post-images/1612425545450.png" alt="" loading="lazy"></p>
+<p>4、至此，可以初步得出结论，是由于应用程序不停的new HikariPool，然后没有及时close导致的问题。然后顺着这个结论去查看应用程序的BUG</p>
+<p>5、在程序发现下面逻辑，下面这一段逻辑就是根据租户来获取缓存中租户对应的datasource对象</p>
+<pre><code class="language-java">   /**
+     * 获取已缓存的数据源
+     */
+    private Optional&lt;DataSource&gt; getDataSourceIfCache(SelectRdsConfigDto rdsConfigDto) {
+        String key = getUniqueMysqlKey(rdsConfigDto.getHost(), rdsConfigDto.getPort());
+        if (Objects.nonNull(dataSourceCachePool.get(key))) {
+            DataSourceCache dataSourceCache = dataSourceCachePool.get(key);
+            //cache中已经缓存了租户的连接并且没有修改rds config信息
+            if (dataSourceCache.verifyRdsConfig(rdsConfigDto)) {
+                return Optional.ofNullable(dataSourceCachePool.get(key).getDataSource());
+            }
+            //cache中已经缓存了租户的连接，但是校验不通过
+            else {
+                dataSourceCachePool.remove(key);
+                return Optional.empty();
+            }
+        }
+        return Optional.empty();
+    }
+
+   // 校验
+   private boolean verifyRdsConfig(SelectRdsConfigDto rdsConfigDto) {
+        return rdsConfigDto.getAccount().equals(this.account) &amp;&amp;
+                rdsConfigDto.getHost().equals(this.host) &amp;&amp;
+                rdsConfigDto.getPort().equals(this.port) &amp;&amp;    rdsConfigDto.getPwd().equals(this.pwd) &amp;&amp;；
+
+    //  dataSourceCachePool的key组成，一个MySQL连接对应的key
+    private String getUniqueMysqlKey(String host, Integer port){
+        return host + &quot;:&quot; + port;
+    }
+
+ }
+</code></pre>
+<p>这里逻辑有一段是校验不通过，会remove对应的datasource对象，问题就出现在这里，这里没有及时close。校验不通过的原因就是，一个host port作为一个dataSourceCachePool的key，因为线上有一个MySQL实例多个账号，导致校验总是不通过误以为成是修改了用户名或者密码，随后就是一直new datasource对象。</p>
+<h3 id="五-根本原因">五、根本原因</h3>
+<p>所以综上，最终得出结论是，因为程序问题导致HikariDataSource对象增多，而且因为HikariDataSource对象内部有一个线程池，如果外部丢失了对这个HikariDataSource对象的引用，也不会被垃圾回收，导致HikariDataSource对象不释放，然后结果就是数据库连接未释放。</p>
+<h3 id="六-最终处理方式">六、最终处理方式：</h3>
+<p>1、修改代码：<br>
+1） dataSourceCachePool的key组成由host port 改成 host port account pwd 四个维度作为一个key。</p>
+<p>2）关闭datasource对象，remove那段代码的逻辑修改成下面这个样子</p>
+<pre><code class="language-java">//cache中已经缓存了租户的连接,但是修改了rds config信息
+        DataSource dataSource = dataSourceCachePool.remove(key).getDataSource();
+        log.info(&quot;remove datasource:{}, {}&quot;, key, rdsConfigDto.toString());
+        new Thread(() -&gt; {
+            while (true) {
+                try {
+                    TimeUnit.SECONDS.sleep(10);
+                } catch (InterruptedException e) {
+                    log.error(&quot;e:&quot;, e);
+                }
+                if (dataSource instanceof HikariDataSource) {
+                    if (((HikariDataSource) dataSource).getHikariPoolMXBean().getActiveConnections() &gt; 0){
+                        log.info(&quot;ActiveConnections &gt; 0, continue&quot;);
+                        continue;
+                    }
+                    log.info(&quot;HikariDataSource close...&quot;);
+                    ((HikariDataSource) dataSource).close();
+                } else if (dataSource instanceof DruidDataSource) {
+                    if (((DruidDataSource) dataSource).getActiveCount() &gt; 0) {
+                        log.info(&quot;ActiveConnections &gt; 0, continue&quot;);
+                        continue;
+                    }
+                    log.info(&quot;DruidDataSource close...&quot;);
+                    ((DruidDataSource) dataSource).close();
+                } else {
+                    log.error(&quot;close datasource|datasource is wrong&quot;);
+                    throw new RuntimeException(&quot;close datasource|datasource is wrong&quot;);
+                }
+                break;
+            }
+        }).start();
+</code></pre>
+<p>Q：为什么要判断活跃的连接 ActiveCount &gt; 0 ？<br>
+A：因为close的时候要判断是否有正在使用的connection对象，如果强制关闭，那么会出现一个线程查询的时候，connetion突然不可用，导致错误。</p>
+<p>2、改配置，改成和官方默认的配置<br>
+<img src="https://zhangyaoo.github.io/post-images/1612426469625.png" alt="" loading="lazy"></p>
+<p>最后，重新上线后，观测对象内存数据，正常。</p>
+<h3 id="七-总结">七、总结</h3>
+<p>底层的数据库组件的代码编写，要注意使用数据库连接资源的时候，一定要检查代码中是否释放，不然会造成严重的事故。而且平常还要熟悉官方配置，并且多研究源码。以免出现这种情况时束手无策。<br>
+可以的话还可以叫身边的资深大牛给review代码，做到双重保障。</p>
 
             </div>
             
+            
+              <div class="post-footer">
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong class="language" data-lan="author">本文作者：</strong>
+      will
+    </li>
+    <li class="post-copyright-link">
+      <strong class="language" data-lan="link">本文链接：</strong>
+      <a href="https://zhangyaoo.github.io/post/ji-yi-ci-duo-shu-ju-yuan-lu-you-zao-cheng-de-shu-ju-ku-lian-jie-nei-cun-xie-lu/" title="记一次多数据源路由造成的数据库连接泄露排查过程">https://zhangyaoo.github.io/post/ji-yi-ci-duo-shu-ju-yuan-lu-you-zao-cheng-de-shu-ju-ku-lian-jie-nei-cun-xie-lu/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong class="language" data-lan="copyright">版权声明： </strong>
+      本博客所有文章除特别声明外，均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i> BY-NC-SA</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+  <div class="tags">
+    
+  </div>
+  <div class="nav">
+    <div class="nav-prev">
+      
+    </div>
+    <div class="nav-next">
+      
+        <a class="nav-pc-next" title="2020年总结" href="https://zhangyaoo.github.io/post/2020-nian-zong-jie/">2020年总结</a>
+        <a class="nav-mobile-next" title="2020年总结" href="https://zhangyaoo.github.io/post/2020-nian-zong-jie/">下一篇</a>
+        <i class="fa fa-chevron-right"></i>
+      
+    </div>
+  </div>
+</div>
             
             
   
