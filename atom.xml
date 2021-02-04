@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://zhangyaoo.github.io</id>
     <title>will</title>
-    <updated>2021-02-04T08:31:21.093Z</updated>
+    <updated>2021-02-04T08:51:45.954Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://zhangyaoo.github.io"/>
     <link rel="self" href="https://zhangyaoo.github.io/atom.xml"/>
@@ -148,6 +148,7 @@ A：因为close的时候要判断是否有正在使用的connection对象，如�
 <h3 id="七-总结">七、总结</h3>
 <p>底层的数据库组件的代码编写，要注意使用数据库连接资源的时候，一定要检查代码中是否释放，不然会造成严重的事故。而且平常还要熟悉官方配置，并且多研究源码。以免出现这种情况时束手无策。<br>
 可以的话还可以叫身边的资深大牛给review代码，做到双重保障。</p>
+<p>最后非常感谢组内小伙伴的技术支持，才能一步一步的排除出问题，找出问题所在</p>
 ]]></content>
     </entry>
     <entry>
