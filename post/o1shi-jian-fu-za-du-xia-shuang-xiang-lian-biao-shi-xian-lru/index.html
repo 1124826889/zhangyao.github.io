@@ -9,7 +9,7 @@
 <meta name="description" content="生死看淡，不服就干">
 <meta name="theme-color" content="#000">
 <title>O(1)时间复杂度下，双向链表实现LRU | will</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1614249867244">
+<link rel="shortcut icon" href="/favicon.ico?v=1614252362915">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
 <link
@@ -1262,7 +1262,7 @@ public class LRUCacheV2 {
 &lt;li&gt;HikariDataSource对象：Hikari中的核心类为HikariDataSource，实现了DataSource的getConnetion接口&lt;/li&gt;
 &lt;li&gt;HikariPool对象：HikariDataSource中有两个HikariPool对象,一个是fastPathPool是在HikariPool有参构造函数中创建, 如果没有创建fastPathPool,那么就会在getConnection方法时创建pool对象。&lt;/li&gt;
 &lt;li&gt;ConcurrentBag对象：连接池的真正实现，实现了&lt;strong&gt;高性能高并发的无锁设计&lt;/strong&gt;，主要的方法有borrow 借,requite 归还,add 新增,remove 去除。&lt;/li&gt;
-&lt;li&gt;PoolEntry对象：对数据库connection对象进行包装，增加额外的属性，包括最后一次访问时间，是否丢弃，当前状态等等。源码底层里面都是操作这个对象。&lt;/li&gt;
+&lt;li&gt;PoolEntry对象：对数据库connection对象进行包装，增加额外的属性，包括最后一次访问时间，是否丢弃，当前状态等等。HikariDataSource源码底层里面都是操作这个对象。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h3 id=&#34;21-初始化以下所有代码只列出关键实现&#34;&gt;2.1 初始化（以下所有代码只列出关键实现）&lt;/h3&gt;
 &lt;p&gt;初始化工作包括HikariDataSource初始化，HikariPool初始化，connectionBag初始化，一些线程池的初始化，最小连接数的初始化，以下逐一分析&lt;/p&gt;
@@ -1369,12 +1369,12 @@ public Connection getConnection(){
 &lt;p&gt;result.getConnection()就是HikariPool getConnection方法，这里面大致核心逻辑就是加锁在超时时间内获取poolEntry的connectionBag.borrow方法，重点着重borrow方法实现。&lt;/p&gt;
 &lt;p&gt;在讲之前，先介绍以下connectionBag的几个重要的成员变量&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;private final CopyOnWriteArrayList&lt;T&gt; sharedList：当前所有缓存的poolEntry连接，都在这个list内，CopyOnWriteArrayList写时复制，在读多写少的场景下性能更高，一般情况下连接池中的poolEntry连接不会增加或者关闭，读场景多。&lt;/li&gt;
-&lt;li&gt;private final ThreadLocal&amp;lt;List&lt;Object&gt;&amp;gt; threadList ：当前线程缓存的本地poolEntry的list。朝生夕灭的线程，是无法有效利用本地线程缓存的，只有在线程池场景或者当前线程多次使用getConnetion获取connection方法进行增删改时候，才会有效的使用ThreadLocal。&lt;/li&gt;
-&lt;li&gt;private final boolean weakThreadLocals：是否是弱引用，ThreadLocal可能会存在内存泄露的风险，当值为true时包装的poolEntry对象是弱引用，在内存不足时GC的时候会被回收，避免了出现内存泄露的问题。&lt;/li&gt;
-&lt;li&gt;private final IBagStateListener listener：&lt;/li&gt;
-&lt;li&gt;private final AtomicInteger waiters：当前正在等待获取连接的数量&lt;/li&gt;
-&lt;li&gt;private final SynchronousQueue&lt;T&gt; handoffQueue：无存储元素的单个提供者和消费者通信队列，并且是公平模式。比如，是谁先来take操作，谁就会优先take成功，类似FIFO。&lt;/li&gt;
+&lt;li&gt;final CopyOnWriteArrayList&lt;T&gt; sharedList：当前所有缓存的poolEntry连接，都在这个list内，CopyOnWriteArrayList写时复制，在读多写少的场景下性能更高，一般情况下连接池中的poolEntry连接不会增加或者关闭，读场景多。&lt;/li&gt;
+&lt;li&gt;final ThreadLocal&amp;lt;List&lt;Object&gt;&amp;gt; threadList ：当前线程缓存的本地poolEntry的list。朝生夕灭的线程，是无法有效利用本地线程缓存的，只有在线程池场景或者当前线程多次使用getConnetion获取connection方法进行增删改时候，才会有效的使用ThreadLocal。&lt;/li&gt;
+&lt;li&gt;final boolean weakThreadLocals：是否是弱引用，ThreadLocal可能会存在内存泄露的风险，当值为true时包装的poolEntry对象是弱引用，在内存不足时GC的时候会被回收，避免了出现内存泄露的问题。&lt;/li&gt;
+&lt;li&gt;final IBagStateListener listener：监听器，监听创建poolEntry的任务&lt;/li&gt;
+&lt;li&gt;final AtomicInteger waiters：当前正在等待获取连接的数量&lt;/li&gt;
+&lt;li&gt;final SynchronousQueue&lt;T&gt; handoffQueue：无存储元素的单个提供者和消费者通信队列，并且是公平模式。比如，是谁先来take操作，谁就会优先take成功，类似FIFO。&lt;/li&gt;
 &lt;li&gt;this.threadList = ThreadLocal.withInitial(() -&amp;gt; new FastList&amp;lt;&amp;gt;(IConcurrentBagEntry.class, 16))：默认情况下会ThreadLocal value默认使用fastList来存储poolEntry，fastList是Hikari自己写一个不需要范围检查的一个List，而且它的remove方法是从后往前遍历删除的（和arrayList相反），刚好符合下面倒叙遍历获取poolEntry的逻辑&lt;/li&gt;
 &lt;/ol&gt;
 &lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;public T borrow(long timeout, final TimeUnit timeUnit) throws InterruptedException
