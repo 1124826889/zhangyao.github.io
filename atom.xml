@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://zhangyaoo.github.io</id>
     <title>will</title>
-    <updated>2021-02-25T09:23:28.244Z</updated>
+    <updated>2021-02-25T09:27:26.582Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://zhangyaoo.github.io"/>
     <link rel="self" href="https://zhangyaoo.github.io/atom.xml"/>
@@ -17,7 +17,7 @@
         </link>
         <updated>2021-02-24T03:31:24.000Z</updated>
         <content type="html"><![CDATA[<h2 id="一-前言">一、前言</h2>
-<p>上一篇文章讲了不合理的连接池代码导致的内存泄露事件，详见这篇文章。其中粗略的分析了HikariDataSource连接池的代码，并没有仔细分析。本篇文章带读者们一起去分析一波源码，看完本篇文章后，你可以<br>
+<p>上一篇文章讲了不合理的连接池代码导致的内存泄露事件，详见这篇文章<a href="https://zhangyaoo.github.io/post/ji-yi-ci-duo-shu-ju-yuan-lu-you-zao-cheng-de-shu-ju-ku-lian-jie-nei-cun-xie-lu/">记一次多数据源路由造成的数据库连接泄露排查过程</a>。其中粗略的分析了HikariDataSource连接池的代码，并没有仔细分析。本篇文章带读者们一起去分析一波源码，看完本篇文章后，你可以<br>
 1、对锁和高并发有一定理解以及其在连接池中的运用<br>
 2、了解HikariDataSource业界性能最高连接池的原因<br>
 3、可以对连接池的原理有大致的了解，可以尝试自己实现一个连接池</p>
