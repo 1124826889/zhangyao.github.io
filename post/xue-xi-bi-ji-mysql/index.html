@@ -9,7 +9,7 @@
 <meta name="description" content="生死看淡，不服就干">
 <meta name="theme-color" content="#000">
 <title>学习笔记：MySQL | will</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1614252362915">
+<link rel="shortcut icon" href="/favicon.ico?v=1614844870779">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
 <link
@@ -1503,7 +1503,34 @@ public Connection getConnection(){
         (connectionBag.getWaitingThreadCount() &amp;gt; 0 || getIdleConnections() &amp;lt; config.getMinimumIdle());
   }
 }
+
+// 真正创建poolEntry的实现
+private PoolEntry createPoolEntry(){
+  try {
+      // 创建poolEntry
+     final PoolEntry poolEntry = newPoolEntry();
+
+     final long maxLifetime = config.getMaxLifetime();
+     if (maxLifetime &amp;gt; 0) {
+        // variance up to 2.5% of the maxlifetime
+        final long variance = maxLifetime &amp;gt; 10_000 ? ThreadLocalRandom.current().nextLong( maxLifetime / 40 ) : 0;
+        final long lifetime = maxLifetime - variance;
+        // 如果配置了maxlifetime，那么会给这一个连接增加一个延迟任务
+        // 延迟任务主要就是将这个连接标记为Evict不可用
+        poolEntry.setFutureEol(houseKeepingExecutorService.schedule(
+           () -&amp;gt; {
+              if (softEvictConnection(poolEntry, &amp;quot;(connection has passed maxLifetime)&amp;quot;, false /* not owner */)) {
+                 addBagItem(connectionBag.getWaitingThreadCount());
+              }
+           },
+           lifetime, MILLISECONDS));
+     }
+     return poolEntry;
+  }
+  return null;
+}
 &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;由上面createPoolEntry可以知道，HikariCP在使用时不会关闭连接。如果使用中的连接到达maxLifetime时它将被标记为驱逐，并且在下一次线程尝试借用它时将被驱逐，这也是Hikari连接池设计的一个核心精髓。&lt;/p&gt;
 &lt;p&gt;再来看一下connectionBag的add方法&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;public void add(final T bagEntry){
       // 在sharedList增加bagEntry
@@ -1564,10 +1591,20 @@ public void requite(final T bagEntry){
 &lt;p&gt;什么时候会调用remove，笔者总结了以下：&lt;br&gt;
 1、当调用datasource shutdown方法时候&lt;br&gt;
 2、当前connetion没有用的时候（可能是MySQL服务器down机）&lt;br&gt;
-3、当前conntion被标记为丢弃时候&lt;br&gt;
+3、当前conntion被标记为丢弃时候，超过了maxLifetime被标记为丢弃&lt;br&gt;
 4、当前connetion的最后一次使用时间和当前时间的差值大于idleTimeout时候&lt;/p&gt;
 &lt;p&gt;以上可以理解了从初始化到getConnection获取连接，到closeConnectiond的核心逻辑，实现了核心逻辑的小闭环。&lt;/p&gt;
-&lt;h2 id=&#34;三-总结&#34;&gt;三、总结&lt;/h2&gt;
+&lt;h2 id=&#34;三-自己写个连接池需要考虑哪些方面&#34;&gt;三、自己写个连接池需要考虑哪些方面&lt;/h2&gt;
+&lt;p&gt;根据上面分析的源码，可以看到，如果自己实现一个连接池的话，需要考虑：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;初始化的步骤，初始化最初的最小空闲数连接&lt;/li&gt;
+&lt;li&gt;取连接，从连接池中取，并且要上锁&lt;/li&gt;
+&lt;li&gt;归还连接，需要放回到连接池中，要上锁&lt;/li&gt;
+&lt;li&gt;如果连接池全被占用，是返回失败，还是让上游等待&lt;/li&gt;
+&lt;li&gt;拿到的连接，需要检测这个连接是否可用，是否还是活的，因为不知道服务端是否挂掉，抑或是连接超过maxlife被标记为evit正在关闭&lt;/li&gt;
+&lt;li&gt;连接池用什么数据结构存储，数组还是链表，还要考虑并发安全&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;四-总结&#34;&gt;四、总结&lt;/h2&gt;
 &lt;p&gt;本篇文章从源码角度分析了一波，明白了为什么HikariDataSource是业界性能最高连接池的原因。我们可以更深入理解连接池背后的工作原理，以便后面出了线上问题可以轻松应对。最后读者可以试试自己实现一个连接池加深理解。&lt;br&gt;
 以上文章有任何表达上或者技术问题欢迎指正。&lt;/p&gt;
 &lt;h2 id=&#34;四-参考&#34;&gt;四、参考&lt;/h2&gt;
