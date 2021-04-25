@@ -9,7 +9,7 @@
 <meta name="description" content="生死看淡，不服就干">
 <meta name="theme-color" content="#000">
 <title>O(1)时间复杂度下，双向链表实现LRU | will</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1614844870779">
+<link rel="shortcut icon" href="/favicon.ico?v=1619344088483">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
 <link
@@ -202,7 +202,7 @@
     <div class="sidebar-item-box">
       <a href="/archives/">
         
-        <span class="site-item-stat-count">15</span>
+        <span class="site-item-stat-count">14</span>
         <span class="site-item-stat-name language" data-lan="article">文章</span>
       </a>
     </div>
@@ -247,6 +247,7 @@
 <li><a href="#%E5%89%8D%E8%A8%80">前言</a></li>
 <li><a href="#linkedhashmap%E5%BA%95%E5%B1%82%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84">linkedHashMap底层的数据结构</a></li>
 <li><a href="#%E9%93%BE%E8%A1%A8%E5%AE%9E%E7%8E%B0">链表实现</a></li>
+<li><a href="#%E9%93%BE%E8%A1%A8%E5%AE%9E%E7%8E%B0v2">链表实现V2</a></li>
 </ul>
 </li>
 </ul>
@@ -544,12 +545,12 @@
     
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>4<span class="language" data-lan="minute">分钟</span></span>
+      <span>7<span class="language" data-lan="minute">分钟</span></span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>775<span class="pc-show language" data-lan="words">字数</span></span>
+      <span>1230<span class="pc-show language" data-lan="words">字数</span></span>
     </span>
     
   </div>
@@ -748,6 +749,109 @@ public class LRUCacheV2 {
     }
 }
 </code></pre>
+<h3 id="链表实现v2">链表实现V2</h3>
+<p>2021.3.15更新<br>
+上述的链表有点复杂，没有考虑到利用map的size，没有利用好头尾节点双向特性，笔者重新实现了下，参考leetcode146题<br>
+实现的几个要点</p>
+<ol>
+<li>构造函数中要构造好头尾节点，形成指针闭环，为后续的增删移做好准备</li>
+<li>删除节点的时候，可以根据map的value也就是Node的key，来删除map中的数据，也就是说，可以根据map的key来删除数据，也可以根据map的value中的key来删除数据</li>
+</ol>
+<pre><code class="language-java">package com.zyblue.fastim.common.algorithm.distribute;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * @author will
+ * @date 2021/3/15 10:18
+ */
+public class LRUCacheV3&lt;K, V&gt;{
+    public static class Node&lt;K,V&gt;{
+        public K key;
+        public V value;
+        public Node&lt;K,V&gt; pre;
+        public Node&lt;K,V&gt; next;
+        public Node(){}
+        public Node(K key, V value) {
+            this.key = key;
+            this.value = value;
+        }
+    }
+
+    /**
+     * map这样设计的原因是
+     * 1、
+     */
+    private Map&lt;K, Node&lt;K,V&gt;&gt; map = new HashMap&lt;&gt;();
+
+    private int capacity;
+
+    private Node&lt;K,V&gt; head;
+
+    private Node&lt;K,V&gt; tail;
+
+    public LRUCacheV3(int capacity){
+        this.capacity = capacity;
+        this.head = new Node&lt;&gt;();
+        this.tail = new Node&lt;&gt;();
+        head.pre = tail;
+        tail.next = head;
+    }
+
+    private void remove2Head(Node&lt;K,V&gt; node){
+        Node&lt;K, V&gt; pre = node.pre;
+        Node&lt;K, V&gt; next = node.next;
+        pre.next = next;
+        next.pre = pre;
+
+        add2Head(node);
+    }
+
+    private void removeTail(){
+        Node&lt;K, V&gt; next = tail.next.next;
+        tail.next = next;
+        next.pre = tail;
+    }
+
+    private void add2Head(Node&lt;K,V&gt; node){
+        Node&lt;K, V&gt; pre = head.pre;
+        pre.next = node;
+        node.next = head;
+        node.pre = pre;
+        head.pre = node;
+    }
+
+    public V get(K key){
+        Node&lt;K,V&gt; node = map.get(key);
+        if(node == null){
+            return null;
+        }
+        remove2Head(node);
+        return node.value;
+    }
+
+    public void put(K key, V value){
+        Node&lt;K,V&gt; node = map.get(key);
+        if(node == null){
+            // 利用map的size
+            if(map.size() &gt;= capacity){
+                // 去除尾部节点
+                removeTail();
+                // 删除map的node
+                map.remove(tail.next.key);
+            }
+            Node&lt;K,V&gt; nodeAdd = new Node&lt;&gt;(key, value);
+            add2Head(nodeAdd);
+            map.put(key, nodeAdd);
+        }else {
+            node.value = value;
+            remove2Head(node);
+        }
+    }
+}
+
+</code></pre>
 <p>参考：<br>
 1、https://www.iteye.com/blog/gogole-692103<br>
 2、https://crossoverjie.top/2018/04/07/algorithm/LRU-cache/</p>
@@ -785,8 +889,8 @@ public class LRUCacheV2 {
     </div>
     <div class="nav-next">
       
-        <a class="nav-pc-next" title="2019年总结" href="https://zhangyaoo.github.io/post/2019-nian-zong-jie/">2019年总结</a>
-        <a class="nav-mobile-next" title="2019年总结" href="https://zhangyaoo.github.io/post/2019-nian-zong-jie/">下一篇</a>
+        <a class="nav-pc-next" title="关于" href="https://zhangyaoo.github.io/post/about/">关于</a>
+        <a class="nav-mobile-next" title="关于" href="https://zhangyaoo.github.io/post/about/">下一篇</a>
         <i class="fa fa-chevron-right"></i>
       
     </div>
@@ -1770,6 +1874,9 @@ A：这个场景笔者也有考虑，但是这种场景很少，一般不会有�
       <div class="item">
         <a class="result-title" style="opacity: 0;" href="https://zhangyaoo.github.io/post/ying-yong-ceng-wang-guan-she-ji-yu-shi-xian/"" data-c="
           &lt;h3 id=&#34;前言&#34;&gt;前言&lt;/h3&gt;
+&lt;h3 id=&#34;api网关调研&#34;&gt;API网关调研&lt;/h3&gt;
+&lt;h4 id=&#34;webflux&#34;&gt;webflux&lt;/h4&gt;
+&lt;p&gt;异步非阻塞模型&lt;/p&gt;
 &lt;h3 id=&#34;原理&#34;&gt;原理&lt;/h3&gt;
 &lt;h3 id=&#34;设计&#34;&gt;设计&lt;/h3&gt;
 &lt;h3 id=&#34;关键实现&#34;&gt;关键实现&lt;/h3&gt;
@@ -3233,6 +3340,109 @@ public class LRUCacheV2 {
         System.out.println(lruCacheV2.toString());
     }
 }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;链表实现v2&#34;&gt;链表实现V2&lt;/h3&gt;
+&lt;p&gt;2021.3.15更新&lt;br&gt;
+上述的链表有点复杂，没有考虑到利用map的size，没有利用好头尾节点双向特性，笔者重新实现了下，参考leetcode146题&lt;br&gt;
+实现的几个要点&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;构造函数中要构造好头尾节点，形成指针闭环，为后续的增删移做好准备&lt;/li&gt;
+&lt;li&gt;删除节点的时候，可以根据map的value也就是Node的key，来删除map中的数据，也就是说，可以根据map的key来删除数据，也可以根据map的value中的key来删除数据&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;package com.zyblue.fastim.common.algorithm.distribute;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * @author will
+ * @date 2021/3/15 10:18
+ */
+public class LRUCacheV3&amp;lt;K, V&amp;gt;{
+    public static class Node&amp;lt;K,V&amp;gt;{
+        public K key;
+        public V value;
+        public Node&amp;lt;K,V&amp;gt; pre;
+        public Node&amp;lt;K,V&amp;gt; next;
+        public Node(){}
+        public Node(K key, V value) {
+            this.key = key;
+            this.value = value;
+        }
+    }
+
+    /**
+     * map这样设计的原因是
+     * 1、
+     */
+    private Map&amp;lt;K, Node&amp;lt;K,V&amp;gt;&amp;gt; map = new HashMap&amp;lt;&amp;gt;();
+
+    private int capacity;
+
+    private Node&amp;lt;K,V&amp;gt; head;
+
+    private Node&amp;lt;K,V&amp;gt; tail;
+
+    public LRUCacheV3(int capacity){
+        this.capacity = capacity;
+        this.head = new Node&amp;lt;&amp;gt;();
+        this.tail = new Node&amp;lt;&amp;gt;();
+        head.pre = tail;
+        tail.next = head;
+    }
+
+    private void remove2Head(Node&amp;lt;K,V&amp;gt; node){
+        Node&amp;lt;K, V&amp;gt; pre = node.pre;
+        Node&amp;lt;K, V&amp;gt; next = node.next;
+        pre.next = next;
+        next.pre = pre;
+
+        add2Head(node);
+    }
+
+    private void removeTail(){
+        Node&amp;lt;K, V&amp;gt; next = tail.next.next;
+        tail.next = next;
+        next.pre = tail;
+    }
+
+    private void add2Head(Node&amp;lt;K,V&amp;gt; node){
+        Node&amp;lt;K, V&amp;gt; pre = head.pre;
+        pre.next = node;
+        node.next = head;
+        node.pre = pre;
+        head.pre = node;
+    }
+
+    public V get(K key){
+        Node&amp;lt;K,V&amp;gt; node = map.get(key);
+        if(node == null){
+            return null;
+        }
+        remove2Head(node);
+        return node.value;
+    }
+
+    public void put(K key, V value){
+        Node&amp;lt;K,V&amp;gt; node = map.get(key);
+        if(node == null){
+            // 利用map的size
+            if(map.size() &amp;gt;= capacity){
+                // 去除尾部节点
+                removeTail();
+                // 删除map的node
+                map.remove(tail.next.key);
+            }
+            Node&amp;lt;K,V&amp;gt; nodeAdd = new Node&amp;lt;&amp;gt;(key, value);
+            add2Head(nodeAdd);
+            map.put(key, nodeAdd);
+        }else {
+            node.value = value;
+            remove2Head(node);
+        }
+    }
+}
+
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;参考：&lt;br&gt;
 1、https://www.iteye.com/blog/gogole-692103&lt;br&gt;
