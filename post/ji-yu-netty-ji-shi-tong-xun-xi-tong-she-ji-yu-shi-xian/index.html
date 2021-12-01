@@ -8,7 +8,7 @@
 <meta name="keywords" content="zhangyao blog">
 <meta name="description" content="生死看淡，不服就干">
 <meta name="theme-color" content="#000">
-<title>2018年总结 | will</title>
+<title>基于Netty即时通讯系统设计与实现 | will</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1638331584367">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
@@ -38,8 +38,8 @@
 
 
 
-  <meta name="description" content="2018年总结" />
-  <meta name="keywords" content="总结" />
+  <meta name="description" content="基于Netty即时通讯系统设计与实现" />
+  <meta name="keywords" content="IM,网关,架构" />
 </head>
 
 <body>
@@ -242,14 +242,154 @@
     <ul class="markdownIt-TOC">
 <li>
 <ul>
-<li><a href="#%E5%86%99%E7%BB%99%E8%87%AA%E5%B7%B1%E7%9A%842018%E5%B9%B4%E6%80%BB%E7%BB%93">写给自己的2018年总结</a></li>
-<li><a href="#%E9%A2%98%E8%AE%B0">题记</a></li>
-<li><a href="#1-%E5%85%B3%E4%BA%8E%E6%8A%80%E6%9C%AF">1、关于技术</a></li>
-<li><a href="#2-%E5%85%B3%E4%BA%8E%E8%AE%A4%E7%9F%A5">2、关于认知</a></li>
-<li><a href="#3-%E5%85%B3%E4%BA%8E%E4%B8%BA%E4%BA%BA%E5%A4%84%E4%BA%8B">3、关于为人处事</a></li>
-<li><a href="#4-%E5%85%B3%E4%BA%8E%E5%8F%8B%E6%83%85%E7%88%B1%E6%83%85%E4%BA%B2%E6%83%85">4、关于友情爱情亲情</a></li>
-<li><a href="#5-2019%E5%B9%B4%E5%B1%95%E6%9C%9B">5、2019年展望</a></li>
-<li><a href="#%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B">总结一下</a></li>
+<li><a href="#fastim">FastIM</a></li>
+<li><a href="#%E4%B8%80-%E5%8A%9F%E8%83%BD">一、功能</a>
+<ul>
+<li><a href="#1-%E8%AE%BE%E8%AE%A1">1. 设计</a></li>
+<li><a href="#2-%E5%8A%9F%E8%83%BD">2. 功能</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BA%8C-%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1">二、系统设计</a>
+<ul>
+<li><a href="#1-im%E6%9E%B6%E6%9E%84%E5%9B%BE">1. IM架构图</a></li>
+<li><a href="#2-%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1">2. 架构设计</a>
+<ul>
+<li><a href="#20-client%E8%AE%BE%E8%AE%A1">2.0 CLIENT设计：</a>
+<ul>
+<li><a href="#21-%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%BA%8F%E5%88%97%E5%8F%B7%E8%AE%BE%E8%AE%A1">2.1 客户端序列号设计</a></li>
+<li><a href="#%E6%96%B9%E6%A1%88%E4%B8%80">方案一</a></li>
+<li><a href="#%E6%96%B9%E6%A1%88%E4%BA%8C">方案二</a></li>
+</ul>
+</li>
+<li><a href="#21-lsb%E8%AE%BE%E8%AE%A1%E4%B8%8E%E4%BC%98%E5%8C%96">2.1 LSB设计与优化：</a>
+<ul>
+<li><a href="#210-lsb%E8%AE%BE%E8%AE%A1">2.1.0 LSB设计</a></li>
+<li><a href="#211-lsb%E4%BC%98%E5%8C%96">2.1.1 LSB优化</a></li>
+</ul>
+</li>
+<li><a href="#22-gate%E8%AE%BE%E8%AE%A1">2.2 GATE设计：</a></li>
+<li><a href="#23-router%E8%AE%BE%E8%AE%A1">2.3 ROUTER设计：</a></li>
+<li><a href="#24-logic%E8%AE%BE%E8%AE%A1">2.4 LOGIC设计：</a></li>
+<li><a href="#25-das-data-access-service%E8%AE%BE%E8%AE%A1">2.5 DAS (data access service)设计：</a></li>
+</ul>
+</li>
+<li><a href="#3-%E5%8D%8F%E8%AE%AE%E8%AE%BE%E8%AE%A1">3. 协议设计</a>
+<ul>
+<li><a href="#30-%E7%9B%AE%E6%A0%87">3.0 目标</a></li>
+<li><a href="#31-%E8%AE%BE%E8%AE%A1">3.1 设计</a></li>
+<li><a href="#32-%E5%AE%9E%E8%B7%B5">3.2 实践</a></li>
+</ul>
+</li>
+<li><a href="#4-%E5%AE%89%E5%85%A8%E7%AE%A1%E7%90%86">4. 安全管理</a></li>
+<li><a href="#5-%E6%B6%88%E6%81%AF%E6%B5%81%E8%BD%AC%E8%AE%BE%E8%AE%A1">5. 消息流转设计</a>
+<ul>
+<li><a href="#50-%E6%B6%88%E6%81%AF%E5%8F%AF%E9%9D%A0%E6%80%A7%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81-%E4%B8%8D%E4%B8%A2%E6%B6%88%E6%81%AF">5.0 消息可靠性如何保证 不丢消息</a></li>
+<li><a href="#51-%E6%B6%88%E6%81%AF%E9%87%8D%E5%A4%8D%E6%80%A7%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81-%E4%B8%8D%E9%87%8D%E5%A4%8D">5.1 消息重复性如何保证 不重复</a></li>
+<li><a href="#52-%E6%B6%88%E6%81%AF%E9%A1%BA%E5%BA%8F%E6%80%A7%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81-%E4%B8%8D%E4%B9%B1%E5%BA%8F">5.2 消息顺序性如何保证 不乱序</a>
+<ul>
+<li><a href="#520-%E6%B6%88%E6%81%AF%E4%B9%B1%E5%BA%8F%E5%BD%B1%E5%93%8D%E7%9A%84%E5%9B%A0%E7%B4%A0">5.2.0 消息乱序影响的因素</a></li>
+<li><a href="#521-%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E6%97%B6%E5%BA%8F">5.2.1 如何保证时序</a></li>
+<li><a href="#522-%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E9%A1%BA%E5%BA%8F">5.2.2 客户端如何保证顺序</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#6-%E6%B6%88%E6%81%AF%E9%80%9A%E7%9F%A5%E8%AE%BE%E8%AE%A1">6 消息通知设计</a>
+<ul>
+<li><a href="#60-%E6%B6%88%E6%81%AF%E6%8B%89%E5%8F%96%E6%96%B9%E5%BC%8F%E7%9A%84%E9%80%89%E6%8B%A9">6.0 消息拉取方式的选择</a></li>
+<li><a href="#61-%E6%8E%A8%E6%8B%89%E9%9A%94%E7%A6%BB%E8%AE%BE%E8%AE%A1">6.1 推拉隔离设计</a></li>
+</ul>
+</li>
+<li><a href="#7-%E6%B6%88%E6%81%AFid%E7%94%9F%E6%88%90%E8%AE%BE%E8%AE%A1">7 消息ID生成设计</a><br>
+*
+<ul>
+<li><a href="#70-%E8%AE%BE%E8%AE%A1">7.0 设计</a></li>
+<li><a href="#71-%E4%BC%98%E7%82%B9">7.1 优点</a></li>
+<li><a href="#72-%E7%BC%BA%E7%82%B9">7.2 缺点：</a></li>
+<li><a href="#73-%E4%B8%A4%E7%A7%8D%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88">7.3 两种解决方案：</a></li>
+</ul>
+</li>
+<li><a href="#8-%E6%B6%88%E6%81%AF%E6%9C%AA%E8%AF%BB%E6%95%B0%E8%AE%BE%E8%AE%A1">8 消息未读数设计</a>
+<ul>
+<li><a href="#80-%E5%AE%9E%E7%8E%B0">8.0 实现</a></li>
+<li><a href="#81-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E4%BF%9D%E8%AF%81%E6%80%BB%E6%9C%AA%E8%AF%BB%E6%95%B0%E5%92%8C%E4%BC%9A%E8%AF%9D%E6%9C%AA%E8%AF%BB%E6%95%B0%E4%B8%80%E8%87%B4">8.1 分布式锁保证总未读数和会话未读数一致</a></li>
+<li><a href="#82-%E7%BE%A4%E8%81%8A%E6%B6%88%E6%81%AF%E6%9C%AA%E8%AF%BB%E6%95%B0%E9%9A%BE%E7%82%B9%E5%92%8C%E4%BC%98%E5%8C%96">8.2 群聊消息未读数难点和优化</a></li>
+</ul>
+</li>
+<li><a href="#9-%E7%BD%91%E5%85%B3%E8%AE%BE%E8%AE%A1">9. 网关设计</a>
+<ul>
+<li><a href="#91-%E6%8E%A5%E5%85%A5%E5%B1%82%E7%BD%91%E5%85%B3%E8%AE%BE%E8%AE%A1">9.1 接入层网关设计</a>
+<ul>
+<li><a href="#910-%E7%9B%AE%E6%A0%87">9.1.0 目标：</a></li>
+<li><a href="#911-%E6%8A%80%E6%9C%AF%E7%82%B9">9.1.1 技术点：</a></li>
+<li><a href="#912-%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%A1%88">9.1.2 设计方案：</a></li>
+</ul>
+</li>
+<li><a href="#92-%E5%BA%94%E7%94%A8%E5%B1%82api%E7%BD%91%E5%85%B3%E8%AE%BE%E8%AE%A1">9.2 应用层API网关设计</a>
+<ul>
+<li><a href="#920-%E7%9B%AE%E6%A0%87">9.2.0 目标：</a></li>
+<li><a href="#921-%E6%8A%80%E6%9C%AF%E7%82%B9">9.2.1 技术点：</a></li>
+<li><a href="#922-%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%A1%88">9.2.2 设计方案：</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#10-%E9%AB%98%E5%B9%B6%E5%8F%91-%E9%AB%98%E5%8F%AF%E7%94%A8%E8%AE%BE%E8%AE%A1">10. 高并发、高可用设计</a>
+<ul>
+<li><a href="#100-%E9%AB%98%E5%B9%B6%E5%8F%91%E8%AE%BE%E8%AE%A1">10.0 高并发设计</a>
+<ul>
+<li><a href="#1000-%E6%9E%B6%E6%9E%84%E4%BC%98%E5%8C%96">10.0.0 架构优化</a></li>
+<li><a href="#1001-%E4%B8%87%E4%BA%BA%E7%BE%A4%E8%81%8A%E4%BC%98%E5%8C%96">10.0.1 万人群聊优化</a></li>
+</ul>
+</li>
+<li><a href="#101-%E9%AB%98%E5%8F%AF%E7%94%A8%E8%AE%BE%E8%AE%A1">10.1 高可用设计</a></li>
+</ul>
+</li>
+<li><a href="#1010-%E5%BF%83%E8%B7%B3%E8%AE%BE%E8%AE%A1">10.1.0 心跳设计</a></li>
+<li><a href="#1011-%E5%BC%82%E5%B8%B8%E5%9C%BA%E6%99%AF%E8%AE%BE%E8%AE%A1">10.1.1 异常场景设计</a>
+<ul>
+<li><a href="#1012-%E7%B3%BB%E7%BB%9F%E7%A8%B3%E5%AE%9A%E6%80%A7%E8%AE%BE%E8%AE%A1">10.1.2 系统稳定性设计</a></li>
+</ul>
+</li>
+<li><a href="#11-%E6%A0%B8%E5%BF%83%E8%A1%A8%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1">11. 核心表结构设计</a>
+<ul>
+<li><a href="#%E7%94%A8%E6%88%B7%E8%A1%A8-t_user">用户表 t_user</a></li>
+<li><a href="#%E7%BE%A4%E8%A1%A8-t_group">群表 t_group</a></li>
+<li><a href="#%E7%BE%A4%E7%94%A8%E6%88%B7%E8%A1%A8-t_group_user">群用户表 t_group_user</a></li>
+<li><a href="#%E7%BE%A4%E7%94%A8%E6%88%B7%E6%B6%88%E6%81%AF%E8%A1%A8-t_group_user_msg">群用户消息表 t_group_user_msg</a></li>
+<li><a href="#%E7%BE%A4%E6%B6%88%E6%81%AF%E8%A1%A8-t_group_msg">群消息表 t_group_msg</a></li>
+<li><a href="#%E4%B8%AA%E4%BA%BA%E6%B6%88%E6%81%AF%E8%A1%A8-t_user_msg">个人消息表 t_user_msg</a></li>
+<li><a href="#%E4%B8%AA%E4%BA%BA%E4%BC%9A%E8%AF%9D%E8%A1%A8-t_conversation">个人会话表 t_conversation</a></li>
+</ul>
+</li>
+<li><a href="#12-%E6%A0%B8%E5%BF%83%E4%B8%9A%E5%8A%A1%E6%B5%81%E7%A8%8B">12 核心业务流程</a>
+<ul>
+<li><a href="#120-%E7%94%A8%E6%88%B7a%E5%8F%91%E6%B6%88%E6%81%AF%E7%BB%99%E7%94%A8%E6%88%B7b-%E5%8D%95%E8%81%8A">12.0 用户A发消息给用户B 【单聊】</a></li>
+<li><a href="#121-%E7%94%A8%E6%88%B7a%E5%8F%91%E6%B6%88%E6%81%AF%E7%BB%99%E7%BE%A4g-%E7%BE%A4%E8%81%8A">12.1 用户A发消息给群G 【群聊】</a></li>
+</ul>
+</li>
+<li><a href="#13-%E7%BA%A2%E5%8C%85%E8%AE%BE%E8%AE%A1">13 红包设计</a>
+<ul>
+<li><a href="#131-%E6%8A%A2%E7%BA%A2%E5%8C%85%E7%9A%84%E5%A4%A7%E8%87%B4%E6%A0%B8%E5%BF%83%E9%80%BB%E8%BE%91">13.1 抢红包的大致核心逻辑</a></li>
+<li><a href="#132-%E7%BA%A2%E5%8C%85%E7%9B%B8%E5%85%B3%E8%A1%A8%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1">13.2 红包相关表结构设计</a>
+<ul>
+<li><a href="#%E7%BA%A2%E5%8C%85%E8%A1%A8-t_red_package-%E5%8E%9F%E5%88%99%E4%B8%8A%E7%BA%A2%E5%8C%85%E4%BF%A1%E6%81%AF%E5%92%8C%E8%AE%A2%E5%8D%95%E6%94%AF%E4%BB%98%E4%BF%A1%E6%81%AF%E5%88%86%E4%B8%A4%E4%B8%AA%E8%A1%A8">红包表 t_red_package (原则上红包信息和订单支付信息分两个表)</a></li>
+<li><a href="#%E6%8A%A2%E7%BA%A2%E5%8C%85%E8%AE%B0%E5%BD%95%E8%A1%A8-t_red_package_record">抢红包记录表 t_red_package_record</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E4%B8%89-%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84">三、项目结构</a></li>
+<li><a href="#%E5%9B%9B-%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95">四、性能测试</a></li>
+<li><a href="#%E4%BA%94-qa">五、Q&amp;A</a>
+<ul>
+<li><a href="#1-%E6%9E%B6%E6%9E%84">1 架构</a></li>
+<li><a href="#2-%E6%8A%80%E6%9C%AF%E7%BB%86%E8%8A%82">2 技术细节</a></li>
+</ul>
+</li>
+<li><a href="#%E5%85%AD-contact">六、Contact</a></li>
 </ul>
 </li>
 </ul>
@@ -517,8 +657,8 @@
           <div class="section bg-color post post-page">
             <header class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://zhangyaoo.github.io/post/2018-nian-zong-jie/">
-      2018年总结
+    <a class="post-title-link" href="https://zhangyaoo.github.io/post/ji-yu-netty-ji-shi-tong-xun-xi-tong-she-ji-yu-shi-xian/">
+      基于Netty即时通讯系统设计与实现
     </a>
   </h1>
   <div class="post-meta">
@@ -526,7 +666,7 @@
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span class="language" data-lan="publish">发布于</span>
-      <span>2019-01-01</span>
+      <span>2021-12-01</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
@@ -535,8 +675,20 @@
       <span class="pc-show language" data-lan="category-in">分类于</span>
       
       
-      <a href="https://zhangyaoo.github.io/tag/hD1pMQ2Ri/">
-        <span>总结</span>
+      <a href="https://zhangyaoo.github.io/tag/H4ekOzuAI/">
+        <span>IM</span>
+      </a>、
+      
+      
+      
+      <a href="https://zhangyaoo.github.io/tag/SsTjyPN_I/">
+        <span>网关</span>
+      </a>、
+      
+      
+      
+      <a href="https://zhangyaoo.github.io/tag/8IlK1cWz9/">
+        <span>架构</span>
       </a>
       
       
@@ -545,89 +697,1105 @@
     
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>10<span class="language" data-lan="minute">分钟</span></span>
+      <span>36<span class="language" data-lan="minute">分钟</span></span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>2730<span class="pc-show language" data-lan="words">字数</span></span>
+      <span>10081<span class="pc-show language" data-lan="words">字数</span></span>
     </span>
     
   </div>
 </header>
             <div class="post-body next-md-body" id="post_body">
-              <h2 id="写给自己的2018年总结">写给自己的2018年总结</h2>
-<h2 id="题记">题记</h2>
-<p><img src="https://img-blog.csdnimg.cn/20181231115831927.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3p5MTUxMTIzNDI0NDk=,size_16,color_FFFFFF,t_70" alt="" loading="lazy"><br>
-不觉中，2018年就快过了，在这之前从来没有写过一些总结性的文章，从小学初中日志作业，到高中的日复一夜的学习再到大学的浑浑噩噩的僵硬式的学习，一直都在进行流水账式的学习输入，从没有写过关于一年的计划甚至是一个月的小目标。</p>
-<p>至于为什么要做这个总结，我想是因为，年复一年的度过，有时候自己都不知道在这一年干过什么事情、收获了什么和失去了什么，包括对友情、亲情和事业等等。是因为我记性太差，还是说在这个娱乐信息爆炸的时代，我注意力都集中在快餐式的的认知上，很难有精力或者集中注意力去汲取自己想要的高质量的信息上，不得而知。所以今年我觉得有必要去总结自己的这一年。</p>
-<p>总结目录：</p>
+              <h2 id="fastim">FastIM</h2>
+<blockquote>
+<p>🚀基于Netty高可用分布式即时通讯系统，支持长连接网关管理、单聊、群聊、登录登出、聊天记录查询、离线消息存储、消息推送、心跳、分布式唯一ID、红包、消息同步和漫游等功能，支持集群部署的分布式架构。</p>
+</blockquote>
+<h2 id="一-功能">一、功能</h2>
+<h3 id="1-设计">1. 设计</h3>
+<ul class="contains-task-list">
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-2961719"> <a href="#%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1">IM架构设计<label class="task-list-item-label" for="task-item-2961719"> [IM架构设计](#架构设计)</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-1018164"> <a href="#%E6%B6%88%E6%81%AFID%E7%94%9F%E6%88%90%E6%9C%BA%E5%88%B6">分布式ID设计<label class="task-list-item-label" for="task-item-1018164"> [分布式ID设计](#消息ID生成机制)</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-8624631"> <a href="#%E6%A0%B8%E5%BF%83%E8%A1%A8%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1">IM表结构设计<label class="task-list-item-label" for="task-item-8624631"> [IM表结构设计](#核心表结构设计)</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-4891272"><label class="task-list-item-label" for="task-item-4891272"> TCP网关设计</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-5318263"><label class="task-list-item-label" for="task-item-5318263"> HTTP网关设计</label></li>
+</ul>
+<h3 id="2-功能">2. 功能</h3>
+<ul class="contains-task-list">
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-2731915"><label class="task-list-item-label" for="task-item-2731915"> 单聊</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-1373941"><label class="task-list-item-label" for="task-item-1373941"> 群聊</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-8646244"><label class="task-list-item-label" for="task-item-8646244"> 心跳保活，断线自动重连</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-1935693"> <a href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E9%80%9A%E8%AE%AF%E5%8D%8F%E8%AE%AE+Protobuf%E5%BA%8F%E5%88%97%E5%8C%96">自定义通讯协议 + Protobuf序列化<label class="task-list-item-label" for="task-item-1935693"> [自定义通讯协议 + Protobuf序列化](#自定义通讯协议+Protobuf序列化)</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-1312619"> <a href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%9C%AAack%E6%B6%88%E6%81%AF%E9%87%8D%E8%AF%95">客户端未ack消息重试<label class="task-list-item-label" for="task-item-1312619"> [客户端未ack消息重试](#客户端未ack消息重试)</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-7127960"><label class="task-list-item-label" for="task-item-7127960"> 消息未读计数</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-8522881"><label class="task-list-item-label" for="task-item-8522881"> 聊天记录存储和查询</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-745469"><label class="task-list-item-label" for="task-item-745469"> 登录、登出</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-5882915"><label class="task-list-item-label" for="task-item-5882915"> 通讯协议支持HTTP/2</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-13603"> <a href="#%E5%AE%A2%E6%88%B7%E7%AB%AFSDK">客户端SDK<label class="task-list-item-label" for="task-item-13603"> [客户端SDK](#客户端SDK)</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-3285230"><label class="task-list-item-label" for="task-item-3285230"> 多端消息同步和消息漫游</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-9870161"><label class="task-list-item-label" for="task-item-9870161"> 唯一设备踢出</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-7699860"><label class="task-list-item-label" for="task-item-7699860"> 文件图片发送</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-8897110"><label class="task-list-item-label" for="task-item-8897110"> 消息加密</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-2228880"><label class="task-list-item-label" for="task-item-2228880"> 群红包</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-3425310"><label class="task-list-item-label" for="task-item-3425310"> 消息撤回</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-758566"><label class="task-list-item-label" for="task-item-758566"> 消息已读</label></li>
+</ul>
+<h2 id="二-系统设计">二、系统设计</h2>
+<h3 id="1-im架构图">1. IM架构图</h3>
+<p>基于可扩展性高可用原则，把网关层、路由层、逻辑层、数据层分离，并且支持分布式部署<br>
+<img src="https://github.com/zhangyaoo/fastim/blob/master/pic/architecture.png" alt="IM架构图" loading="lazy"></p>
+<h3 id="2-架构设计">2. 架构设计</h3>
+<h4 id="20-client设计">2.0 CLIENT设计：</h4>
 <ol>
-<li>关于技术</li>
-<li>关于认知</li>
-<li>关于为人处事</li>
-<li>关于友情爱情亲情</li>
-<li>2019展望</li>
+<li>client每个设备会在本地存每一个会话，保留有最新一条消息的顺序 ID</li>
+<li>为了避免client宕机，也就是退出应用，保存在内存的消息ID丢失，会存到本地的文件中</li>
+<li>client需要在本地维护一个等待ack队列，并配合timer超时机制，来记录哪些消息没有收到ack：N，以定时重发。</li>
+<li>客户端本地生成一个递增序列号发送给服务器，用作保证发送顺序性。该序列号还用作ack队列收消息时候的移除。</li>
 </ol>
-<h2 id="1-关于技术">1、关于技术</h2>
-<p><img src="https://img-blog.csdnimg.cn/20181231120336118.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3p5MTUxMTIzNDI0NDk=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-1、技术积累<br>
-师范专业毕业的我从大三开始接触计算机，大三那年学的网络工程，还考了个CCNA，目前发现没有什么用，对于现在的我来说。然后被住在上铺的兄弟67代入坑里学习code搬砖，从那开始便一发不可收拾，埋头苦学，连教师资格证都不考，跑出去公司里面当小弟实习。至此就开始技术积累之路了。</p>
-<p>当小弟那一段时间，就像刚萌发的种子一样疯狂吸收营养，学些了python爬虫、python web开发、Java公众号开发，SSM Java全家桶开发。这些都是在学校学不到的东西，当时感觉自己很牛逼，直到毕业找工作。</p>
-<p>毕业那一刻起，因为技术发展瓶颈，我又背上行囊横跨大半个中国从山东去南方一线城市漂。拿这自以为高大上的简历去投递，然后面试，惨遭面试官的啪啪打脸，连一个hashmap的底层原理都不知道，最有印象的是Java 循环删除list怎么删除，回答完后别面试官一脸嫌弃-。-</p>
-<p><strong>只会拿着现成的框架和应用去用，而不知道底层的实现方式和原理，那么工作性质就和网管差不多</strong>。<br>
-不会举一反三，如果又有新的框架出来又必须要学习一遍，如果说掌握了底层工作原理，那么用起来会舒服很多。</p>
-<p>2、技术分享<br>
-<img src="https://img-blog.csdnimg.cn/20181231124820725.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3p5MTUxMTIzNDI0NDk=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-<strong>分享的乐趣，从一开始就停不下来。</strong><br>
-公司会周期性的选一些当下热门的技术让我们去研究，然后去把自己研究的内容分享出来。我认为这是非常棒的一种学习方式。为什么这么说。因为这个是非常具体挑战性的，你理解了是一个层次，如果说要给别人将明白又是另外一个层次，这是两个不同层次的概念。如果说你的语言表达性不行，那么这个就是更加难上加难了。</p>
-<p>分享的乐趣不仅是这个，当你给别人讲完后，你还可以通过别人提供的问题和建议方案，和你自己的理解进行碰撞，然后产生新的认知元素，到下一次分享就可以融入上次分享的认知进来。</p>
-<p>到现在为止，我还在想，怎么在给别人讲解分享的时候能够更能让别人听懂，而且愿意去听。我最怕还是在分享的时候别人在玩手机。因为有了这个现象就表明你的分享做的不够好。</p>
-<p>3、书籍<br>
-<strong>在这个手机万能的时代，能够静下心来看完一本书并理解是非常不容易的</strong>。<br>
-或许你们都说哪有时间看书，都忙工作任务了，甚至有时候我自己都不敢说一个月看完一本书，不管是文学还是专业技术性书籍。</p>
-<p>今年，我看了以下几本书，有的只看了一本书中的一部分，大部分都是涉及专业技术的：Netty权威指南、深入理解Java多线程、JavaEE互联网轻量级技术整合开发、Java高并发程序设计。还有其他的一些非技术书就不一一列举了。一年才看这几本书真是有点丢人-。-</p>
-<p>自认为网络技术博客和纸质书还是有各有各自的存在的意义的。就拿纸质书来说，它能够通过一系列的目录，能够从基本来源、基本原理、使用场景、底层原理技术、工作应用场景来一一进行有顺序的给人以真正理解和掌握。不需要自己从网上搜分散的知识点。</p>
-<p><strong>不是看完书后就完了，还需要自己通过实践去证明你自己的理解是否正确</strong>，这也是个不可欠缺的过程。</p>
-<p>为什么还需要读书呢，我认为网上一句话还是不错的，是《物演通论》作者王东岳说的：“因为通过电视或者其他方式搜集的信息，即那种通过直观方式接受的知识，是最浅显、最粗疏且没有经过精密逻辑证明的东西”。</p>
-<p>4、思考<br>
-<img src="https://img-blog.csdnimg.cn/20181231141547586.png" alt="在这里插入图片描述" loading="lazy"><br>
-关于程序员技术深度和广度的选择，也是从网上看的一句话，Oracle技术大牛杨晓峰指出：“<strong>技术人免不了要构建广泛的知识体系，但终究还是要克制住诱惑，将某个领域做到精深</strong>。水桶的水量取决于最短板，但是大多数情况下，我们在工作中的回报，更多的源自于自身的长处，甚至某种程度上还决定了我们是拥有自己选择的自由，还是疲于奔命，必经我们每个人的体力、经历有现实的上限的”。<br>
-自认为还是很有道理的，先建立自己广度网，然后专门找一项自己喜欢的方向，然后放开手脚去研究。至少要有一个非常深的领域知识，所谓知识体系的搭建是基于多个扎实的知识点汇集而成，点不扎实不深入。</p>
-<h2 id="2-关于认知">2、关于认知</h2>
-<p><img src="https://img-blog.csdnimg.cn/20181231154812245.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3p5MTUxMTIzNDI0NDk=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-1、<strong>人与人最大的不同：认知不同</strong><br>
-我认为的成长就是认知成长，是对一间事物的理解和处理方法。由于每个人的出生家境不同，生活环境不同，也就影响了每个人的认知，所以人才会有各自的想法，做事准则和处世方式。</p>
-<p>2、<strong>不断学习，使自己更值钱。</strong><br>
-都说2018年是互联网寒冬，但是对我们技术人来说，难以构成影响，因为只要你有足够的技术底子，在哪都可以养活自己。用我们家乡话来说，”学好技术，走到天下都不怕“，这里我私自把物理化改成技术，哈哈。<br>
-经常都能在网上看到一句话，”<strong>人生最重要的投资是自己。使自己更值钱才是立身之本。</strong>“</p>
-<p>3、<strong>高质量的输入重要，输出比输入更重要</strong><br>
-就拿看书写文章来说，当我们要写类似高考那种作文题目时候，如果这时读武侠小说，那么肯定是对于写作文是无益的，这就是低质量的输入，如果看一些文学方面的书的话，那么对于写作是非常有好处的。<br>
-但是一味的输入，提升的意义不高，个人观点。比如我从小学到大，到现在都没写过文章的话，以前在高中学习的写文章的能力都没有了。所以如果不去输出，那么学习到的东西将在以后某个时刻都会忘记。</p>
-<h2 id="3-关于为人处事">3、关于为人处事</h2>
-<p><img src="https://img-blog.csdnimg.cn/20181231150512794.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3p5MTUxMTIzNDI0NDk=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-我这举两个例子：<br>
-例1：上学那会，我爸送我去火车站，到了马路上准备叫出租车。这时对面马路上来了一辆空车，司机师傅看到我们招手，就准备到不远处掉头，然后这时候另外一辆出租车就刚好停在我们面前，我准备上眼前这辆车的时候，我爸就把我拉住叫我等之前那一辆车掉头坐那辆车，而且那辆车已经拐弯马上到我们这边来了。之后结果就是，我和我爸坐上了之前一辆车，而且和停在我们面前的后一辆车师傅说“不好意思我们已经叫了马路对面那一辆车了“。</p>
-<p>这件事到现在我还有记忆深刻，这里我想说的是，<strong>我们在方便自己的同时，也要换位思考考虑别人的感受</strong>。<br>
-或许对于你来说是一件小事情，直接图方便坐上离自己最近的车。那也无可厚非，换作以前的我也是，没有换位思考过。但是现在我觉得换位思考也是一个成年人应具备的素质。</p>
-<p>例2：上一次公司技术联调，我这边需要远程和另一个分公司同事联调，我这边完事后需要通知他那边，他那边才能继续完成工作，由于自己的原因，这边做完，没有及时通知到他们，导致他们那边延期。</p>
-<p>这件事我想说的是，<strong>我们在做事的时候，无论是工作还是生活，都不能去因为自己耽搁别人</strong>，因为别人的时间也是时间，和我们自己是一样的。</p>
-<h2 id="4-关于友情爱情亲情">4、关于友情爱情亲情</h2>
-<p><img src="https://img-blog.csdnimg.cn/20181231151002819.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3p5MTUxMTIzNDI0NDk=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-关于友情：想对远方的朋友说 <strong>当你辉煌时候，我祝贺你，当你落魄的时候，我随时帮助你</strong>。</p>
-<p>关于爱情：到现在我还在想自己真正想去拥有的是什么。</p>
-<p>关于亲情：只有别人关心你飞的高不高，没有人会关心你飞的累不累，除了家人。</p>
-<h2 id="5-2019年展望">5、2019年展望</h2>
-<p>立个flag，毕竟是未来的事<br>
-1、一周一次跑步+篮球<br>
-2、两个月至少看完一本书<br>
-3、保护好视力<br>
-4、熟悉金融核心业务<br>
-5、体重不超140</p>
-<h2 id="总结一下">总结一下</h2>
-<p><img src="https://img-blog.csdnimg.cn/20181231162952878.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3p5MTUxMTIzNDI0NDk=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-人的成长是不断认识到以前的自己是一个傻X的过程，希望明年的我认为今年的我是一个傻X。</p>
-<p><em>2018-12-31 于张遥出租屋写</em></p>
+<h5 id="21-客户端序列号设计">2.1 客户端序列号设计</h5>
+<h5 id="方案一">方案一</h5>
+<figure data-type="image" tabindex="1"><img src="https://github.com/zhangyaoo/fastim/blob/master/pic/sequenceId.png" alt="客户端序列号" loading="lazy"></figure>
+<p>设计：</p>
+<ul>
+<li>
+<p>数据传输中的大小尽量小用int，不用bigint，节省传输大小</p>
+</li>
+<li>
+<p>只保证递增即可,在用户重新登录或者重连后可以进行日期重置，只保证单次</p>
+</li>
+<li>
+<p>客户端发号器不需要像类似服务器端发号器那样集群部署，不需要考虑集群同步问题<br>
+说明：上述生成器可以用18年[(2^29-1)/3600/24/365]左右，一秒内最多产生4个消息</p>
+</li>
+<li>
+<p>优点：可以在断线重连和重装APP的情况下，18年之内是有序的</p>
+</li>
+<li>
+<p>缺点：每秒只能发4个消息，限制太大，对于群发场景不合适</p>
+</li>
+<li>
+<p>改进：使用long进行传输，年限扩展很久并且有序</p>
+</li>
+</ul>
+<h5 id="方案二">方案二</h5>
+<p>设计：</p>
+<ul>
+<li>
+<p>每次重新建立链接后进行重置，将sequence_id（int表示）从0开始进行严格递增</p>
+</li>
+<li>
+<p>客户端发送消息会带上唯一的递增sequence_id，同一条消息重复投递的sequence_id是一样的</p>
+</li>
+<li>
+<p>后端存储每个用户的sequence_id，当sequence_id归0，用户的epoch年代加1存储入库，单聊场景下转发给接收者时候，接收者按照sequence_id和epoch来进行排序</p>
+</li>
+<li>
+<p>优点：可以在断线重连和重装APP的情况下，接收者可以按照发送者发送时序来显示，并且对发送消息的速率没限制</p>
+</li>
+</ul>
+<h4 id="21-lsb设计与优化">2.1 LSB设计与优化：</h4>
+<h5 id="210-lsb设计">2.1.0 LSB设计</h5>
+<ol>
+<li>接入层的高可用、负载均衡、扩展性全部在这里面做</li>
+<li>客户端通过LSB，来获取gate IP地址，通过IP直连，目的是
+<ul>
+<li>灵活的负载均衡策略 可根据最少连接数来分配IP</li>
+<li>做灰度策略来分配IP</li>
+<li>AppId业务隔离策略 不同业务连接不同的gate，防止相互影响</li>
+<li>单聊和群聊的im接入层通道分开</li>
+</ul>
+</li>
+</ol>
+<h5 id="211-lsb优化">2.1.1 LSB优化</h5>
+<p>问题背景：当某个实例重启后，该实例的连接断开后，客户端会发起重连，重连就大概率转移其他实例上，导致最近启动的实例连接数较少，最早启动的实例连接数较多<br>
+解决方法：</p>
+<ol>
+<li>客户端会发起重连，跟服务器申请重连的新的服务器IP，系统提供合适的算法来平摊gate层的压力，防止雪崩效应。</li>
+<li>gate层定时上报本机的元数据信息以及连接数信息，提供给LSB中心，LSB根据最少连接数负载均衡实现，来计算一个节点供连接。</li>
+</ol>
+<h4 id="22-gate设计">2.2 GATE设计：</h4>
+<p>GATE层网关有以下特性：</p>
+<ol>
+<li>任何一个gate网关断掉，用户端检测到以后重新连接LSB服务获取另一个gate网关IP，拿到IP重新进行长连接通信。对整体服务可靠性基本没有影响。</li>
+<li>gate可以无状态的横向部署，来扩展接入层的接入能力</li>
+<li>根据协议分类将入口请求打到不同的网关上去，HTTP网关接收HTTP请求，TCP网关接收tcp长连接请求</li>
+<li>长连接网关，提供各种监控功能，比如网关执行线程数、队列任务数、ByteBuf使用堆内存数、堆外内存数、消息上行和下行的数量以及时间</li>
+</ol>
+<h4 id="23-router设计">2.3 ROUTER设计：</h4>
+<ol>
+<li>把用户状态信息存储在Redis集群里。因此也是无状态的，任何一个router服务挂掉，不影响整体服务能力。</li>
+<li>转发消息，将消息投递给固定gate上的会话，处理路由逻辑</li>
+<li>router层需要存储的关系
+<ul>
+<li>uid和gate层机器ID关系</li>
+<li>用户全局在线信息</li>
+</ul>
+</li>
+<li>用户路由状态一致性保证
+<ul>
+<li>如果路由状态和channel通道不一致，比如有路由状态，没有channel通道（已关闭）那么，就会走离线消息流出，并且清除路由信息</li>
+<li>动态重启gate，会及时清理路由信息</li>
+</ul>
+</li>
+</ol>
+<h4 id="24-logic设计">2.4 LOGIC设计：</h4>
+<p>logic按照分布式微服务的拆分思想进行拆分，拆分为多个模块</p>
+<ol>
+<li>单聊服务</li>
+<li>群聊服务</li>
+<li>登录 登出 注册服务</li>
+<li>红包服务</li>
+<li>分布式ID服务</li>
+<li>离线服务</li>
+</ol>
+<h4 id="25-das-data-access-service设计">2.5 DAS (data access service)设计：</h4>
+<ol>
+<li>定时将冷数据迁移到Cold存储系统</li>
+<li>多个存储系统的实现，统一cache层</li>
+<li>向上游屏蔽存储引擎，提供友好的接口</li>
+</ol>
+<h3 id="3-协议设计">3. 协议设计</h3>
+<h4 id="30-目标">3.0 目标</h4>
+<ol>
+<li>高性能：协议设计紧凑，保证数据包小，并且序列化性能好</li>
+<li>可扩展性：针对后续业务发展，可以自由的自定义协议，无需较大改动协议结构</li>
+</ol>
+<h4 id="31-设计">3.1 设计</h4>
+<p>IM协议采用二进制定长包头和变长包体来实现客户端和服务端的通信，并且采用谷歌protobuf序列化协议，设计如下：</p>
+<figure data-type="image" tabindex="2"><img src="https://github.com/zhangyaoo/fastim/blob/master/pic/IM-protocol.png" alt="IM协议设计图" loading="lazy"></figure>
+<p>各个字段如下解释：</p>
+<ul>
+<li>headData：头部标识，协议头标识，用作粘包半包处理。4个字节</li>
+<li>version：客户端版本。4个字节</li>
+<li>cmd：业务命令，比如心跳、推送、单聊、群聊。1个字节</li>
+<li>msgType：消息通知类型 request response notify。1个字节</li>
+<li>logId：调试性日志，追溯一个请求的全路径。4个字节</li>
+<li>sequenceId：序列号，可以用作异步处理。4个字节</li>
+<li>dataLength：数据体的长度。4个字节</li>
+<li>data：数据</li>
+</ul>
+<h4 id="32-实践">3.2 实践</h4>
+<ol>
+<li>针对数据data，<strong>网关gate层不做反序列化，反序列化步骤在service做</strong>，避免重复序列化和反序列化导致的性能损失</li>
+<li>网关层不做业务逻辑处理，只做消息转发和推送，减少网关层的复杂度</li>
+</ol>
+<h3 id="4-安全管理">4. 安全管理</h3>
+<ol>
+<li>为防止消息传输过程中不被截获、篡改、伪造，采用TLS传输层加密协议</li>
+<li>私有化协议天然具备一定的防窃取和防篡改的能力，相对于使用JSON、XML、HTML等明文传输系统，被第三方截获后在内容破解上相对成本更高，因此安全性上会更好一些</li>
+<li>消息存储安全性:针对账号密码的存储安全可以通过“高强度单向散列算法”和“加盐”机制来提升加密密码可逆性；IM消息采用“端到端加密”方式来提供更加安全的消息传输保护。</li>
+<li>安全层协议设计。基于动态密钥，借鉴类似SSL，不需要用证书来管理。</li>
+</ol>
+<h3 id="5-消息流转设计">5. 消息流转设计</h3>
+<p>一个正常的消息流转需要如图所示的流程：<br>
+<img src="https://github.com/zhangyaoo/fastim/blob/master/pic/IM-pic1.png" alt="IM核心流程图" loading="lazy"></p>
+<ol>
+<li>客户端A发送请求包R</li>
+<li>server将消息存储到DB</li>
+<li>存储成功后返回确认ack</li>
+<li>server push消息给客户端B</li>
+<li>客户端B收到消息后返回确认ack</li>
+<li>server收到ack后更新消息的状态或者删除消息</li>
+</ol>
+<p>需要考虑的是，一个健壮的系统需要考虑各种异常情况，如丢消息，重复消息，消息时序问题</p>
+<h4 id="50-消息可靠性如何保证-不丢消息">5.0 消息可靠性如何保证 不丢消息</h4>
+<ol>
+<li>应用层ACK</li>
+<li>客户端需要超时与重传</li>
+<li>服务端需要超时与重传，具体做法就是增加ack队列和定时器Timer</li>
+<li>业务侧兜底保证，客户端拉消息通过一个本地的旧的序列号来拉取服务器的最新消息</li>
+<li>为了保证消息必达，在线客户端还增加一个定时器，定时向服务端拉取消息，避免服务端向客户端发送拉取通知的包丢失导致客户端未及时拉取数据。</li>
+</ol>
+<h4 id="51-消息重复性如何保证-不重复">5.1 消息重复性如何保证 不重复</h4>
+<ol>
+<li>超时与重传机制将导致接收的client收到重复的消息，具体做法就是一份消息使用同一个消息ID进行去重处理。</li>
+</ol>
+<h4 id="52-消息顺序性如何保证-不乱序">5.2 消息顺序性如何保证 不乱序</h4>
+<h5 id="520-消息乱序影响的因素">5.2.0 消息乱序影响的因素</h5>
+<ol>
+<li>时钟不一致，分布式环境下每个机器的时间可能是不一致的</li>
+<li>多发送方和多接收方，这种情况下，无法保先发的消息被先收到</li>
+<li>网络传输和多线程，网络传输不稳定的话可能导致包在数据传输过程中有的慢有的快。多线程也可能是会导致时序不一致影响的因素</li>
+</ol>
+<p>以上，如果保持绝对的实现，那么只能是一个发送方，一个接收方，一个线程阻塞式通讯来实现。那么性能会降低。</p>
+<h5 id="521-如何保证时序">5.2.1 如何保证时序</h5>
+<ol>
+<li>
+<p>单聊：通过发送方的绝对时序seq，来作为接收方的展现时序seq。</p>
+<ul>
+<li>实现方式：可以通过时间戳或者本地序列号方式来实现</li>
+<li>缺点：本地时间戳不准确或者本地序列号在意外情况下可能会清0，都会导致发送方的绝对时序不准确</li>
+</ul>
+</li>
+<li>
+<p>群聊：因为发送方多点发送时序不一致，所以通过服务器的单点做序列化，也就是通过ID递增发号器服务来生成seq，接收方通过seq来进行展现时序。</p>
+<ul>
+<li>实现方式：通过服务端统一生成唯一趋势递增消息ID来实现或者通过redis的递增incr来实现</li>
+<li>缺点：redis的递增incr来实现，redis取号都是从主取的，会有性能瓶颈。ID递增发号器服务是集群部署，可能不同发号服务上的集群时间戳不同，可能会导致后到的消息seq还小。</li>
+</ul>
+</li>
+<li>
+<p>群聊时序的优化：按照上面的群聊处理，业务上按照道理只需要保证单个群的时序，不需要保证所有群的绝对时序，所以解决思路就是<strong>同一个群的消息落到同一个发号service</strong>上面，消息seq通过service本地生成即可。</p>
+</li>
+</ol>
+<h5 id="522-客户端如何保证顺序">5.2.2 客户端如何保证顺序</h5>
+<ol>
+<li>
+<p>为什么要保证顺序？</p>
+<ul>
+<li>消息即使按照顺序到达服务器端，也会可能出现：不同消息到达接收端后，可能会出现“先产生的消息后到”“后产生的消息先到”等问题。所以客户端需要进行兜底的流量整形机制</li>
+</ul>
+</li>
+<li>
+<p>如何保证顺序？</p>
+<ul>
+<li>接收方收到消息后进行判定，如果当前消息序号大于前一条消息的序号就将当前消息追加在会话里</li>
+<li>否则继续往前查找倒数第二条、第三条等消息，一直查找到恰好小于当前推送消息的那条消息，然后插入在其后展示。</li>
+</ul>
+</li>
+</ol>
+<h3 id="6-消息通知设计">6 消息通知设计</h3>
+<p><strong>整体消息推送和拉取的时序图如下：</strong><br>
+<img src="https://github.com/zhangyaoo/fastim/blob/master/pic/msg-pull-push-model.png" alt="IM消息推拉模型" loading="lazy"></p>
+<h4 id="60-消息拉取方式的选择">6.0 消息拉取方式的选择</h4>
+<p>本项目是进行推拉结合来进行服务器端消息的推送和客户端的拉取，我们知道单pull和单push有以下缺点：</p>
+<p>单pull：</p>
+<ul>
+<li>pull要考虑到消息的实时性，不知道消息何时送达</li>
+<li>pull要考虑到哪些好友和群收到了消息，要循环每个群和好友拿到消息列表，读扩散</li>
+</ul>
+<p>单push：</p>
+<ul>
+<li>push实时性高，只要将消息推送给接收者就ok，但是会集中消耗服务器资源。并且再群聊非常多，聊天频率非常高的情况下，会增加客户端和服务端的网络交互次数</li>
+</ul>
+<p>推拉结合：</p>
+<ul>
+<li>推拉结合的方式能够分摊服务端的压力,能保证时效性，又能保证性能</li>
+<li>具体做法就是有新消息时候，推送哪个好友或者哪个群有新消息，以及新消息的数量或者最新消息ID，客户端按需根据自身数据进行拉取</li>
+</ul>
+<h4 id="61-推拉隔离设计">6.1 推拉隔离设计</h4>
+<ol>
+<li>为什么做隔离
+<ul>
+<li>如果客户端一边正在拉取数据，一边有新的增量消息push过来</li>
+</ul>
+</li>
+<li>如何做隔离
+<ul>
+<li>本地设置一个全局的状态，当客户端拉取完离线消息后设置状态为1（表示离线消息拉取完毕）。当客户端收到拉取实时消息，会启用一个轮询监听这个状态，状态为1后，再去向服务器拉取消息。</li>
+<li>如果是push消息过来（不是主动拉取），那么会先将消息存储到本地的消息队列中，等待客户端上一次拉取数据完毕，然后将数据进行合并即可</li>
+</ul>
+</li>
+</ol>
+<h3 id="7-消息id生成设计">7 消息ID生成设计</h3>
+<h5 id="70-设计">7.0 设计</h5>
+<p>实际业务的情况【只做参考，实际可以根据公司业务线来调整】</p>
+<ol>
+<li>单机高峰并发量小于1W，预计未来5年单机高峰并发量小于10W</li>
+<li>有2个机房，预计未来5年机房数量小于4个 每个机房机器数小于150台</li>
+<li>目前只有单聊和群聊两个业务线，后续可以扩展为系统消息、聊天室、客服等业务线，最多8个业务线</li>
+</ol>
+<p>根据以上业务情况，来设计分布式ID：<br>
+<img src="https://github.com/zhangyaoo/fastim/blob/master/pic/server-id.jpg" alt="IM服务端分布式ID设计" loading="lazy"></p>
+<h5 id="71-优点">7.1 优点</h5>
+<ul>
+<li>不同机房不同机器不同业务线内生成的ID互不相同</li>
+<li>每个机器的每毫秒内生成的ID不同</li>
+<li>预留两位留作扩展位</li>
+</ul>
+<h5 id="72-缺点">7.2 缺点：</h5>
+<p>当并发度不高的时候，时间跨毫秒的消息，区分不出来消息的先后顺序。因为时间跨毫秒的消息生成的ID后面的最后一位都是0，后续如果按照消息ID维度进行分库分表，会导致数据倾斜</p>
+<h5 id="73-两种解决方案">7.3 两种解决方案：</h5>
+<ol>
+<li>方案一：去掉snowflake最后8位，然后对剩余的位进行取模</li>
+<li>方案二：不同毫秒的计数，每次不是归0，而是归为随机数，相比方案一，比较简单实用</li>
+</ol>
+<h3 id="8-消息未读数设计">8 消息未读数设计</h3>
+<h4 id="80-实现">8.0 实现</h4>
+<ol>
+<li>每发一个消息，消息接收者的会话未读数+1，并且接收者所有未读数+1</li>
+<li>消息接收者返回消息接收确认ack后，消息未读数会-1</li>
+<li>消息接收者的未读数+1，服务端就会推算有多少条未读数的通知</li>
+</ol>
+<h4 id="81-分布式锁保证总未读数和会话未读数一致">8.1 分布式锁保证总未读数和会话未读数一致</h4>
+<ol>
+<li>不一致原因：当总未读数增加，这个时候客户端来了请求将未知数置0，然后再增加会话未读数，那么会导致不一致</li>
+<li>保证：为了保证总未读数和会话未读数原子性，需要用分布式锁来保证</li>
+</ol>
+<h4 id="82-群聊消息未读数难点和优化">8.2 群聊消息未读数难点和优化</h4>
+<ol>
+<li>
+<p>难点</p>
+<ul>
+<li>一个群聊每秒几百的并发聊天，比如消息未读数，相当于每秒W级别的写入redis，即便redis做了集群数据分片+主从，但是写入还是单节点，会有写入瓶颈</li>
+</ul>
+</li>
+<li>
+<p>优化</p>
+</li>
+</ol>
+<ul>
+<li>群ID分组或者用户ID分组，批量写入，写入的两种方式
+<ul>
+<li>定时flush</li>
+<li>满多少消息进行flush</li>
+</ul>
+</li>
+</ul>
+<h3 id="9-网关设计">9. 网关设计</h3>
+<ul>
+<li>接入层网关和应用层网关不同地方
+<ul>
+<li>接入层网关需要有接收通知包或者下行接收数据的端口，并且需要另外开启线程池。应用层网关不需要开端口，并且不需要开启线程池。</li>
+<li>接入层网关需要保持长连接，接入层网关需要本地缓存channel映射关系。应用层网关无状态不需要保存。</li>
+</ul>
+</li>
+</ul>
+<h4 id="91-接入层网关设计">9.1 接入层网关设计</h4>
+<h5 id="910-目标">9.1.0 目标：</h5>
+<ol>
+<li>网关的线程池实现1+8+4+1，减少线程切换</li>
+<li>集中实现长连接管理和推送能力</li>
+<li>与业务服务器解耦，集群部署缩容扩容以及重启升级不相互影响</li>
+<li>长连接的监控与报警能力</li>
+<li>客户端重连指令一键实现</li>
+</ol>
+<h5 id="911-技术点">9.1.1 技术点：</h5>
+<ul>
+<li>自定义协议以及序列化</li>
+<li>通道连接自定义保活以及心跳检测</li>
+<li>本地缓存channel</li>
+<li>责任链</li>
+<li>服务调用完全异步</li>
+<li>泛化调用</li>
+<li>转发通知包或者Push包</li>
+<li>容错网关down机处理</li>
+</ul>
+<h5 id="912-设计方案">9.1.2 设计方案：</h5>
+<p>参考<a href="https://github.com/zhangyaoo/fastim/blob/master/fastim-gate/fastim-gate-tcp/README.md">基于Netty的长连接网关设计与实现</a></p>
+<p>一个Notify包的数据经网关的线程模型图：<br>
+<img src="https://github.com/zhangyaoo/fastim/blob/master/pic/TCP-Gate-ThreadModel.png" alt="TCP网关线程模型" loading="lazy"></p>
+<h4 id="92-应用层api网关设计">9.2 应用层API网关设计</h4>
+<h5 id="920-目标">9.2.0 目标：</h5>
+<ol>
+<li>基于版本的自动发现以及灰度/扩容 ，不需要关注IP</li>
+<li>网关的线程池实现1+8+1，减少线程切换</li>
+<li>支持协议转换实现多个协议转换，基于SPI来实现</li>
+<li>与业务服务器解耦，集群部署缩容扩容以及重启升级不相互影响</li>
+<li>接口错误信息统计和RT时间的监控和报警能力</li>
+<li>UI界面实现路由算法，服务接口版本管理，灰度策略管理以及接口和服务信息展示能力</li>
+<li>基于OpenAPI提供接口级别的自动生成文档的功能</li>
+</ol>
+<h5 id="921-技术点">9.2.1 技术点：</h5>
+<ul>
+<li>Http2.0</li>
+<li>channel连接池复用</li>
+<li>Netty http 服务端编解码</li>
+<li>责任链</li>
+<li>服务调用完全异步</li>
+<li>全链路超时机制</li>
+<li>泛化调用</li>
+</ul>
+<h5 id="922-设计方案">9.2.2 设计方案：</h5>
+<p>参考<a href="https://github.com/zhangyaoo/fastim/blob/master/fastim-gate/fastim-gate-http/README.md">基于Netty的API网关设计与实现</a></p>
+<p>一个请求包的数据经网关的架构图：<br>
+<img src="https://github.com/zhangyaoo/fastim/blob/master/pic/HTTP-gate.png" alt="网关的架构图" loading="lazy"></p>
+<h3 id="10-高并发-高可用设计">10. 高并发、高可用设计</h3>
+<h4 id="100-高并发设计">10.0 高并发设计</h4>
+<h5 id="1000-架构优化">10.0.0 架构优化</h5>
+<ul>
+<li>水平扩展：各个模块无状态部署</li>
+<li>线程模型：每个服务底层线程模型遵从Netty主从reactor模型</li>
+<li>多层缓存：Gate层二级缓存，Redis一级缓存</li>
+<li>长连接：客户端长连接保持，避免频繁创建连接消耗</li>
+</ul>
+<h5 id="1001-万人群聊优化">10.0.1 万人群聊优化</h5>
+<ol>
+<li>
+<p>难点</p>
+<ul>
+<li>消息扇出大，比如每秒群聊有50条消息，群聊2000人，那么光一个群对系统并发就有10W的消息扇出</li>
+</ul>
+</li>
+<li>
+<p>优化</p>
+<ul>
+<li>批量ACK：每条群消息都ACK，会给服务器造成巨大的冲击，为了减少ACK请求量，参考TCP的Delay ACK机制，在接收方层面进行批量ACK。</li>
+<li>群消息和成员批量加载以及懒加载：在真正进入一个群时才实时拉取群友的数据</li>
+<li>群离线消息过多：群消息分页拉取,第二次拉取请求作为第一次拉取请求的ack</li>
+<li>对于消息未读数场景，每个用户维护一个全局的未读数和每个会话的未读数，当群聊非常大时，未读资源变更的QPS非常大。这个时候应用层对未读数进行缓存，批量写+定时写来保证未读计数的写入性能</li>
+<li>路由信息存入redis会有写入和读取的性能瓶颈，每条消息在发出的时候会查路由信息来发送对应的gate接入层，比如有10个群，每个群1W，那么1s100条消息，那么1000W的查询会打满redis，即使redis做了集群。优化的思路就是将集中的路由信息分散到Router JVM本地内存中，然后做Route可用，避免单点故障。</li>
+<li>存储的优化，扩散写写入并发量巨大，另一方面也存在存储浪费，一般优化成扩散读的方式存储</li>
+<li>消息路由到相同接入层机器进行合并请求减少网络包传输</li>
+</ul>
+</li>
+</ol>
+<h4 id="101-高可用设计">10.1 高可用设计</h4>
+<h3 id="1010-心跳设计">10.1.0 心跳设计</h3>
+<ol>
+<li>服务端检测到某个客户端迟迟没有心跳过来可以主动关闭通道，让它下线，并且清除在线信息和路由信息；</li>
+<li>客户端检测到某个服务端迟迟没有响应心跳也能重连获取一个新的连接。</li>
+<li>智能心跳策略，比如正在发包的时候，不需要发送心跳。等待发包完毕后在开启心跳。并且自适应心跳策略调整。</li>
+</ol>
+<h3 id="1011-异常场景设计">10.1.1 异常场景设计</h3>
+<ol>
+<li>
+<p>gate层重启升级或者意外down机有以下问题：</p>
+<ul>
+<li>客户端和gate意外丢失长连接，导致 客户端在发送消息的时候导致消息超时等待以及客户端重试等无意义操作</li>
+<li>发送给客户端的消息，从router层转发给gate的消息丢失，导致消息超时等待以及重试。</li>
+</ul>
+</li>
+<li>
+<p>解决方案如下：</p>
+<ul>
+<li>重启升级时候，向客户端发送重新连接指令，让客户端重新请求LSB获取IP直连。</li>
+<li>当gate层down机异常停止时候，增加hook钩子，向客户端发送重新连接指令。</li>
+<li>额外增加hook，向router层发送请求清空路由消息和在线状态</li>
+</ul>
+</li>
+</ol>
+<h4 id="1012-系统稳定性设计">10.1.2 系统稳定性设计</h4>
+<ol>
+<li>
+<p>背景：高峰期系统压力大，偶发的网络波动或者机器过载，都有可能导致大量的系统失败。加上IM系统要求实时性，不能用异步处理实时发过来的消息。所以有了柔性保护机制防止雪崩</p>
+</li>
+<li>
+<p>柔性保护机制开启判断指标，当每个指标不在平均范围内的时候就开启</p>
+<ul>
+<li>每条消息的ack时间 RT时间</li>
+<li>同时在线人数以及同时发消息的人数</li>
+<li>每台机器的负载CPU和内存和网络IO和磁盘IO以及GC参数</li>
+</ul>
+</li>
+<li>
+<p>当开启了柔性保护机制，那么会返回失败，用户端体验不友好，如何优化</p>
+<ul>
+<li>当开启了柔性保护机制，逻辑层hold住多余的请求，返回前端成功，不显示发送失败，后端异步重试，直至成功；</li>
+<li>为了避免重试加剧系统过载，指数时间延迟重试</li>
+</ul>
+</li>
+</ol>
+<h3 id="11-核心表结构设计">11. 核心表结构设计</h3>
+<p>核心设计点</p>
+<ol>
+<li>群消息只存储一份，用户不需要为每个消息单独存一份。用户也无需去删除群消息。</li>
+<li>对于在线的用户，收到群消息后，修改这个last_ack_msg_id。</li>
+<li>对于离线用户，用户上线后，对比最新的消息ID和last_ack_msg_id，来进行拉取(参考Kafka的消费者模型)</li>
+<li>对应单聊，需要记录消息的送达状态，以便在异常情况下来做重试处理</li>
+</ol>
+<h4 id="用户表-t_user">用户表 t_user</h4>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>int</td>
+<td>自增ID</td>
+</tr>
+<tr>
+<td>user_id</td>
+<td>bigint</td>
+<td>用户ID</td>
+</tr>
+</tbody>
+</table>
+<h4 id="群表-t_group">群表 t_group</h4>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>int</td>
+<td>自增ID</td>
+</tr>
+<tr>
+<td>group_id</td>
+<td>int</td>
+<td>群ID</td>
+</tr>
+<tr>
+<td>creator</td>
+<td>bigint</td>
+<td>创建人</td>
+</tr>
+</tbody>
+</table>
+<h4 id="群用户表-t_group_user">群用户表 t_group_user</h4>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>int</td>
+<td>自增ID</td>
+</tr>
+<tr>
+<td>group_id</td>
+<td>int</td>
+<td>群ID</td>
+</tr>
+<tr>
+<td>user_id</td>
+<td>bigint</td>
+<td>用户ID</td>
+</tr>
+<tr>
+<td>join_time</td>
+<td>datetime</td>
+<td>加群时间</td>
+</tr>
+<tr>
+<td>active_time</td>
+<td>datetime</td>
+<td>活跃时间</td>
+</tr>
+</tbody>
+</table>
+<h4 id="群用户消息表-t_group_user_msg">群用户消息表 t_group_user_msg</h4>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>int</td>
+<td>自增ID</td>
+</tr>
+<tr>
+<td>group_id</td>
+<td>int</td>
+<td>群ID</td>
+</tr>
+<tr>
+<td>user_id</td>
+<td>bigint</td>
+<td>用户ID</td>
+</tr>
+<tr>
+<td>last_ack_msg_id</td>
+<td>bigint</td>
+<td>最后一次ack的消息ID</td>
+</tr>
+<tr>
+<td>user_device_type</td>
+<td>tinyint</td>
+<td>用户设备类型</td>
+</tr>
+<tr>
+<td>is_deleted</td>
+<td>tinyint</td>
+<td>是否删除,根据这个字段后续可以做冷备归档</td>
+</tr>
+<tr>
+<td>create_time</td>
+<td>datetime</td>
+<td>创建时间</td>
+</tr>
+<tr>
+<td>update_time</td>
+<td>datetime</td>
+<td>更新时间</td>
+</tr>
+</tbody>
+</table>
+<h4 id="群消息表-t_group_msg">群消息表 t_group_msg</h4>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>int</td>
+<td>自增ID</td>
+</tr>
+<tr>
+<td>msg_id</td>
+<td>bigint</td>
+<td>消息ID</td>
+</tr>
+<tr>
+<td>group_id</td>
+<td>int</td>
+<td>群ID</td>
+</tr>
+<tr>
+<td>sender_id</td>
+<td>bigint</td>
+<td>发送方ID</td>
+</tr>
+<tr>
+<td>msg_type</td>
+<td>int</td>
+<td>消息类型</td>
+</tr>
+<tr>
+<td>msg_content</td>
+<td>varchar</td>
+<td>消息内容</td>
+</tr>
+<tr>
+<td>is_deleted</td>
+<td>tinyint</td>
+<td>是否删除</td>
+</tr>
+<tr>
+<td>create_time</td>
+<td>datetime</td>
+<td>创建时间</td>
+</tr>
+<tr>
+<td>update_time</td>
+<td>datetime</td>
+<td>更新时间</td>
+</tr>
+</tbody>
+</table>
+<h4 id="个人消息表-t_user_msg">个人消息表 t_user_msg</h4>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>int</td>
+<td>自增ID</td>
+</tr>
+<tr>
+<td>msg_id</td>
+<td>bigint</td>
+<td>消息ID</td>
+</tr>
+<tr>
+<td>sender_id</td>
+<td>bigint</td>
+<td>发送方ID</td>
+</tr>
+<tr>
+<td>receiver_id</td>
+<td>bigint</td>
+<td>接收方ID</td>
+</tr>
+<tr>
+<td>receiver_device_type</td>
+<td>tinyint</td>
+<td>接收方设备类型</td>
+</tr>
+<tr>
+<td>msg_type</td>
+<td>int</td>
+<td>消息类型</td>
+</tr>
+<tr>
+<td>msg_content</td>
+<td>varchar</td>
+<td>消息内容</td>
+</tr>
+<tr>
+<td>msg_status</td>
+<td>tinyint</td>
+<td>消息状态，已送达和未送达</td>
+</tr>
+<tr>
+<td>is_deleted</td>
+<td>tinyint</td>
+<td>是否删除</td>
+</tr>
+<tr>
+<td>create_time</td>
+<td>datetime</td>
+<td>创建时间</td>
+</tr>
+<tr>
+<td>update_time</td>
+<td>datetime</td>
+<td>更新时间</td>
+</tr>
+</tbody>
+</table>
+<h4 id="个人会话表-t_conversation">个人会话表 t_conversation</h4>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>int</td>
+<td>自增ID</td>
+</tr>
+<tr>
+<td>conversation_id</td>
+<td>int</td>
+<td>会话ID</td>
+</tr>
+<tr>
+<td>user_id</td>
+<td>bigint</td>
+<td>用户ID</td>
+</tr>
+<tr>
+<td>conversation_type</td>
+<td>tinyint</td>
+<td>会话类型 1=单聊 2=群聊</td>
+</tr>
+<tr>
+<td>receiver_id</td>
+<td>bigint</td>
+<td>接收方ID 单聊为个人用户ID 群聊为群ID</td>
+</tr>
+<tr>
+<td>last_sequence_id</td>
+<td>int</td>
+<td>客户端最新一条消息序号</td>
+</tr>
+<tr>
+<td>last_msg_id</td>
+<td>bigint</td>
+<td>客户端最新一条消息对应的ID</td>
+</tr>
+<tr>
+<td>last_msg_receive_time</td>
+<td>datetime</td>
+<td>客户端最新一条消息接收时间</td>
+</tr>
+<tr>
+<td>is_deleted</td>
+<td>tinyint</td>
+<td>会话是否删除</td>
+</tr>
+<tr>
+<td>create_time</td>
+<td>datetime</td>
+<td>会话创建时间</td>
+</tr>
+<tr>
+<td>update_time</td>
+<td>datetime</td>
+<td>更新时间</td>
+</tr>
+</tbody>
+</table>
+<h3 id="12-核心业务流程">12 核心业务流程</h3>
+<h4 id="120-用户a发消息给用户b-单聊">12.0 用户A发消息给用户B 【单聊】</h4>
+<ul>
+<li>A通过账号密码登录获取token，以及接入层IP和port信息</li>
+<li>接入层IP和port信息进行远程TCP连接，接入层维护登录状态</li>
+<li>服务层校验token，token校验通过</li>
+<li>A打包数据发送给服务端， 服务端检测A用户是否风险用户</li>
+<li>服务端对消息进行敏感词检查，以及发送频率的限制检查</li>
+<li>服务端接收消息后，根据接收消息的sequence_id来进行客户端发送消息的去重，并且生成递增的消息ID，将发送的信息和ID打包一块入库，入库成功后返回ACK，ACK包带上服务端生成的消息ID</li>
+<li>服务端检测接收用户B是否在线，在线直接推送给用户B</li>
+<li>如果没有本地消息ID则存入，并且返回接入层ACK信息；如果有则拿本地sequence_id和推送过来的sequence_id大小对比，并且去重，进行展现时序进行排序展示，并且记录最新一条消息ID。最后返回接入层ack</li>
+<li>服务端接收ACK后，将消息标为已送达</li>
+<li>如果用户B不在线,首先将消息存入库中，然后直接通过手机通知来告知客户新消息到来</li>
+<li>用户B上线后，拿本地最新的消息ID，去服务端拉取所有好友发送给B的消息，考虑到一次拉取所有消息数据量大，通过channel通道来进行分页拉取，将上一次拉取消息的最大的ID，作为请求参数，来请求最新一页的比ID大的数据。</li>
+</ul>
+<h4 id="121-用户a发消息给群g-群聊">12.1 用户A发消息给群G 【群聊】</h4>
+<ul>
+<li>登录，TCP连接，token校验，名词检查，sequence_id去重，生成递增的消息ID，群消息入库成功返回发送方ACK</li>
+<li>查询群G所有的成员，然后去redis中央存储中找在线状态。离线和在线成员分不同的方式处理</li>
+<li>在线成员：并行发送拉取通知，等待在线成员过来拉取，发送拉取通知包如丢失会有兜底机制</li>
+<li>在线成员过来拉取，会带上这个群标识和上一次拉取群的最小消息ID，服务端会找比这个消息ID大的所有的数据返回给客户端，等待客户端ACK。一段时间没ack继续推送。如果重试几次后没有回ack，那么关闭连接和清除ack等待队列消息</li>
+<li>客户端会更新本地的最新的消息ID，然后进行ack回包。服务端收到ack后会更新群成员的最新的消息ID</li>
+<li>离线成员：发送手机通知栏通知。离线成员上线后，拿本地最新的消息ID，去服务端拉取群G发送给A的消息，通过channel通道来进行分页拉取，每一次请求，会将上一次拉取消息的最大的ID，作为请求参数来拉取消息，这里相当于第二次拉取请求包是作为第一次拉取的ack包。</li>
+<li>分页的情况下，客户端在收到上一页请求的的数据后更新本地的最新的消息ID后，再请求下一页并且带上消息ID。上一页请求的的数据可以当作为ack来返回服务端，避免网络多次交互。服务端收到ack后会更新群成员的最新的消息ID</li>
+</ul>
+<h3 id="13-红包设计">13 红包设计</h3>
+<h4 id="131-抢红包的大致核心逻辑">13.1 抢红包的大致核心逻辑</h4>
+<ol>
+<li>银行快捷支付，保证账户余额和发送红包逻辑的一致性</li>
+<li>发送红包后，首先计算好红包的个数，个数确定好后，确定好每个红包的金额，存入存储层【这里可以是redis的List或者是队列】方便后续每个人来取</li>
+<li>生成一个24小时的延迟任务，检测红包是否还有钱方便退回</li>
+<li>每个红包的金额需要保证每个红包的的抢金额概率是一致的，算法需要考量</li>
+<li>存入数据库表中后，服务器通过长连接，给群里notify红包消息,供群成员抢红包</li>
+<li>群成员并发抢红包，在第二步中会将每个红包的金额放入一个队列或者其他存储中，群成员实际是来竞争去队列中的红包金额。兜底机制：如果redis挂了，可以重新生成红包信息到数据库中</li>
+<li>取成功后，需要保证红包剩余金额、新插入的红包流水数据、队列中的红包数据以及群成员的余额账户金额一致性。</li>
+<li>这里还需要保证一个用户只能领取一次，并且保持幂等</li>
+</ol>
+<h4 id="132-红包相关表结构设计">13.2 红包相关表结构设计</h4>
+<h5 id="红包表-t_red_package-原则上红包信息和订单支付信息分两个表">红包表 t_red_package (原则上红包信息和订单支付信息分两个表)</h5>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>int</td>
+<td>自增ID</td>
+</tr>
+<tr>
+<td>package_id</td>
+<td>int</td>
+<td>红包ID</td>
+</tr>
+<tr>
+<td>sender_id</td>
+<td>bigint</td>
+<td>发送用户ID</td>
+</tr>
+<tr>
+<td>received_id</td>
+<td>bigint</td>
+<td>接收者ID或者群ID</td>
+</tr>
+<tr>
+<td>type</td>
+<td>tinyint</td>
+<td>1=单聊红包 2=群聊红包</td>
+</tr>
+<tr>
+<td>package_amount</td>
+<td>bigint</td>
+<td>红包金额, 填充0到分后两位</td>
+</tr>
+<tr>
+<td>package_lock_amount</td>
+<td>bigint</td>
+<td>红包预占金额</td>
+</tr>
+<tr>
+<td>package_remaining_amount_</td>
+<td>bigint</td>
+<td>红包剩余金额</td>
+</tr>
+<tr>
+<td>status</td>
+<td>tinyint</td>
+<td>红包状态，是否支付成功</td>
+</tr>
+<tr>
+<td>pay_time</td>
+<td>datetime</td>
+<td>支付时间</td>
+</tr>
+<tr>
+<td>pay_order_no</td>
+<td>datetime</td>
+<td>支付订单号</td>
+</tr>
+<tr>
+<td>is_deleted</td>
+<td>tinyint</td>
+<td>是否删除</td>
+</tr>
+<tr>
+<td>create_time</td>
+<td>datetime</td>
+<td>创建时间</td>
+</tr>
+<tr>
+<td>update_time</td>
+<td>datetime</td>
+<td>更新时间</td>
+</tr>
+</tbody>
+</table>
+<h5 id="抢红包记录表-t_red_package_record">抢红包记录表 t_red_package_record</h5>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>int</td>
+<td>自增ID</td>
+</tr>
+<tr>
+<td>user_id</td>
+<td>int</td>
+<td>用户ID</td>
+</tr>
+<tr>
+<td>package_id</td>
+<td>int</td>
+<td>红包ID</td>
+</tr>
+<tr>
+<td>package_rob_amount</td>
+<td>bigint</td>
+<td>抢红包金额</td>
+</tr>
+<tr>
+<td>status</td>
+<td>tinyint</td>
+<td>红包状态，是否存入零钱账户</td>
+</tr>
+<tr>
+<td>payment_time</td>
+<td>datetime</td>
+<td>收款时间</td>
+</tr>
+<tr>
+<td>receive_order_no</td>
+<td>datetime</td>
+<td>收款订单号</td>
+</tr>
+<tr>
+<td>is_deleted</td>
+<td>tinyint</td>
+<td>是否删除</td>
+</tr>
+<tr>
+<td>create_time</td>
+<td>datetime</td>
+<td>创建时间</td>
+</tr>
+<tr>
+<td>update_time</td>
+<td>datetime</td>
+<td>更新时间</td>
+</tr>
+</tbody>
+</table>
+<h2 id="三-项目结构">三、项目结构</h2>
+<ul>
+<li>fastim-logic：逻辑服务，比如单聊、群聊、红包、离线等业务逻辑</li>
+<li>fastim-client：客户端逻辑实现，实现发送消息、断线重连、SDK包等功能</li>
+<li>fastim-gate-tcp：HTTP API网关实现，实现限流降级、版本路由、openAPI管理、协议转换、泛化调用等功能</li>
+<li>fastim-gate-http：长连接TCP网关实现，实现自定义协议、channel管理、心跳检测、泛化调用等功能</li>
+<li>fastim-leaf：分布式ID实现，基于zookeeper的实现或基于redis实现或完全基于内存的实现</li>
+<li>fastim-router：路由逻辑服务，主要负责消息的路由转发，以及客户端在线状态的维护</li>
+<li>fastim-common：共用类，主要是实体类和工具类的存放</li>
+<li>fastim-lsb：LSB service，提供接入层IP和port来进行负载均衡的连接</li>
+<li>fastim-das：数据访问层实现，封装一层，提供数据的增删改查入口</li>
+<li>fastim-sample：客户端client使用案例</li>
+</ul>
+<h2 id="四-性能测试">四、性能测试</h2>
+<h2 id="五-qa">五、Q&amp;A</h2>
+<h3 id="1-架构">1 架构</h3>
+<ol>
+<li>
+<p>Q：对于单聊和群聊的实时性消息，是否需要MQ来作为通信的中间件来代替rpc？</p>
+<p>A：MQ作为解耦可以有以下好处：</p>
+<ul>
+<li>易扩展，gate层到logic层无需路由，logic层多个有新的业务时候，只需要监听新的topic即可</li>
+<li>解耦，gate层到logic层解耦，不会有依赖关系</li>
+<li>节省端口资源，gate层无需再开启新的端口接收logic的请求，而且直接监听MQ消息即可</li>
+</ul>
+<p>但是缺点也有：</p>
+<ul>
+<li>网络通信多一次网络通信，增加RT的时间，消息实时性对于IM即使通信的场景是非常注重的一个点</li>
+<li>MQ的稳定性，不管任何系统只要引入中间件都会有稳定性问题，需要考虑MQ不可用或者丢失数据的情况</li>
+<li>需要考虑到运维的成本</li>
+<li>当用消息中间代替路由层的时候，gate层需要广播消费消息，这个时候gate层会接收大部分的无效消息，因为这个消息的接收者channel不在本机维护的session中</li>
+</ul>
+<p>综上，是否考虑使用MQ需要架构师去考量，比如考虑业务是否允许、或者系统的流量等等影响因素。<br>
+本项目基于使用成本、耦合成本和运维成本考虑，采用RPC的方案来实现。并且根据泛化调用，也能同样实现层级解耦。</p>
+</li>
+<li>
+<p>Q：架构设计为什么要增加router层？上行消息gate层为什么直接访问service，而下行消息service则需要经过router和Kafka来跟gate通信？</p>
+<p>A：增加router层的目的是根据路由全局信息将通知包或者推送包路由到具体的某一台接入层的机器上，然后router层通过rpc或者MQ发送到gate层，gate发送数据到客户端来进行通信。</p>
+</li>
+<li>
+<p>Q：为什么接入层用LSB返回的IP来做接入呢？</p>
+<p>A：可以有以下好处：1、灵活的负载均衡策略 可根据最少连接数来分配IP；2、做灰度策略来分配IP；3、AppId业务隔离策略 不同业务连接不同的gate，防止相互影响</p>
+</li>
+<li>
+<p>Q：为什么应用层心跳对连接进行健康检查？</p>
+<p>A：因为TCP Keepalive状态无法反应应用层状态问题，如进程阻塞、死锁、TCP缓冲区满等情况；并且要注意心跳的频率，频率小则可能及时感知不到应用情况，频率大可能有一定的性能开销。</p>
+</li>
+<li>
+<p>Q：MQ的使用场景？</p>
+<p>A：IM消息是非常庞大的，比如说群聊相关业务、推送，对于一些业务上可以忍受的场景，尽量使用MQ来解耦和通信，来降低同步通讯的服务器压力。</p>
+</li>
+<li>
+<p>Q：群消息存一份还是多份，读扩散还是写扩散？</p>
+<p>A：存1份，读扩散。存多份下同一条消息存储了很多次，对磁盘和带宽造成了很大的浪费。可以在架构上和业务上进行优化，来实现读扩散。</p>
+</li>
+<li>
+<p>Q：消息ID为什么是趋势递增就可以，严格递增的不行吗？</p>
+<p>A：严格递增会有单点性能瓶颈，比如MySQL auto increments；redis性能好但是没有业务语义，比如缺少时间因素，还可能会有数据丢失的风险，并且集群环境下写入ID也属于单点，属于集中式生成服务。小型IM可以根据业务场景需求直接使用redis的incr命令来实现IM消息唯一ID。本项目采用snowflake算法实现唯一趋势递增ID，即可实现IM消息中，时序性，重复性以及查找功能。</p>
+</li>
+<li>
+<p>Q：为什么gate层泛化调用logic层，router层泛化调用gate层？</p>
+<p>A：gate层直接调用logic层，不需要调用router层，减少网络传输和RT时间，增加一个服务,就多了一条链路, 就可能会导致服务链路过长,稳定性下降。泛化调用的目的是解耦网关和服务，使其不相互影响。router层泛化调用gate层，目的也是解耦gate层和router层，防止各自层级机器扩容缩容重启升级等场景下互相影响，并且router需要具体调用某一台gate层机器，泛化刚好能实现。</p>
+</li>
+<li>
+<p>Q：gate层为什么需要开两个端口？</p>
+<p>A：gate会接收客户端的连接请求（被动），需要外网监听端口；entry会主动给logic发请求（主动）；entry会接收router给它的通知请求（被动），需要内网监听端口。一个端口对内，一个端口对外。</p>
+</li>
+<li>
+<p>Q：用户的在线状态，是维护在中央存储的redis中，还是维护在每个gate层内存中？</p>
+</li>
+</ol>
+<p>A：如果维护在每个gate层内存的话，router层无法知晓目标的用户会话在哪个gate层，只能通过MQ或者广播到gate层，然后gate层做过滤处理。这种处理方式的缺点就是会多消耗网络资源，好处也明显，不需要中央维护资源，高并发查询下会增加性能。如果维护在中央存储的话，相比各自存储不需要消耗太多的网络资源，但缺点就是需要维护中央存储的redis</p>
+<h3 id="2-技术细节">2 技术细节</h3>
+<ol>
+<li>
+<p>Q：本地写数据成功，一定代表对端应用侧接收读取消息了吗？</p>
+<p>A：本地TCP写操作成功，但数据可能还在本地写缓冲区中、网络链路设备中、对端读缓冲区中，并不代表对端应用读取到了数据。</p>
+</li>
+<li>
+<p>Q：为什么用netty做来做http网关, 而不用tomcat？</p>
+<ul>
+<li>netty对象池，内存池，高性能线程模型</li>
+<li>netty堆外内存管理，减少GC压力，jvm管理的只是一个很小的DirectByteBuffer对象引用</li>
+<li>tomcat读取数据和写入数据都需要从内核态缓冲copy到用户态的JVM中，多1次或者2次的拷贝会有性能影响</li>
+</ul>
+</li>
+<li>
+<p>Q：为什么消息入库后，对于在线状态的用户，单聊直接推送，群聊通知客户端来拉取，而不是直接推送消息给客户端（推拉结合）？</p>
+<p>A：在保证消息实时性的前提下，对于单聊，直接推送。对于群聊，由于群聊人数多，推送的话一份群消息会对群内所有的用户都产生一份推送的消息，推送量巨大。解决办法是按需拉取，当群消息有新消息时候发送时候，服务端主动推送新的消息数量，然后客户端分页按需拉取数据。</p>
+</li>
+<li>
+<p>Q：为什么除了单聊 群聊 推送 离线拉取等实时性业务，其他的业务都走http协议？</p>
+<p>A：IM协议简单最好，如果让其他的业务请求混进IM协议中，会让其IM变的更复杂，比如查找离线消息记录拉取走http通道避免tcp 通道压力过大，影响即时消息下发效率。在比如上传图片和大文件，可以利用HTTP的断点上传和分段上传特性</p>
+</li>
+</ol>
+<h2 id="六-contact">六、Contact</h2>
+<ul>
+<li>网站：zhangyaoo.github.io</li>
+<li>微信：will_zhangyao</li>
+</ul>
 
             </div>
             
@@ -640,7 +1808,7 @@
     </li>
     <li class="post-copyright-link">
       <strong class="language" data-lan="link">本文链接：</strong>
-      <a href="https://zhangyaoo.github.io/post/2018-nian-zong-jie/" title="2018年总结">https://zhangyaoo.github.io/post/2018-nian-zong-jie/</a>
+      <a href="https://zhangyaoo.github.io/post/ji-yu-netty-ji-shi-tong-xun-xi-tong-she-ji-yu-shi-xian/" title="基于Netty即时通讯系统设计与实现">https://zhangyaoo.github.io/post/ji-yu-netty-ji-shi-tong-xun-xi-tong-she-ji-yu-shi-xian/</a>
     </li>
     <li class="post-copyright-license">
       <strong class="language" data-lan="copyright">版权声明： </strong>
@@ -649,7 +1817,11 @@
   </ul>
   <div class="tags">
     
-      <a href="https://zhangyaoo.github.io/tag/hD1pMQ2Ri/"># 总结</a>
+      <a href="https://zhangyaoo.github.io/tag/H4ekOzuAI/"># IM</a>
+    
+      <a href="https://zhangyaoo.github.io/tag/SsTjyPN_I/"># 网关</a>
+    
+      <a href="https://zhangyaoo.github.io/tag/8IlK1cWz9/"># 架构</a>
     
   </div>
   <div class="nav">
@@ -657,6 +1829,10 @@
       
     </div>
     <div class="nav-next">
+      
+        <a class="nav-pc-next" title="浅谈结构化思维" href="https://zhangyaoo.github.io/post/jie-gou-hua-si-wei/">浅谈结构化思维</a>
+        <a class="nav-mobile-next" title="浅谈结构化思维" href="https://zhangyaoo.github.io/post/jie-gou-hua-si-wei/">下一篇</a>
+        <i class="fa fa-chevron-right"></i>
       
     </div>
   </div>

@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://zhangyaoo.github.io</id>
     <title>will</title>
-    <updated>2021-04-25T09:53:20.957Z</updated>
+    <updated>2021-12-01T04:06:29.412Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://zhangyaoo.github.io"/>
     <link rel="self" href="https://zhangyaoo.github.io/atom.xml"/>
@@ -10,6 +10,1135 @@
     <logo>https://zhangyaoo.github.io/images/avatar.png</logo>
     <icon>https://zhangyaoo.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, will</rights>
+    <entry>
+        <title type="html"><![CDATA[基于Netty即时通讯系统设计与实现]]></title>
+        <id>https://zhangyaoo.github.io/post/ji-yu-netty-ji-shi-tong-xun-xi-tong-she-ji-yu-shi-xian/</id>
+        <link href="https://zhangyaoo.github.io/post/ji-yu-netty-ji-shi-tong-xun-xi-tong-she-ji-yu-shi-xian/">
+        </link>
+        <updated>2021-12-01T04:02:35.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="fastim">FastIM</h2>
+<blockquote>
+<p>🚀基于Netty高可用分布式即时通讯系统，支持长连接网关管理、单聊、群聊、登录登出、聊天记录查询、离线消息存储、消息推送、心跳、分布式唯一ID、红包、消息同步和漫游等功能，支持集群部署的分布式架构。</p>
+</blockquote>
+<h2 id="一-功能">一、功能</h2>
+<h3 id="1-设计">1. 设计</h3>
+<ul class="contains-task-list">
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-2961719"> <a href="#%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1">IM架构设计<label class="task-list-item-label" for="task-item-2961719"> [IM架构设计](#架构设计)</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-1018164"> <a href="#%E6%B6%88%E6%81%AFID%E7%94%9F%E6%88%90%E6%9C%BA%E5%88%B6">分布式ID设计<label class="task-list-item-label" for="task-item-1018164"> [分布式ID设计](#消息ID生成机制)</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-8624631"> <a href="#%E6%A0%B8%E5%BF%83%E8%A1%A8%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1">IM表结构设计<label class="task-list-item-label" for="task-item-8624631"> [IM表结构设计](#核心表结构设计)</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-4891272"><label class="task-list-item-label" for="task-item-4891272"> TCP网关设计</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-5318263"><label class="task-list-item-label" for="task-item-5318263"> HTTP网关设计</label></li>
+</ul>
+<h3 id="2-功能">2. 功能</h3>
+<ul class="contains-task-list">
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-2731915"><label class="task-list-item-label" for="task-item-2731915"> 单聊</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-1373941"><label class="task-list-item-label" for="task-item-1373941"> 群聊</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-8646244"><label class="task-list-item-label" for="task-item-8646244"> 心跳保活，断线自动重连</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-1935693"> <a href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E9%80%9A%E8%AE%AF%E5%8D%8F%E8%AE%AE+Protobuf%E5%BA%8F%E5%88%97%E5%8C%96">自定义通讯协议 + Protobuf序列化<label class="task-list-item-label" for="task-item-1935693"> [自定义通讯协议 + Protobuf序列化](#自定义通讯协议+Protobuf序列化)</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-1312619"> <a href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%9C%AAack%E6%B6%88%E6%81%AF%E9%87%8D%E8%AF%95">客户端未ack消息重试<label class="task-list-item-label" for="task-item-1312619"> [客户端未ack消息重试](#客户端未ack消息重试)</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-7127960"><label class="task-list-item-label" for="task-item-7127960"> 消息未读计数</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-8522881"><label class="task-list-item-label" for="task-item-8522881"> 聊天记录存储和查询</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-745469"><label class="task-list-item-label" for="task-item-745469"> 登录、登出</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-5882915"><label class="task-list-item-label" for="task-item-5882915"> 通讯协议支持HTTP/2</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-13603"> <a href="#%E5%AE%A2%E6%88%B7%E7%AB%AFSDK">客户端SDK<label class="task-list-item-label" for="task-item-13603"> [客户端SDK](#客户端SDK)</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-3285230"><label class="task-list-item-label" for="task-item-3285230"> 多端消息同步和消息漫游</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-9870161"><label class="task-list-item-label" for="task-item-9870161"> 唯一设备踢出</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-7699860"><label class="task-list-item-label" for="task-item-7699860"> 文件图片发送</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-8897110"><label class="task-list-item-label" for="task-item-8897110"> 消息加密</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-2228880"><label class="task-list-item-label" for="task-item-2228880"> 群红包</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-3425310"><label class="task-list-item-label" for="task-item-3425310"> 消息撤回</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-758566"><label class="task-list-item-label" for="task-item-758566"> 消息已读</label></li>
+</ul>
+<h2 id="二-系统设计">二、系统设计</h2>
+<h3 id="1-im架构图">1. IM架构图</h3>
+<p>基于可扩展性高可用原则，把网关层、路由层、逻辑层、数据层分离，并且支持分布式部署<br>
+<img src="https://github.com/zhangyaoo/fastim/blob/master/pic/architecture.png" alt="IM架构图" loading="lazy"></p>
+<h3 id="2-架构设计">2. 架构设计</h3>
+<h4 id="20-client设计">2.0 CLIENT设计：</h4>
+<ol>
+<li>client每个设备会在本地存每一个会话，保留有最新一条消息的顺序 ID</li>
+<li>为了避免client宕机，也就是退出应用，保存在内存的消息ID丢失，会存到本地的文件中</li>
+<li>client需要在本地维护一个等待ack队列，并配合timer超时机制，来记录哪些消息没有收到ack：N，以定时重发。</li>
+<li>客户端本地生成一个递增序列号发送给服务器，用作保证发送顺序性。该序列号还用作ack队列收消息时候的移除。</li>
+</ol>
+<h5 id="21-客户端序列号设计">2.1 客户端序列号设计</h5>
+<h5 id="方案一">方案一</h5>
+<figure data-type="image" tabindex="1"><img src="https://github.com/zhangyaoo/fastim/blob/master/pic/sequenceId.png" alt="客户端序列号" loading="lazy"></figure>
+<p>设计：</p>
+<ul>
+<li>
+<p>数据传输中的大小尽量小用int，不用bigint，节省传输大小</p>
+</li>
+<li>
+<p>只保证递增即可,在用户重新登录或者重连后可以进行日期重置，只保证单次</p>
+</li>
+<li>
+<p>客户端发号器不需要像类似服务器端发号器那样集群部署，不需要考虑集群同步问题<br>
+说明：上述生成器可以用18年[(2^29-1)/3600/24/365]左右，一秒内最多产生4个消息</p>
+</li>
+<li>
+<p>优点：可以在断线重连和重装APP的情况下，18年之内是有序的</p>
+</li>
+<li>
+<p>缺点：每秒只能发4个消息，限制太大，对于群发场景不合适</p>
+</li>
+<li>
+<p>改进：使用long进行传输，年限扩展很久并且有序</p>
+</li>
+</ul>
+<h5 id="方案二">方案二</h5>
+<p>设计：</p>
+<ul>
+<li>
+<p>每次重新建立链接后进行重置，将sequence_id（int表示）从0开始进行严格递增</p>
+</li>
+<li>
+<p>客户端发送消息会带上唯一的递增sequence_id，同一条消息重复投递的sequence_id是一样的</p>
+</li>
+<li>
+<p>后端存储每个用户的sequence_id，当sequence_id归0，用户的epoch年代加1存储入库，单聊场景下转发给接收者时候，接收者按照sequence_id和epoch来进行排序</p>
+</li>
+<li>
+<p>优点：可以在断线重连和重装APP的情况下，接收者可以按照发送者发送时序来显示，并且对发送消息的速率没限制</p>
+</li>
+</ul>
+<h4 id="21-lsb设计与优化">2.1 LSB设计与优化：</h4>
+<h5 id="210-lsb设计">2.1.0 LSB设计</h5>
+<ol>
+<li>接入层的高可用、负载均衡、扩展性全部在这里面做</li>
+<li>客户端通过LSB，来获取gate IP地址，通过IP直连，目的是
+<ul>
+<li>灵活的负载均衡策略 可根据最少连接数来分配IP</li>
+<li>做灰度策略来分配IP</li>
+<li>AppId业务隔离策略 不同业务连接不同的gate，防止相互影响</li>
+<li>单聊和群聊的im接入层通道分开</li>
+</ul>
+</li>
+</ol>
+<h5 id="211-lsb优化">2.1.1 LSB优化</h5>
+<p>问题背景：当某个实例重启后，该实例的连接断开后，客户端会发起重连，重连就大概率转移其他实例上，导致最近启动的实例连接数较少，最早启动的实例连接数较多<br>
+解决方法：</p>
+<ol>
+<li>客户端会发起重连，跟服务器申请重连的新的服务器IP，系统提供合适的算法来平摊gate层的压力，防止雪崩效应。</li>
+<li>gate层定时上报本机的元数据信息以及连接数信息，提供给LSB中心，LSB根据最少连接数负载均衡实现，来计算一个节点供连接。</li>
+</ol>
+<h4 id="22-gate设计">2.2 GATE设计：</h4>
+<p>GATE层网关有以下特性：</p>
+<ol>
+<li>任何一个gate网关断掉，用户端检测到以后重新连接LSB服务获取另一个gate网关IP，拿到IP重新进行长连接通信。对整体服务可靠性基本没有影响。</li>
+<li>gate可以无状态的横向部署，来扩展接入层的接入能力</li>
+<li>根据协议分类将入口请求打到不同的网关上去，HTTP网关接收HTTP请求，TCP网关接收tcp长连接请求</li>
+<li>长连接网关，提供各种监控功能，比如网关执行线程数、队列任务数、ByteBuf使用堆内存数、堆外内存数、消息上行和下行的数量以及时间</li>
+</ol>
+<h4 id="23-router设计">2.3 ROUTER设计：</h4>
+<ol>
+<li>把用户状态信息存储在Redis集群里。因此也是无状态的，任何一个router服务挂掉，不影响整体服务能力。</li>
+<li>转发消息，将消息投递给固定gate上的会话，处理路由逻辑</li>
+<li>router层需要存储的关系
+<ul>
+<li>uid和gate层机器ID关系</li>
+<li>用户全局在线信息</li>
+</ul>
+</li>
+<li>用户路由状态一致性保证
+<ul>
+<li>如果路由状态和channel通道不一致，比如有路由状态，没有channel通道（已关闭）那么，就会走离线消息流出，并且清除路由信息</li>
+<li>动态重启gate，会及时清理路由信息</li>
+</ul>
+</li>
+</ol>
+<h4 id="24-logic设计">2.4 LOGIC设计：</h4>
+<p>logic按照分布式微服务的拆分思想进行拆分，拆分为多个模块</p>
+<ol>
+<li>单聊服务</li>
+<li>群聊服务</li>
+<li>登录 登出 注册服务</li>
+<li>红包服务</li>
+<li>分布式ID服务</li>
+<li>离线服务</li>
+</ol>
+<h4 id="25-das-data-access-service设计">2.5 DAS (data access service)设计：</h4>
+<ol>
+<li>定时将冷数据迁移到Cold存储系统</li>
+<li>多个存储系统的实现，统一cache层</li>
+<li>向上游屏蔽存储引擎，提供友好的接口</li>
+</ol>
+<h3 id="3-协议设计">3. 协议设计</h3>
+<h4 id="30-目标">3.0 目标</h4>
+<ol>
+<li>高性能：协议设计紧凑，保证数据包小，并且序列化性能好</li>
+<li>可扩展性：针对后续业务发展，可以自由的自定义协议，无需较大改动协议结构</li>
+</ol>
+<h4 id="31-设计">3.1 设计</h4>
+<p>IM协议采用二进制定长包头和变长包体来实现客户端和服务端的通信，并且采用谷歌protobuf序列化协议，设计如下：</p>
+<figure data-type="image" tabindex="2"><img src="https://github.com/zhangyaoo/fastim/blob/master/pic/IM-protocol.png" alt="IM协议设计图" loading="lazy"></figure>
+<p>各个字段如下解释：</p>
+<ul>
+<li>headData：头部标识，协议头标识，用作粘包半包处理。4个字节</li>
+<li>version：客户端版本。4个字节</li>
+<li>cmd：业务命令，比如心跳、推送、单聊、群聊。1个字节</li>
+<li>msgType：消息通知类型 request response notify。1个字节</li>
+<li>logId：调试性日志，追溯一个请求的全路径。4个字节</li>
+<li>sequenceId：序列号，可以用作异步处理。4个字节</li>
+<li>dataLength：数据体的长度。4个字节</li>
+<li>data：数据</li>
+</ul>
+<h4 id="32-实践">3.2 实践</h4>
+<ol>
+<li>针对数据data，<strong>网关gate层不做反序列化，反序列化步骤在service做</strong>，避免重复序列化和反序列化导致的性能损失</li>
+<li>网关层不做业务逻辑处理，只做消息转发和推送，减少网关层的复杂度</li>
+</ol>
+<h3 id="4-安全管理">4. 安全管理</h3>
+<ol>
+<li>为防止消息传输过程中不被截获、篡改、伪造，采用TLS传输层加密协议</li>
+<li>私有化协议天然具备一定的防窃取和防篡改的能力，相对于使用JSON、XML、HTML等明文传输系统，被第三方截获后在内容破解上相对成本更高，因此安全性上会更好一些</li>
+<li>消息存储安全性:针对账号密码的存储安全可以通过“高强度单向散列算法”和“加盐”机制来提升加密密码可逆性；IM消息采用“端到端加密”方式来提供更加安全的消息传输保护。</li>
+<li>安全层协议设计。基于动态密钥，借鉴类似SSL，不需要用证书来管理。</li>
+</ol>
+<h3 id="5-消息流转设计">5. 消息流转设计</h3>
+<p>一个正常的消息流转需要如图所示的流程：<br>
+<img src="https://github.com/zhangyaoo/fastim/blob/master/pic/IM-pic1.png" alt="IM核心流程图" loading="lazy"></p>
+<ol>
+<li>客户端A发送请求包R</li>
+<li>server将消息存储到DB</li>
+<li>存储成功后返回确认ack</li>
+<li>server push消息给客户端B</li>
+<li>客户端B收到消息后返回确认ack</li>
+<li>server收到ack后更新消息的状态或者删除消息</li>
+</ol>
+<p>需要考虑的是，一个健壮的系统需要考虑各种异常情况，如丢消息，重复消息，消息时序问题</p>
+<h4 id="50-消息可靠性如何保证-不丢消息">5.0 消息可靠性如何保证 不丢消息</h4>
+<ol>
+<li>应用层ACK</li>
+<li>客户端需要超时与重传</li>
+<li>服务端需要超时与重传，具体做法就是增加ack队列和定时器Timer</li>
+<li>业务侧兜底保证，客户端拉消息通过一个本地的旧的序列号来拉取服务器的最新消息</li>
+<li>为了保证消息必达，在线客户端还增加一个定时器，定时向服务端拉取消息，避免服务端向客户端发送拉取通知的包丢失导致客户端未及时拉取数据。</li>
+</ol>
+<h4 id="51-消息重复性如何保证-不重复">5.1 消息重复性如何保证 不重复</h4>
+<ol>
+<li>超时与重传机制将导致接收的client收到重复的消息，具体做法就是一份消息使用同一个消息ID进行去重处理。</li>
+</ol>
+<h4 id="52-消息顺序性如何保证-不乱序">5.2 消息顺序性如何保证 不乱序</h4>
+<h5 id="520-消息乱序影响的因素">5.2.0 消息乱序影响的因素</h5>
+<ol>
+<li>时钟不一致，分布式环境下每个机器的时间可能是不一致的</li>
+<li>多发送方和多接收方，这种情况下，无法保先发的消息被先收到</li>
+<li>网络传输和多线程，网络传输不稳定的话可能导致包在数据传输过程中有的慢有的快。多线程也可能是会导致时序不一致影响的因素</li>
+</ol>
+<p>以上，如果保持绝对的实现，那么只能是一个发送方，一个接收方，一个线程阻塞式通讯来实现。那么性能会降低。</p>
+<h5 id="521-如何保证时序">5.2.1 如何保证时序</h5>
+<ol>
+<li>
+<p>单聊：通过发送方的绝对时序seq，来作为接收方的展现时序seq。</p>
+<ul>
+<li>实现方式：可以通过时间戳或者本地序列号方式来实现</li>
+<li>缺点：本地时间戳不准确或者本地序列号在意外情况下可能会清0，都会导致发送方的绝对时序不准确</li>
+</ul>
+</li>
+<li>
+<p>群聊：因为发送方多点发送时序不一致，所以通过服务器的单点做序列化，也就是通过ID递增发号器服务来生成seq，接收方通过seq来进行展现时序。</p>
+<ul>
+<li>实现方式：通过服务端统一生成唯一趋势递增消息ID来实现或者通过redis的递增incr来实现</li>
+<li>缺点：redis的递增incr来实现，redis取号都是从主取的，会有性能瓶颈。ID递增发号器服务是集群部署，可能不同发号服务上的集群时间戳不同，可能会导致后到的消息seq还小。</li>
+</ul>
+</li>
+<li>
+<p>群聊时序的优化：按照上面的群聊处理，业务上按照道理只需要保证单个群的时序，不需要保证所有群的绝对时序，所以解决思路就是<strong>同一个群的消息落到同一个发号service</strong>上面，消息seq通过service本地生成即可。</p>
+</li>
+</ol>
+<h5 id="522-客户端如何保证顺序">5.2.2 客户端如何保证顺序</h5>
+<ol>
+<li>
+<p>为什么要保证顺序？</p>
+<ul>
+<li>消息即使按照顺序到达服务器端，也会可能出现：不同消息到达接收端后，可能会出现“先产生的消息后到”“后产生的消息先到”等问题。所以客户端需要进行兜底的流量整形机制</li>
+</ul>
+</li>
+<li>
+<p>如何保证顺序？</p>
+<ul>
+<li>接收方收到消息后进行判定，如果当前消息序号大于前一条消息的序号就将当前消息追加在会话里</li>
+<li>否则继续往前查找倒数第二条、第三条等消息，一直查找到恰好小于当前推送消息的那条消息，然后插入在其后展示。</li>
+</ul>
+</li>
+</ol>
+<h3 id="6-消息通知设计">6 消息通知设计</h3>
+<p><strong>整体消息推送和拉取的时序图如下：</strong><br>
+<img src="https://github.com/zhangyaoo/fastim/blob/master/pic/msg-pull-push-model.png" alt="IM消息推拉模型" loading="lazy"></p>
+<h4 id="60-消息拉取方式的选择">6.0 消息拉取方式的选择</h4>
+<p>本项目是进行推拉结合来进行服务器端消息的推送和客户端的拉取，我们知道单pull和单push有以下缺点：</p>
+<p>单pull：</p>
+<ul>
+<li>pull要考虑到消息的实时性，不知道消息何时送达</li>
+<li>pull要考虑到哪些好友和群收到了消息，要循环每个群和好友拿到消息列表，读扩散</li>
+</ul>
+<p>单push：</p>
+<ul>
+<li>push实时性高，只要将消息推送给接收者就ok，但是会集中消耗服务器资源。并且再群聊非常多，聊天频率非常高的情况下，会增加客户端和服务端的网络交互次数</li>
+</ul>
+<p>推拉结合：</p>
+<ul>
+<li>推拉结合的方式能够分摊服务端的压力,能保证时效性，又能保证性能</li>
+<li>具体做法就是有新消息时候，推送哪个好友或者哪个群有新消息，以及新消息的数量或者最新消息ID，客户端按需根据自身数据进行拉取</li>
+</ul>
+<h4 id="61-推拉隔离设计">6.1 推拉隔离设计</h4>
+<ol>
+<li>为什么做隔离
+<ul>
+<li>如果客户端一边正在拉取数据，一边有新的增量消息push过来</li>
+</ul>
+</li>
+<li>如何做隔离
+<ul>
+<li>本地设置一个全局的状态，当客户端拉取完离线消息后设置状态为1（表示离线消息拉取完毕）。当客户端收到拉取实时消息，会启用一个轮询监听这个状态，状态为1后，再去向服务器拉取消息。</li>
+<li>如果是push消息过来（不是主动拉取），那么会先将消息存储到本地的消息队列中，等待客户端上一次拉取数据完毕，然后将数据进行合并即可</li>
+</ul>
+</li>
+</ol>
+<h3 id="7-消息id生成设计">7 消息ID生成设计</h3>
+<h5 id="70-设计">7.0 设计</h5>
+<p>实际业务的情况【只做参考，实际可以根据公司业务线来调整】</p>
+<ol>
+<li>单机高峰并发量小于1W，预计未来5年单机高峰并发量小于10W</li>
+<li>有2个机房，预计未来5年机房数量小于4个 每个机房机器数小于150台</li>
+<li>目前只有单聊和群聊两个业务线，后续可以扩展为系统消息、聊天室、客服等业务线，最多8个业务线</li>
+</ol>
+<p>根据以上业务情况，来设计分布式ID：<br>
+<img src="https://github.com/zhangyaoo/fastim/blob/master/pic/server-id.jpg" alt="IM服务端分布式ID设计" loading="lazy"></p>
+<h5 id="71-优点">7.1 优点</h5>
+<ul>
+<li>不同机房不同机器不同业务线内生成的ID互不相同</li>
+<li>每个机器的每毫秒内生成的ID不同</li>
+<li>预留两位留作扩展位</li>
+</ul>
+<h5 id="72-缺点">7.2 缺点：</h5>
+<p>当并发度不高的时候，时间跨毫秒的消息，区分不出来消息的先后顺序。因为时间跨毫秒的消息生成的ID后面的最后一位都是0，后续如果按照消息ID维度进行分库分表，会导致数据倾斜</p>
+<h5 id="73-两种解决方案">7.3 两种解决方案：</h5>
+<ol>
+<li>方案一：去掉snowflake最后8位，然后对剩余的位进行取模</li>
+<li>方案二：不同毫秒的计数，每次不是归0，而是归为随机数，相比方案一，比较简单实用</li>
+</ol>
+<h3 id="8-消息未读数设计">8 消息未读数设计</h3>
+<h4 id="80-实现">8.0 实现</h4>
+<ol>
+<li>每发一个消息，消息接收者的会话未读数+1，并且接收者所有未读数+1</li>
+<li>消息接收者返回消息接收确认ack后，消息未读数会-1</li>
+<li>消息接收者的未读数+1，服务端就会推算有多少条未读数的通知</li>
+</ol>
+<h4 id="81-分布式锁保证总未读数和会话未读数一致">8.1 分布式锁保证总未读数和会话未读数一致</h4>
+<ol>
+<li>不一致原因：当总未读数增加，这个时候客户端来了请求将未知数置0，然后再增加会话未读数，那么会导致不一致</li>
+<li>保证：为了保证总未读数和会话未读数原子性，需要用分布式锁来保证</li>
+</ol>
+<h4 id="82-群聊消息未读数难点和优化">8.2 群聊消息未读数难点和优化</h4>
+<ol>
+<li>
+<p>难点</p>
+<ul>
+<li>一个群聊每秒几百的并发聊天，比如消息未读数，相当于每秒W级别的写入redis，即便redis做了集群数据分片+主从，但是写入还是单节点，会有写入瓶颈</li>
+</ul>
+</li>
+<li>
+<p>优化</p>
+</li>
+</ol>
+<ul>
+<li>群ID分组或者用户ID分组，批量写入，写入的两种方式
+<ul>
+<li>定时flush</li>
+<li>满多少消息进行flush</li>
+</ul>
+</li>
+</ul>
+<h3 id="9-网关设计">9. 网关设计</h3>
+<ul>
+<li>接入层网关和应用层网关不同地方
+<ul>
+<li>接入层网关需要有接收通知包或者下行接收数据的端口，并且需要另外开启线程池。应用层网关不需要开端口，并且不需要开启线程池。</li>
+<li>接入层网关需要保持长连接，接入层网关需要本地缓存channel映射关系。应用层网关无状态不需要保存。</li>
+</ul>
+</li>
+</ul>
+<h4 id="91-接入层网关设计">9.1 接入层网关设计</h4>
+<h5 id="910-目标">9.1.0 目标：</h5>
+<ol>
+<li>网关的线程池实现1+8+4+1，减少线程切换</li>
+<li>集中实现长连接管理和推送能力</li>
+<li>与业务服务器解耦，集群部署缩容扩容以及重启升级不相互影响</li>
+<li>长连接的监控与报警能力</li>
+<li>客户端重连指令一键实现</li>
+</ol>
+<h5 id="911-技术点">9.1.1 技术点：</h5>
+<ul>
+<li>自定义协议以及序列化</li>
+<li>通道连接自定义保活以及心跳检测</li>
+<li>本地缓存channel</li>
+<li>责任链</li>
+<li>服务调用完全异步</li>
+<li>泛化调用</li>
+<li>转发通知包或者Push包</li>
+<li>容错网关down机处理</li>
+</ul>
+<h5 id="912-设计方案">9.1.2 设计方案：</h5>
+<p>参考<a href="https://github.com/zhangyaoo/fastim/blob/master/fastim-gate/fastim-gate-tcp/README.md">基于Netty的长连接网关设计与实现</a></p>
+<p>一个Notify包的数据经网关的线程模型图：<br>
+<img src="https://github.com/zhangyaoo/fastim/blob/master/pic/TCP-Gate-ThreadModel.png" alt="TCP网关线程模型" loading="lazy"></p>
+<h4 id="92-应用层api网关设计">9.2 应用层API网关设计</h4>
+<h5 id="920-目标">9.2.0 目标：</h5>
+<ol>
+<li>基于版本的自动发现以及灰度/扩容 ，不需要关注IP</li>
+<li>网关的线程池实现1+8+1，减少线程切换</li>
+<li>支持协议转换实现多个协议转换，基于SPI来实现</li>
+<li>与业务服务器解耦，集群部署缩容扩容以及重启升级不相互影响</li>
+<li>接口错误信息统计和RT时间的监控和报警能力</li>
+<li>UI界面实现路由算法，服务接口版本管理，灰度策略管理以及接口和服务信息展示能力</li>
+<li>基于OpenAPI提供接口级别的自动生成文档的功能</li>
+</ol>
+<h5 id="921-技术点">9.2.1 技术点：</h5>
+<ul>
+<li>Http2.0</li>
+<li>channel连接池复用</li>
+<li>Netty http 服务端编解码</li>
+<li>责任链</li>
+<li>服务调用完全异步</li>
+<li>全链路超时机制</li>
+<li>泛化调用</li>
+</ul>
+<h5 id="922-设计方案">9.2.2 设计方案：</h5>
+<p>参考<a href="https://github.com/zhangyaoo/fastim/blob/master/fastim-gate/fastim-gate-http/README.md">基于Netty的API网关设计与实现</a></p>
+<p>一个请求包的数据经网关的架构图：<br>
+<img src="https://github.com/zhangyaoo/fastim/blob/master/pic/HTTP-gate.png" alt="网关的架构图" loading="lazy"></p>
+<h3 id="10-高并发-高可用设计">10. 高并发、高可用设计</h3>
+<h4 id="100-高并发设计">10.0 高并发设计</h4>
+<h5 id="1000-架构优化">10.0.0 架构优化</h5>
+<ul>
+<li>水平扩展：各个模块无状态部署</li>
+<li>线程模型：每个服务底层线程模型遵从Netty主从reactor模型</li>
+<li>多层缓存：Gate层二级缓存，Redis一级缓存</li>
+<li>长连接：客户端长连接保持，避免频繁创建连接消耗</li>
+</ul>
+<h5 id="1001-万人群聊优化">10.0.1 万人群聊优化</h5>
+<ol>
+<li>
+<p>难点</p>
+<ul>
+<li>消息扇出大，比如每秒群聊有50条消息，群聊2000人，那么光一个群对系统并发就有10W的消息扇出</li>
+</ul>
+</li>
+<li>
+<p>优化</p>
+<ul>
+<li>批量ACK：每条群消息都ACK，会给服务器造成巨大的冲击，为了减少ACK请求量，参考TCP的Delay ACK机制，在接收方层面进行批量ACK。</li>
+<li>群消息和成员批量加载以及懒加载：在真正进入一个群时才实时拉取群友的数据</li>
+<li>群离线消息过多：群消息分页拉取,第二次拉取请求作为第一次拉取请求的ack</li>
+<li>对于消息未读数场景，每个用户维护一个全局的未读数和每个会话的未读数，当群聊非常大时，未读资源变更的QPS非常大。这个时候应用层对未读数进行缓存，批量写+定时写来保证未读计数的写入性能</li>
+<li>路由信息存入redis会有写入和读取的性能瓶颈，每条消息在发出的时候会查路由信息来发送对应的gate接入层，比如有10个群，每个群1W，那么1s100条消息，那么1000W的查询会打满redis，即使redis做了集群。优化的思路就是将集中的路由信息分散到Router JVM本地内存中，然后做Route可用，避免单点故障。</li>
+<li>存储的优化，扩散写写入并发量巨大，另一方面也存在存储浪费，一般优化成扩散读的方式存储</li>
+<li>消息路由到相同接入层机器进行合并请求减少网络包传输</li>
+</ul>
+</li>
+</ol>
+<h4 id="101-高可用设计">10.1 高可用设计</h4>
+<h3 id="1010-心跳设计">10.1.0 心跳设计</h3>
+<ol>
+<li>服务端检测到某个客户端迟迟没有心跳过来可以主动关闭通道，让它下线，并且清除在线信息和路由信息；</li>
+<li>客户端检测到某个服务端迟迟没有响应心跳也能重连获取一个新的连接。</li>
+<li>智能心跳策略，比如正在发包的时候，不需要发送心跳。等待发包完毕后在开启心跳。并且自适应心跳策略调整。</li>
+</ol>
+<h3 id="1011-异常场景设计">10.1.1 异常场景设计</h3>
+<ol>
+<li>
+<p>gate层重启升级或者意外down机有以下问题：</p>
+<ul>
+<li>客户端和gate意外丢失长连接，导致 客户端在发送消息的时候导致消息超时等待以及客户端重试等无意义操作</li>
+<li>发送给客户端的消息，从router层转发给gate的消息丢失，导致消息超时等待以及重试。</li>
+</ul>
+</li>
+<li>
+<p>解决方案如下：</p>
+<ul>
+<li>重启升级时候，向客户端发送重新连接指令，让客户端重新请求LSB获取IP直连。</li>
+<li>当gate层down机异常停止时候，增加hook钩子，向客户端发送重新连接指令。</li>
+<li>额外增加hook，向router层发送请求清空路由消息和在线状态</li>
+</ul>
+</li>
+</ol>
+<h4 id="1012-系统稳定性设计">10.1.2 系统稳定性设计</h4>
+<ol>
+<li>
+<p>背景：高峰期系统压力大，偶发的网络波动或者机器过载，都有可能导致大量的系统失败。加上IM系统要求实时性，不能用异步处理实时发过来的消息。所以有了柔性保护机制防止雪崩</p>
+</li>
+<li>
+<p>柔性保护机制开启判断指标，当每个指标不在平均范围内的时候就开启</p>
+<ul>
+<li>每条消息的ack时间 RT时间</li>
+<li>同时在线人数以及同时发消息的人数</li>
+<li>每台机器的负载CPU和内存和网络IO和磁盘IO以及GC参数</li>
+</ul>
+</li>
+<li>
+<p>当开启了柔性保护机制，那么会返回失败，用户端体验不友好，如何优化</p>
+<ul>
+<li>当开启了柔性保护机制，逻辑层hold住多余的请求，返回前端成功，不显示发送失败，后端异步重试，直至成功；</li>
+<li>为了避免重试加剧系统过载，指数时间延迟重试</li>
+</ul>
+</li>
+</ol>
+<h3 id="11-核心表结构设计">11. 核心表结构设计</h3>
+<p>核心设计点</p>
+<ol>
+<li>群消息只存储一份，用户不需要为每个消息单独存一份。用户也无需去删除群消息。</li>
+<li>对于在线的用户，收到群消息后，修改这个last_ack_msg_id。</li>
+<li>对于离线用户，用户上线后，对比最新的消息ID和last_ack_msg_id，来进行拉取(参考Kafka的消费者模型)</li>
+<li>对应单聊，需要记录消息的送达状态，以便在异常情况下来做重试处理</li>
+</ol>
+<h4 id="用户表-t_user">用户表 t_user</h4>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>int</td>
+<td>自增ID</td>
+</tr>
+<tr>
+<td>user_id</td>
+<td>bigint</td>
+<td>用户ID</td>
+</tr>
+</tbody>
+</table>
+<h4 id="群表-t_group">群表 t_group</h4>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>int</td>
+<td>自增ID</td>
+</tr>
+<tr>
+<td>group_id</td>
+<td>int</td>
+<td>群ID</td>
+</tr>
+<tr>
+<td>creator</td>
+<td>bigint</td>
+<td>创建人</td>
+</tr>
+</tbody>
+</table>
+<h4 id="群用户表-t_group_user">群用户表 t_group_user</h4>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>int</td>
+<td>自增ID</td>
+</tr>
+<tr>
+<td>group_id</td>
+<td>int</td>
+<td>群ID</td>
+</tr>
+<tr>
+<td>user_id</td>
+<td>bigint</td>
+<td>用户ID</td>
+</tr>
+<tr>
+<td>join_time</td>
+<td>datetime</td>
+<td>加群时间</td>
+</tr>
+<tr>
+<td>active_time</td>
+<td>datetime</td>
+<td>活跃时间</td>
+</tr>
+</tbody>
+</table>
+<h4 id="群用户消息表-t_group_user_msg">群用户消息表 t_group_user_msg</h4>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>int</td>
+<td>自增ID</td>
+</tr>
+<tr>
+<td>group_id</td>
+<td>int</td>
+<td>群ID</td>
+</tr>
+<tr>
+<td>user_id</td>
+<td>bigint</td>
+<td>用户ID</td>
+</tr>
+<tr>
+<td>last_ack_msg_id</td>
+<td>bigint</td>
+<td>最后一次ack的消息ID</td>
+</tr>
+<tr>
+<td>user_device_type</td>
+<td>tinyint</td>
+<td>用户设备类型</td>
+</tr>
+<tr>
+<td>is_deleted</td>
+<td>tinyint</td>
+<td>是否删除,根据这个字段后续可以做冷备归档</td>
+</tr>
+<tr>
+<td>create_time</td>
+<td>datetime</td>
+<td>创建时间</td>
+</tr>
+<tr>
+<td>update_time</td>
+<td>datetime</td>
+<td>更新时间</td>
+</tr>
+</tbody>
+</table>
+<h4 id="群消息表-t_group_msg">群消息表 t_group_msg</h4>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>int</td>
+<td>自增ID</td>
+</tr>
+<tr>
+<td>msg_id</td>
+<td>bigint</td>
+<td>消息ID</td>
+</tr>
+<tr>
+<td>group_id</td>
+<td>int</td>
+<td>群ID</td>
+</tr>
+<tr>
+<td>sender_id</td>
+<td>bigint</td>
+<td>发送方ID</td>
+</tr>
+<tr>
+<td>msg_type</td>
+<td>int</td>
+<td>消息类型</td>
+</tr>
+<tr>
+<td>msg_content</td>
+<td>varchar</td>
+<td>消息内容</td>
+</tr>
+<tr>
+<td>is_deleted</td>
+<td>tinyint</td>
+<td>是否删除</td>
+</tr>
+<tr>
+<td>create_time</td>
+<td>datetime</td>
+<td>创建时间</td>
+</tr>
+<tr>
+<td>update_time</td>
+<td>datetime</td>
+<td>更新时间</td>
+</tr>
+</tbody>
+</table>
+<h4 id="个人消息表-t_user_msg">个人消息表 t_user_msg</h4>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>int</td>
+<td>自增ID</td>
+</tr>
+<tr>
+<td>msg_id</td>
+<td>bigint</td>
+<td>消息ID</td>
+</tr>
+<tr>
+<td>sender_id</td>
+<td>bigint</td>
+<td>发送方ID</td>
+</tr>
+<tr>
+<td>receiver_id</td>
+<td>bigint</td>
+<td>接收方ID</td>
+</tr>
+<tr>
+<td>receiver_device_type</td>
+<td>tinyint</td>
+<td>接收方设备类型</td>
+</tr>
+<tr>
+<td>msg_type</td>
+<td>int</td>
+<td>消息类型</td>
+</tr>
+<tr>
+<td>msg_content</td>
+<td>varchar</td>
+<td>消息内容</td>
+</tr>
+<tr>
+<td>msg_status</td>
+<td>tinyint</td>
+<td>消息状态，已送达和未送达</td>
+</tr>
+<tr>
+<td>is_deleted</td>
+<td>tinyint</td>
+<td>是否删除</td>
+</tr>
+<tr>
+<td>create_time</td>
+<td>datetime</td>
+<td>创建时间</td>
+</tr>
+<tr>
+<td>update_time</td>
+<td>datetime</td>
+<td>更新时间</td>
+</tr>
+</tbody>
+</table>
+<h4 id="个人会话表-t_conversation">个人会话表 t_conversation</h4>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>int</td>
+<td>自增ID</td>
+</tr>
+<tr>
+<td>conversation_id</td>
+<td>int</td>
+<td>会话ID</td>
+</tr>
+<tr>
+<td>user_id</td>
+<td>bigint</td>
+<td>用户ID</td>
+</tr>
+<tr>
+<td>conversation_type</td>
+<td>tinyint</td>
+<td>会话类型 1=单聊 2=群聊</td>
+</tr>
+<tr>
+<td>receiver_id</td>
+<td>bigint</td>
+<td>接收方ID 单聊为个人用户ID 群聊为群ID</td>
+</tr>
+<tr>
+<td>last_sequence_id</td>
+<td>int</td>
+<td>客户端最新一条消息序号</td>
+</tr>
+<tr>
+<td>last_msg_id</td>
+<td>bigint</td>
+<td>客户端最新一条消息对应的ID</td>
+</tr>
+<tr>
+<td>last_msg_receive_time</td>
+<td>datetime</td>
+<td>客户端最新一条消息接收时间</td>
+</tr>
+<tr>
+<td>is_deleted</td>
+<td>tinyint</td>
+<td>会话是否删除</td>
+</tr>
+<tr>
+<td>create_time</td>
+<td>datetime</td>
+<td>会话创建时间</td>
+</tr>
+<tr>
+<td>update_time</td>
+<td>datetime</td>
+<td>更新时间</td>
+</tr>
+</tbody>
+</table>
+<h3 id="12-核心业务流程">12 核心业务流程</h3>
+<h4 id="120-用户a发消息给用户b-单聊">12.0 用户A发消息给用户B 【单聊】</h4>
+<ul>
+<li>A通过账号密码登录获取token，以及接入层IP和port信息</li>
+<li>接入层IP和port信息进行远程TCP连接，接入层维护登录状态</li>
+<li>服务层校验token，token校验通过</li>
+<li>A打包数据发送给服务端， 服务端检测A用户是否风险用户</li>
+<li>服务端对消息进行敏感词检查，以及发送频率的限制检查</li>
+<li>服务端接收消息后，根据接收消息的sequence_id来进行客户端发送消息的去重，并且生成递增的消息ID，将发送的信息和ID打包一块入库，入库成功后返回ACK，ACK包带上服务端生成的消息ID</li>
+<li>服务端检测接收用户B是否在线，在线直接推送给用户B</li>
+<li>如果没有本地消息ID则存入，并且返回接入层ACK信息；如果有则拿本地sequence_id和推送过来的sequence_id大小对比，并且去重，进行展现时序进行排序展示，并且记录最新一条消息ID。最后返回接入层ack</li>
+<li>服务端接收ACK后，将消息标为已送达</li>
+<li>如果用户B不在线,首先将消息存入库中，然后直接通过手机通知来告知客户新消息到来</li>
+<li>用户B上线后，拿本地最新的消息ID，去服务端拉取所有好友发送给B的消息，考虑到一次拉取所有消息数据量大，通过channel通道来进行分页拉取，将上一次拉取消息的最大的ID，作为请求参数，来请求最新一页的比ID大的数据。</li>
+</ul>
+<h4 id="121-用户a发消息给群g-群聊">12.1 用户A发消息给群G 【群聊】</h4>
+<ul>
+<li>登录，TCP连接，token校验，名词检查，sequence_id去重，生成递增的消息ID，群消息入库成功返回发送方ACK</li>
+<li>查询群G所有的成员，然后去redis中央存储中找在线状态。离线和在线成员分不同的方式处理</li>
+<li>在线成员：并行发送拉取通知，等待在线成员过来拉取，发送拉取通知包如丢失会有兜底机制</li>
+<li>在线成员过来拉取，会带上这个群标识和上一次拉取群的最小消息ID，服务端会找比这个消息ID大的所有的数据返回给客户端，等待客户端ACK。一段时间没ack继续推送。如果重试几次后没有回ack，那么关闭连接和清除ack等待队列消息</li>
+<li>客户端会更新本地的最新的消息ID，然后进行ack回包。服务端收到ack后会更新群成员的最新的消息ID</li>
+<li>离线成员：发送手机通知栏通知。离线成员上线后，拿本地最新的消息ID，去服务端拉取群G发送给A的消息，通过channel通道来进行分页拉取，每一次请求，会将上一次拉取消息的最大的ID，作为请求参数来拉取消息，这里相当于第二次拉取请求包是作为第一次拉取的ack包。</li>
+<li>分页的情况下，客户端在收到上一页请求的的数据后更新本地的最新的消息ID后，再请求下一页并且带上消息ID。上一页请求的的数据可以当作为ack来返回服务端，避免网络多次交互。服务端收到ack后会更新群成员的最新的消息ID</li>
+</ul>
+<h3 id="13-红包设计">13 红包设计</h3>
+<h4 id="131-抢红包的大致核心逻辑">13.1 抢红包的大致核心逻辑</h4>
+<ol>
+<li>银行快捷支付，保证账户余额和发送红包逻辑的一致性</li>
+<li>发送红包后，首先计算好红包的个数，个数确定好后，确定好每个红包的金额，存入存储层【这里可以是redis的List或者是队列】方便后续每个人来取</li>
+<li>生成一个24小时的延迟任务，检测红包是否还有钱方便退回</li>
+<li>每个红包的金额需要保证每个红包的的抢金额概率是一致的，算法需要考量</li>
+<li>存入数据库表中后，服务器通过长连接，给群里notify红包消息,供群成员抢红包</li>
+<li>群成员并发抢红包，在第二步中会将每个红包的金额放入一个队列或者其他存储中，群成员实际是来竞争去队列中的红包金额。兜底机制：如果redis挂了，可以重新生成红包信息到数据库中</li>
+<li>取成功后，需要保证红包剩余金额、新插入的红包流水数据、队列中的红包数据以及群成员的余额账户金额一致性。</li>
+<li>这里还需要保证一个用户只能领取一次，并且保持幂等</li>
+</ol>
+<h4 id="132-红包相关表结构设计">13.2 红包相关表结构设计</h4>
+<h5 id="红包表-t_red_package-原则上红包信息和订单支付信息分两个表">红包表 t_red_package (原则上红包信息和订单支付信息分两个表)</h5>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>int</td>
+<td>自增ID</td>
+</tr>
+<tr>
+<td>package_id</td>
+<td>int</td>
+<td>红包ID</td>
+</tr>
+<tr>
+<td>sender_id</td>
+<td>bigint</td>
+<td>发送用户ID</td>
+</tr>
+<tr>
+<td>received_id</td>
+<td>bigint</td>
+<td>接收者ID或者群ID</td>
+</tr>
+<tr>
+<td>type</td>
+<td>tinyint</td>
+<td>1=单聊红包 2=群聊红包</td>
+</tr>
+<tr>
+<td>package_amount</td>
+<td>bigint</td>
+<td>红包金额, 填充0到分后两位</td>
+</tr>
+<tr>
+<td>package_lock_amount</td>
+<td>bigint</td>
+<td>红包预占金额</td>
+</tr>
+<tr>
+<td>package_remaining_amount_</td>
+<td>bigint</td>
+<td>红包剩余金额</td>
+</tr>
+<tr>
+<td>status</td>
+<td>tinyint</td>
+<td>红包状态，是否支付成功</td>
+</tr>
+<tr>
+<td>pay_time</td>
+<td>datetime</td>
+<td>支付时间</td>
+</tr>
+<tr>
+<td>pay_order_no</td>
+<td>datetime</td>
+<td>支付订单号</td>
+</tr>
+<tr>
+<td>is_deleted</td>
+<td>tinyint</td>
+<td>是否删除</td>
+</tr>
+<tr>
+<td>create_time</td>
+<td>datetime</td>
+<td>创建时间</td>
+</tr>
+<tr>
+<td>update_time</td>
+<td>datetime</td>
+<td>更新时间</td>
+</tr>
+</tbody>
+</table>
+<h5 id="抢红包记录表-t_red_package_record">抢红包记录表 t_red_package_record</h5>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>int</td>
+<td>自增ID</td>
+</tr>
+<tr>
+<td>user_id</td>
+<td>int</td>
+<td>用户ID</td>
+</tr>
+<tr>
+<td>package_id</td>
+<td>int</td>
+<td>红包ID</td>
+</tr>
+<tr>
+<td>package_rob_amount</td>
+<td>bigint</td>
+<td>抢红包金额</td>
+</tr>
+<tr>
+<td>status</td>
+<td>tinyint</td>
+<td>红包状态，是否存入零钱账户</td>
+</tr>
+<tr>
+<td>payment_time</td>
+<td>datetime</td>
+<td>收款时间</td>
+</tr>
+<tr>
+<td>receive_order_no</td>
+<td>datetime</td>
+<td>收款订单号</td>
+</tr>
+<tr>
+<td>is_deleted</td>
+<td>tinyint</td>
+<td>是否删除</td>
+</tr>
+<tr>
+<td>create_time</td>
+<td>datetime</td>
+<td>创建时间</td>
+</tr>
+<tr>
+<td>update_time</td>
+<td>datetime</td>
+<td>更新时间</td>
+</tr>
+</tbody>
+</table>
+<h2 id="三-项目结构">三、项目结构</h2>
+<ul>
+<li>fastim-logic：逻辑服务，比如单聊、群聊、红包、离线等业务逻辑</li>
+<li>fastim-client：客户端逻辑实现，实现发送消息、断线重连、SDK包等功能</li>
+<li>fastim-gate-tcp：HTTP API网关实现，实现限流降级、版本路由、openAPI管理、协议转换、泛化调用等功能</li>
+<li>fastim-gate-http：长连接TCP网关实现，实现自定义协议、channel管理、心跳检测、泛化调用等功能</li>
+<li>fastim-leaf：分布式ID实现，基于zookeeper的实现或基于redis实现或完全基于内存的实现</li>
+<li>fastim-router：路由逻辑服务，主要负责消息的路由转发，以及客户端在线状态的维护</li>
+<li>fastim-common：共用类，主要是实体类和工具类的存放</li>
+<li>fastim-lsb：LSB service，提供接入层IP和port来进行负载均衡的连接</li>
+<li>fastim-das：数据访问层实现，封装一层，提供数据的增删改查入口</li>
+<li>fastim-sample：客户端client使用案例</li>
+</ul>
+<h2 id="四-性能测试">四、性能测试</h2>
+<h2 id="五-qa">五、Q&amp;A</h2>
+<h3 id="1-架构">1 架构</h3>
+<ol>
+<li>
+<p>Q：对于单聊和群聊的实时性消息，是否需要MQ来作为通信的中间件来代替rpc？</p>
+<p>A：MQ作为解耦可以有以下好处：</p>
+<ul>
+<li>易扩展，gate层到logic层无需路由，logic层多个有新的业务时候，只需要监听新的topic即可</li>
+<li>解耦，gate层到logic层解耦，不会有依赖关系</li>
+<li>节省端口资源，gate层无需再开启新的端口接收logic的请求，而且直接监听MQ消息即可</li>
+</ul>
+<p>但是缺点也有：</p>
+<ul>
+<li>网络通信多一次网络通信，增加RT的时间，消息实时性对于IM即使通信的场景是非常注重的一个点</li>
+<li>MQ的稳定性，不管任何系统只要引入中间件都会有稳定性问题，需要考虑MQ不可用或者丢失数据的情况</li>
+<li>需要考虑到运维的成本</li>
+<li>当用消息中间代替路由层的时候，gate层需要广播消费消息，这个时候gate层会接收大部分的无效消息，因为这个消息的接收者channel不在本机维护的session中</li>
+</ul>
+<p>综上，是否考虑使用MQ需要架构师去考量，比如考虑业务是否允许、或者系统的流量等等影响因素。<br>
+本项目基于使用成本、耦合成本和运维成本考虑，采用RPC的方案来实现。并且根据泛化调用，也能同样实现层级解耦。</p>
+</li>
+<li>
+<p>Q：架构设计为什么要增加router层？上行消息gate层为什么直接访问service，而下行消息service则需要经过router和Kafka来跟gate通信？</p>
+<p>A：增加router层的目的是根据路由全局信息将通知包或者推送包路由到具体的某一台接入层的机器上，然后router层通过rpc或者MQ发送到gate层，gate发送数据到客户端来进行通信。</p>
+</li>
+<li>
+<p>Q：为什么接入层用LSB返回的IP来做接入呢？</p>
+<p>A：可以有以下好处：1、灵活的负载均衡策略 可根据最少连接数来分配IP；2、做灰度策略来分配IP；3、AppId业务隔离策略 不同业务连接不同的gate，防止相互影响</p>
+</li>
+<li>
+<p>Q：为什么应用层心跳对连接进行健康检查？</p>
+<p>A：因为TCP Keepalive状态无法反应应用层状态问题，如进程阻塞、死锁、TCP缓冲区满等情况；并且要注意心跳的频率，频率小则可能及时感知不到应用情况，频率大可能有一定的性能开销。</p>
+</li>
+<li>
+<p>Q：MQ的使用场景？</p>
+<p>A：IM消息是非常庞大的，比如说群聊相关业务、推送，对于一些业务上可以忍受的场景，尽量使用MQ来解耦和通信，来降低同步通讯的服务器压力。</p>
+</li>
+<li>
+<p>Q：群消息存一份还是多份，读扩散还是写扩散？</p>
+<p>A：存1份，读扩散。存多份下同一条消息存储了很多次，对磁盘和带宽造成了很大的浪费。可以在架构上和业务上进行优化，来实现读扩散。</p>
+</li>
+<li>
+<p>Q：消息ID为什么是趋势递增就可以，严格递增的不行吗？</p>
+<p>A：严格递增会有单点性能瓶颈，比如MySQL auto increments；redis性能好但是没有业务语义，比如缺少时间因素，还可能会有数据丢失的风险，并且集群环境下写入ID也属于单点，属于集中式生成服务。小型IM可以根据业务场景需求直接使用redis的incr命令来实现IM消息唯一ID。本项目采用snowflake算法实现唯一趋势递增ID，即可实现IM消息中，时序性，重复性以及查找功能。</p>
+</li>
+<li>
+<p>Q：为什么gate层泛化调用logic层，router层泛化调用gate层？</p>
+<p>A：gate层直接调用logic层，不需要调用router层，减少网络传输和RT时间，增加一个服务,就多了一条链路, 就可能会导致服务链路过长,稳定性下降。泛化调用的目的是解耦网关和服务，使其不相互影响。router层泛化调用gate层，目的也是解耦gate层和router层，防止各自层级机器扩容缩容重启升级等场景下互相影响，并且router需要具体调用某一台gate层机器，泛化刚好能实现。</p>
+</li>
+<li>
+<p>Q：gate层为什么需要开两个端口？</p>
+<p>A：gate会接收客户端的连接请求（被动），需要外网监听端口；entry会主动给logic发请求（主动）；entry会接收router给它的通知请求（被动），需要内网监听端口。一个端口对内，一个端口对外。</p>
+</li>
+<li>
+<p>Q：用户的在线状态，是维护在中央存储的redis中，还是维护在每个gate层内存中？</p>
+</li>
+</ol>
+<p>A：如果维护在每个gate层内存的话，router层无法知晓目标的用户会话在哪个gate层，只能通过MQ或者广播到gate层，然后gate层做过滤处理。这种处理方式的缺点就是会多消耗网络资源，好处也明显，不需要中央维护资源，高并发查询下会增加性能。如果维护在中央存储的话，相比各自存储不需要消耗太多的网络资源，但缺点就是需要维护中央存储的redis</p>
+<h3 id="2-技术细节">2 技术细节</h3>
+<ol>
+<li>
+<p>Q：本地写数据成功，一定代表对端应用侧接收读取消息了吗？</p>
+<p>A：本地TCP写操作成功，但数据可能还在本地写缓冲区中、网络链路设备中、对端读缓冲区中，并不代表对端应用读取到了数据。</p>
+</li>
+<li>
+<p>Q：为什么用netty做来做http网关, 而不用tomcat？</p>
+<ul>
+<li>netty对象池，内存池，高性能线程模型</li>
+<li>netty堆外内存管理，减少GC压力，jvm管理的只是一个很小的DirectByteBuffer对象引用</li>
+<li>tomcat读取数据和写入数据都需要从内核态缓冲copy到用户态的JVM中，多1次或者2次的拷贝会有性能影响</li>
+</ul>
+</li>
+<li>
+<p>Q：为什么消息入库后，对于在线状态的用户，单聊直接推送，群聊通知客户端来拉取，而不是直接推送消息给客户端（推拉结合）？</p>
+<p>A：在保证消息实时性的前提下，对于单聊，直接推送。对于群聊，由于群聊人数多，推送的话一份群消息会对群内所有的用户都产生一份推送的消息，推送量巨大。解决办法是按需拉取，当群消息有新消息时候发送时候，服务端主动推送新的消息数量，然后客户端分页按需拉取数据。</p>
+</li>
+<li>
+<p>Q：为什么除了单聊 群聊 推送 离线拉取等实时性业务，其他的业务都走http协议？</p>
+<p>A：IM协议简单最好，如果让其他的业务请求混进IM协议中，会让其IM变的更复杂，比如查找离线消息记录拉取走http通道避免tcp 通道压力过大，影响即时消息下发效率。在比如上传图片和大文件，可以利用HTTP的断点上传和分段上传特性</p>
+</li>
+</ol>
+<h2 id="六-contact">六、Contact</h2>
+<ul>
+<li>网站：zhangyaoo.github.io</li>
+<li>微信：will_zhangyao</li>
+</ul>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[浅谈结构化思维]]></title>
+        <id>https://zhangyaoo.github.io/post/jie-gou-hua-si-wei/</id>
+        <link href="https://zhangyaoo.github.io/post/jie-gou-hua-si-wei/">
+        </link>
+        <updated>2021-07-23T03:54:14.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="what">what：</h3>
+<p>是一种以无序到有序的整理信息和构建结构化的思维方式，目的是减少认知复杂度，是的更加被容易理解和记忆，表达清晰</p>
+<h3 id="why">why:</h3>
+<p>0213645879 和 0123456789，这两串数字哪个更容易被人记住。<br>
+当然是按照顺序排列的数字串比杂乱无序排列的要更容易被记住。<br>
+因为人类更容易记住结构化的信息。</p>
+<h3 id="how">how：</h3>
+<p><img src="https://zhangyaoo.github.io/post-images/1627012568883.png" alt="" loading="lazy"><br>
+塔尖就是我们的中心思想或主题。塔身就是构成中心思考或者主题的各个分论点。而塔基则是支撑各个分论点的要素或论据</p>
+<p>1、综上而下的结构化思维<br>
+纵向是自上而下的层次的关系，下一层是上一层的解释和构成，上一层是下一层的总结和概括<br>
+比如，先给结论后给原因，先目的后方法，先抽象后具体，先整体后部分<br>
+2、从左往右的顺序思维，在同一个组内必须是同一个逻辑范畴，按照顺序来组织</p>
+<h4 id="具体的步骤">具体的步骤：</h4>
+<p>1、确定问题产生背景<br>
+2、确定核心目标<br>
+3、拆解核心目标<br>
+4、继续分解，直到能够把问题解释清楚，形成方法论</p>
+<h3 id="example">example</h3>
+<h4 id="1-采购清单">1、采购清单</h4>
+<figure data-type="image" tabindex="1"><img src="https://zhangyaoo.github.io/post-images/1627012578248.png" alt="" loading="lazy"></figure>
+<h4 id="2-带团队">2、带团队</h4>
+<figure data-type="image" tabindex="2"><img src="https://zhangyaoo.github.io/post-images/1627012581164.png" alt="" loading="lazy"></figure>
+<h4 id="3-事情划分方法">3、事情划分方法</h4>
+<figure data-type="image" tabindex="3"><img src="https://zhangyaoo.github.io/post-images/1627012584884.png" alt="" loading="lazy"></figure>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[HikariDataSource核心源码分析]]></title>
         <id>https://zhangyaoo.github.io/post/hikaridatasource-he-xin-yuan-ma-fen-xi/</id>
@@ -1318,270 +2447,6 @@ public class CheckConfigListener implements ApplicationListener&lt;ApplicationRe
 <h2 id="参考">参考</h2>
 <ul>
 <li>MySQL索引背后的数据结构及算法原理——http://blog.codinglabs.org/articles/theory-of-mysql-index.html。</li>
-</ul>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[关于Zookeeper奇数节点以及脑裂问题]]></title>
-        <id>https://zhangyaoo.github.io/post/guan-yu-zookeeper-qi-shu-jie-dian-yi-ji-nao-lie-wen-ti/</id>
-        <link href="https://zhangyaoo.github.io/post/guan-yu-zookeeper-qi-shu-jie-dian-yi-ji-nao-lie-wen-ti/">
-        </link>
-        <updated>2020-06-22T02:32:00.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="前言">前言</h3>
-<blockquote>
-<p>Zookeeper作为微服务分布式协调中间件，了解它的原理以及日常开发中的注意事项和可能会出现的问题是有必要的。</p>
-</blockquote>
-<h3 id="前置知识zab协议">前置知识：ZAB协议</h3>
-<p>ZAB：Zookeeper Atomic Broadcast（ZAB）崩坏恢复和原子广播协议<br>
-1）崩坏恢复：在master节点宕机情况下，其他集群节点会重新选举master节点，快速领导者选举机制：选举规则会参照最大的分代年龄epoch&gt;最大的事务zxid&gt;server id来进行选举，选举过程就是将自己节点投票信息发给其他集群节点，投票信息附带zxid和serverid，<strong>判断是否超过一半的投票选同一个节点</strong>，那么这个节点就会选举为master。<br>
-2）选举完后，就会进行数据同步，将master节点数据同步到slave中，此时对外服务不可用。<br>
-3）原子广播：ZAB协议保证消息的一致性和有序性<br>
- 一致性：leader发送propasal事务请求（包含zxid），master判断过半机制ack，就认为事务可以提交了，master会提交事务，然后广播提交事务消息，从节点开始提交本事务。一半ack机制，可以看zookeeper是CP，但是不是强一致性；从节点接收propasal后，会将事务写入磁盘。<br>
- 有序性：zxid事务id保证全局有序性，每一个slave服务器维持一个FIFO队列，维持局部有序性。</p>
-<h3 id="zookeeper脑裂">Zookeeper脑裂</h3>
-<p> Zookeeper脑裂都是出现在集群环境中的。指的是一个集群环境中出现了多个master节点，导致严重数据同步和写入问题，数据不一致等等，如果这种情况出现在线上分布式环境下，会导致服务不可用。</p>
-<h3 id="出现原因">出现原因</h3>
-<p> 可能就是网络环境有问题导致节点之间断开，或者节点假死等等，导致一部分slave节点会重新进入崩坏恢复模式，重新选举新的master节点，然后对外提供事务服务。由于心跳超时（网络原因导致的）认为旧的master死了，但其实旧的master还存活着。</p>
-<h3 id="如何解决脑裂">如何解决脑裂</h3>
-<p>过半机制，如果集群中某个节点的投票数量大于集群有效节点的一半，就会选出master。这里拿出关键代码：</p>
-<pre><code class="language-java">// 验证是否符合过半机制，如果符合就会选举新的master节点
-public boolean containsQuorum(Set&lt;Long&gt; set){
-    // half是在构造方法里赋值的
-    // n表示集群中zkServer的个数（准确的说是参与者的个数，参与者不包括观察者节点）
-    half = n/2;
-    // set.size()表示某台zkServer获得的票数
-    return (set.size() &gt; half);
-}
-</code></pre>
-<p>笔者介绍几种情况，来说明一下几种脑裂的场景</p>
-<ul>
-<li>
-<p>比如集群中有6个节点，一个master和5个slave，分两个机房，每个机房分别三台，发生了机房不可通信的情况，如下图：<br>
-<img src="https://zhangyaoo.github.io/post-images/1593419532309.png" alt="" loading="lazy"><br>
-然后机房B就会产生新的master，如图<br>
-<img src="https://zhangyaoo.github.io/post-images/1593419550068.png" alt="" loading="lazy"><br>
-这个时候Zookeeper为了防止这样的情况发生，利用了<strong>过半机制</strong>的这个特性。<br>
-上图中，机房B节点为3 小于集群数量的一半，所以，最终上面图中机房B是不会选举出新的master节点的。</p>
-</li>
-<li>
-<p>我们再来看一种情况：比如集群中有5个节点，一个master和4个slave，分两个机房，如下图：<br>
-<img src="https://zhangyaoo.github.io/post-images/1593419973725.png" alt="" loading="lazy"><br>
-如果发生了机房不能通信的情况，那么机房B因为节点是2个，没有超过一半，就不会产生出新的master节点了。</p>
-</li>
-<li>
-<p>再来看最后一种情况，比如集群中有5个节点，一个master和4个slave，分两个机房，不同的是master节点在机房B，如下图：<br>
-<img src="https://zhangyaoo.github.io/post-images/1593420189914.png" alt="" loading="lazy"><br>
-如果发生了机房不能通信的情况，那么机房A节点是3个，超过了一半，就会进入崩坏恢复模式产生新的master节点，那么此时集群中就会出现两个master节点了。如下图所示<br>
-<img src="https://zhangyaoo.github.io/post-images/1593420219104.png" alt="" loading="lazy"><br>
-那么遇到这种情况Zookeeper是如何处理的？答：旧的leader所有的写请求同步到其他followers节点是会被拒绝的。因为每当新leader产生时，会生成一个epoch，这个epoch是递增的，followers如果确认了新的leader存在，知道其epoch，就会拒绝epoch小于现任leader epoch的所有请求。这个时候旧的master进入恢复模式进行数据同步。<br>
-所以按照上面的情况，机房A的所有followers节点正常通信，机房B的所有节点重新进入恢复模式进行数据同步。</p>
-</li>
-</ul>
-<p>总结：通过Quorums机制来防止脑裂，当leader挂掉之后，可以重新选举出新的leader节点使整个集群达成一致；当出现假死现象时，通过epoch大小来拒绝旧的leader发起的请求，当出现这种情况，旧的leader 进入恢复模式进行数据同步。</p>
-<h3 id="引出奇数节点">引出奇数节点</h3>
-<p> 知晓以上场景后，我们知道，2台机器也能选举出master，只不过只要有1个死了zookeeper就不能用了，因为1没有过半。所以2个zookeeper的死亡容忍度为0。同理，要是有3个zookeeper，一个死了，还剩下2个正常的，过半了，所以3个zookeeper的容忍度为1。如果按照这样的机制推理，那么得出2-&gt;0;3-&gt;1;4-&gt;1;5-&gt;2;6-&gt;2  左边是数量，右边是容忍度，所以2n和2n-1的容忍度是一样的，所以可以得出，集群是<strong>奇数个能够节省资源</strong>。</p>
-<!--下面的奇数节点的作用需要确认 TODO-->
-<h3 id="总结">总结</h3>
-<p>以上，笔者总结了ZAB协议，到Zookeeper防止脑裂的场景以及如何处理，以及结合例子，Zookeeper集群在奇数节点下的作用。</p>
-<h3 id="参考">参考</h3>
-<ul>
-<li>ZooKeeper集群的脑裂问题——https://www.cnblogs.com/shoufeng/p/10591526.html</li>
-</ul>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[金融级业务下分布式事务保证数据一致性]]></title>
-        <id>https://zhangyaoo.github.io/post/jin-rong-ji-ye-wu-xia-fen-bu-shi-shi-wu-bao-zheng-shu-ju-yi-zhi-xing/</id>
-        <link href="https://zhangyaoo.github.io/post/jin-rong-ji-ye-wu-xia-fen-bu-shi-shi-wu-bao-zheng-shu-ju-yi-zhi-xing/">
-        </link>
-        <updated>2020-06-22T02:27:01.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="前言">前言</h2>
-<blockquote>
-<p>随着分布式服务架构的流行与普及，原来在单体应用中执行的多个逻辑操作，现在被拆分成了多个服务之间的远程调用。微服务化后，随着带来的服务之间的分布式事务问题，尤其是在金融业务下，分布式事务是保证数据一致性的重要保证。本文着重会讲分布式事务场景和业界主流的解决方案。</p>
-</blockquote>
-<h2 id="一-引入">一、引入</h2>
-<p> 资金转账在金融业务下是一个非常重要而且常见的场景，如果因为技术问题导致资金转账错误，导致数据不一致问题，那么就会造成无法预测的后果。<br>
- 笔者这里拿银行转账的例子来说（这里的转账有很多场景比如银行卡之间充值提现、银行账户之间的转账等等），比如甲银行账户A向乙银行账户B转账1W：</p>
-<p>同步调用：</p>
-<ol>
-<li>A银行对转出账户执行检查校验，进行账户金额扣减。</li>
-<li>A银行同步调用B银行转账接口。</li>
-<li>B银行对转入账户进行检查校验，进行账户金额增加。</li>
-<li>B银行返回处理结果给A银行。<br>
-<img src="https://zhangyaoo.github.io/post-images/1593745125729.png" alt="" loading="lazy"><br>
-同步调用问题：</li>
-</ol>
-<ul>
-<li>如果B银行因为网络原因导致接口不通，那么A调用线程会长时间阻塞。</li>
-<li>如果A扣减后，发送请求后，在网络中丢失了，B银行没有收到请求，导致账户A扣减了，账户B没有加</li>
-<li>如果账户B扣减成功了，由于某种原因比如网络异常没有及时回调给甲银行，那么账户A就认为是异常请求，则会回滚事务，导致数据不一致。</li>
-</ul>
-<p>再来看一下异步调用：</p>
-<ol>
-<li>A银行对转出账户执行检查校验，进行账户金额扣减。</li>
-<li>主线程将请求数据异步写入队列MQ</li>
-<li>真正消费者程序对B银行进行远程调用</li>
-<li>B银行对转入账户进行检查校验，进行账户金额增加。</li>
-<li>B银行返回处理结果给A银行。<br>
-<img src="https://zhangyaoo.github.io/post-images/1593743096206.png" alt="" loading="lazy"><br>
-异步调用问题：</li>
-</ol>
-<ul>
-<li>如果账户A扣减本地事务成功了，但是消息发出后，因为网络原因或者其他宕机原因，导致消息未发送成功，没有进行B账户远程调用，导致本地事务和消息不一致性。</li>
-<li>MQ消费端程序如果消费消息成功，请求银行成功了，但是回传ACK给MQ失败了，那么回导致消费端程序重复消费问题，那么就会出现重复转账的问题。</li>
-</ul>
-<p>异步调用解决了同步调用的主线程阻塞问题，但还是没有解决数据一致性问题。而且引入MQ中间后，还要考虑到本地事务和MQ消息一致性问题，还有其他的引入后的维护工作，比如消息丢失，消息重发等等问题。</p>
-<h2 id="二-分布式事务解决方案">二、分布式事务解决方案</h2>
-<p> 讲到了分布式事务，自然离不开分布式系统的一些基本原则和定理：CAP原则和BASE理论，相信读者应该都知道，这里不做过多阐述。业界根据这些规则和理论，衍生出了各种分布式事务解决方案：XA规范，2PC，3PC，本地消息表方案，基于消息中间件的最终一致性方案，TCC方案，阿里的SEATA，SAGA方案和最大努力通知等等。<br>
- 以上每个方案都有自己的应用场景，就拿2PC来说，MySQL的事务型日志redolog二段提交（redolog(prepare)--》binlog--》redolog(commit)）保证binlog和redolog数据一致性，Zookeeper的proposal事务二段提交（半数以上ack返回成功表示写入数据成功）保证leader和foller的数据一致性，这些都是2PC的应用。<br>
- 金融场景下类似资金业务需要保证最终一致性解决分布式事务，不需要保证转账实时性。所以本地消息表、基于MQ中间件的最终一致性等柔性方案是首选的方案。这些基于消息的分布式事务，本质上就是，本地事务+从事务，从事务从消息中获取信息进行本地提交，这里保持<strong>异步事务机制、只能保证最终一致性</strong>。</p>
-<h3 id="21-利用本地消息表思想解决一致性问题">2.1 利用本地消息表思想解决一致性问题</h3>
-<p> 一般来说，跨行转账的原理，会存在一个中国人民银行的中间人角色来操作转账，但不在本次讨论的范围内。<br>
- 业界银行转账大部分都是同步转账，异步获取转账结果，包括第三方支付平台对接银行都是这样玩的。这里笔者就利用本地消息表思想来具体叙述数据一致性是如何保证的，老规矩先放图：<br>
-<img src="https://zhangyaoo.github.io/post-images/1603274563955.png" alt="" loading="lazy"><br>
-其中交易记录表大概长这个样子：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">字段</th>
-<th style="text-align:center">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">id</td>
-<td style="text-align:center">自增ID，没有业务意义</td>
-</tr>
-<tr>
-<td style="text-align:center">trade_order_num</td>
-<td style="text-align:center">交易订单号，作为转账记录唯一标识</td>
-</tr>
-<tr>
-<td style="text-align:center">source_account_num</td>
-<td style="text-align:center">交易转出方账户ID</td>
-</tr>
-<tr>
-<td style="text-align:center">target_account_num</td>
-<td style="text-align:center">交易收款方账户ID</td>
-</tr>
-<tr>
-<td style="text-align:center">status</td>
-<td style="text-align:center">状态机，0=预创建，1=转账中，2=转账成功，3=转账失败</td>
-</tr>
-<tr>
-<td style="text-align:center">pay_success_time</td>
-<td style="text-align:center">记录转账成功时间</td>
-</tr>
-<tr>
-<td style="text-align:center">create_time</td>
-<td style="text-align:center">记录创建时间，可作为窗口时间内判断标准</td>
-</tr>
-<tr>
-<td style="text-align:center">update_time</td>
-<td style="text-align:center">记录 更新时间</td>
-</tr>
-</tbody>
-</table>
-<p>账户表大概长这个样子：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">字段</th>
-<th style="text-align:center">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">id</td>
-<td style="text-align:center">自增ID，没有业务意义</td>
-</tr>
-<tr>
-<td style="text-align:center">account_num</td>
-<td style="text-align:center">账户ID</td>
-</tr>
-<tr>
-<td style="text-align:center">current_amt</td>
-<td style="text-align:center">当前账户余额</td>
-</tr>
-<tr>
-<td style="text-align:center">lock_amt</td>
-<td style="text-align:center">冻结金额，用来记录临时状态的核心转账数据 。真实余额=current_amt-lock_amt</td>
-</tr>
-</tbody>
-</table>
-<p>图中的步骤大致分为8步，这里细致讲一下每一步的详细步骤，分别是：</p>
-<ol>
-<li>插入初始状态的交易数据。 这一步骤的目的是保证发起同步转账请求和本地初始事务一致性，还有一个目的就是生成转账记录唯一标识，用来标识本次转账</li>
-<li>同步发起转账请求，带上唯一标识以及其他的业务参数</li>
-<li>银行乙会校验参数信息，并且同步返回转账通知，类似“我接收到了你的请求了，我还有其他事情，我等会返回结果给你”</li>
-<li>会根据同步的转账通知来判断这次交易是否合法，然后会记录结果到交易表中。这里并且需要冻结账户的一部分金额，作为临时中间态数据。并且需要更新本地交易表状态为转账中</li>
-<li>银行乙需要记录本次交易记录，插入一条交易中的数据，直至回调转账结果给银行甲，将这条记录置为转账成功。并且银行乙自己生成的收款交易流号，然后放入到回调结果中，传给银行甲</li>
-<li>异步回调结果给银行甲，其中回调参数重要的有银行甲的唯一的转账标识，还有银行乙自己生成的收款交易流号</li>
-<li>根据异步回调的状态，更新交易状态数据，如果成功，那么会扣减账余额，并且释放冻结金额，如果失败，直接释放冻结金额。此时算是正常的一条<strong>流程闭环</strong>走完</li>
-<li>当然不是所有的业务能够正常走完流程闭环，也会出现各种原因导致不能走完。为了保证数据一致性，会增加一个补偿程序，定时去拉取异常数据，异常数据指的是交易状态为0和1并且<strong>不在正常窗口业务</strong>时间内的数据（0和1属于中间态，而2或者3数据终态），窗口时间指的是正常业务从开始到结束的时间。</li>
-</ol>
-<ul>
-<li>如果异常数据状态是0，那么表示有可能是本地更新事务失败了，也有可能是请求或者返回在网络中丢失了，补偿程序里面会根据本地的表数据判断是哪个步骤除问题了，就比如说本地数据没有银行乙的交易流水号，那么就是网络出问题了，后面就可以进行补偿操作</li>
-<li>如果异常数据状态是1，那么表示可能是银行乙接口有问题或者网络有问题原因导致没有及时回调，这个时候补偿程序就用银行乙的交易流水号是去查询交易是否完成，然后更新自己本地的数据。</li>
-</ul>
-<p>以上流程是一次正常的交易过程，当然不是所有的交易流程都是这样走的，不过大部分转账流程和上述步骤相类似，其中的细致步骤在每个交易系统中略有不同。</p>
-<p>总结起来，利用本地消息表思想能够解决上面第一部分文章的同步调用的缺点，能够解决第二个第三 个问题，但是第一个问题就无法解决了，只要是同步调用都会出现这个问题，不过有其他方式去解决这个问题。以笔者认知来说，银行转账的业务都是同步调用的。出现接口阻塞这个问题，需要设置超时时间，如果超过超时时间，就记录下这条交易，异步放入<strong>重试队列</strong>，一段时间后进行<strong>重试</strong>。</p>
-<h3 id="22-事务消息解决本地事务和mq消息一致性问题">2.2 事务消息解决本地事务和MQ消息一致性问题</h3>
-<p> 转账业务，如果用异步的话，当出现MQ问题或者消费也者程序出现消息挤压或者消费者端出现问题 的话，那么整个业务时间线会拉的非常长。所以笔者认为异步不适合这种业务，异步<strong>本质上</strong>是对下游服务的一个缓冲，适合在自己系统中使用，不适合跨系统或者三方调用。当然不是所有的场景都不合适，如果流量非常大话，对方系统有限流机制，使用MQ也算是一种解决方案，这还是看具体业务。</p>
-<p> 什么样的场景适合使用MQ？一般来说在需要限流削峰、异步解耦等场景使用，所以还是拿上面的图，图中标框的部分业务适合用MQ来解决<br>
-<img src="https://zhangyaoo.github.io/post-images/1603790962781.png" alt="" loading="lazy"></p>
-<p> 如果用MQ来做的话，那么会有如下图步骤：<br>
-<img src="https://zhangyaoo.github.io/post-images/1603792233049.png" alt="" loading="lazy"><br>
-图中的步骤大致分为6步，这里细致讲一下每一步的详细步骤，分别是：</p>
-<ol>
-<li>消息生成者发送消息，broker接受消息</li>
-<li>MQ broker收到消息，随即将消息进行持久化，并且存入库。这一步是防止MQ因为物理原因宕机导致的消息丢失，并且入库的时候要判断幂等，防止没有及时返回ack，导致生产者重发消息。</li>
-<li>返回ACK给生产者。如果不及时返回或者长时间没有返回，生产者会认为这条消息发送失败，会重新发送。</li>
-<li>MQ push消息给对应的消费者或者消费者主动来pull消息，然后等待消费者返回ACK</li>
-<li>如果消息消费者在指定时间内成功返回ack，那么MQ认为消息消费成功，在存储中删除消息，即执行第6步；如果MQ在指定时间内没有收到ACK，则认为消息消费失败，会尝试重新push或者pull消息,重复执行4、5、6步骤</li>
-<li>MQ删除消息</li>
-</ol>
-<p> 以上为一条正常的消息从生产到消费的过程，每一步都是不可或缺的。而且我们可以看到，当引入中间件MQ后，消费端业务需要保持幂等。</p>
-<p> 回到上面文章最开始的部分，并没有解决异步调用问题一。没有彻底解决本地事务和消息不一致性。所以这个时候，就需要事务消息解决本地事务和MQ消息一致性问题了，笔者重新画了一张图来说明一下事务消息是如何做的：<br>
-<img src="https://zhangyaoo.github.io/post-images/1603873494446.png" alt="" loading="lazy"><br>
-图中的步骤大致分为几步，分别是：</p>
-<ol>
-<li>生产者发送一条prepare消息</li>
-<li>MQ接受到消息后，先进行持久化,状态为待确认的消息</li>
-<li>返回ACK给消息生产者</li>
-<li>执行本地事务：扣减账户余额，插入交易流水。如果这个事务执行失败，那么相当于业务执行失败，抛给用户交易失败</li>
-<li>执行完成后，将结果发送执行结果给MQ</li>
-<li>根据结果将消息commit或者rollback  commit：将消息状态置为已确认  rollback：将消息删除</li>
-<li>采用pull或者push消费已确认的消息 ，后面流程大致和普通的流程都一样</li>
-</ol>
-<p> 这里还没有体现另外一个流程，就是如果消息待确认状态在一定时间内没有转换为已确认，那么MQ会回查本地事务执行状态是否成功。这个是为了保证在第五步发送的消息在网络中丢失或者消费者宕机等情况下，能够回滚。<br>
- 以上是事务消息大致的流程，能够解决本地事务和MQ消息一致性问题，这里强调的是，不管是是事务消息还是普通的消息，消费端都需要做幂等处理。<br>
- 总结来说，<strong>ack+补偿+重试+幂等</strong>是保证一致性的关键。</p>
-<h4 id="221-事务消息常见问题">2.2.1 事务消息常见问题</h4>
-<ol>
-<li>如果consumer消费失败，是否需要producer做回滚呢？<br>
-不需要，MQ作用要保证的就是<strong>最终一致性</strong>，如果consumer消费失败，就让它进行重试直至成功。如果重试超过一定次数的话，那么就人工介入。</li>
-</ol>
-<h2 id="三-其他方式保证数据一致性">三、 其他方式保证数据一致性</h2>
-<p> 当然，保持数据一致性不光是分布式事务来保证，业务上还要配合其他的辅助来保证，这里笔者就列举几种</p>
-<ol>
-<li>全链路幂等<br>
-全链路幂等保证不产生脏数据，保护核心流程正常执行。</li>
-<li>重试机制<br>
-对异常业务进行重试，超过指定重试次数仍失败的进行人工介入。</li>
-<li>业务对账<br>
-业务内部准实时对账，比如业务发生后充值提现，对比用户余额是否正确，用户业务流水是否正确。<br>
-T+1日对账，程序或者人工定时扫描核心业务数据，保证当日数据准确。对账后自动检测并且修复重试业务</li>
-<li>业务指标监控<br>
-监控数据库中的订单预占资金没有释放，状态机是不是最终态监控，单位窗口时间内业务状态是否异常，账户中的预扣减金额是否释放，业务重试次数是否超过阈值等等业务监控。</li>
-</ol>
-<h2 id="四-总结">四、总结</h2>
-<p> 分布式场景，要用分布式的思维去思考问题。要考虑任何的超时，断电，维护不同物理存储的数据的可能存在的状态不一致的场景，说白了要面向失败编程。</p>
-<h2 id="五-参考">五、参考</h2>
-<ul>
-<li>有赞出金系统——https://tech.youzan.com/build-a-withdraw-sys/</li>
-<li>分布式事务的思考——https://www.cnblogs.com/sujing/p/11006424.html</li>
-<li>阿里云RocketMQ文档——https://help.aliyun.com/document_detail/43348.html</li>
 </ul>
 ]]></content>
     </entry>
