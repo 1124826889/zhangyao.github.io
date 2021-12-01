@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://zhangyaoo.github.io</id>
     <title>will</title>
-    <updated>2021-12-01T04:12:54.175Z</updated>
+    <updated>2021-12-01T04:48:37.585Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://zhangyaoo.github.io"/>
     <link rel="self" href="https://zhangyaoo.github.io/atom.xml"/>
@@ -23,31 +23,31 @@
 <h2 id="一-功能">一、功能</h2>
 <h3 id="1-设计">1. 设计</h3>
 <ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-8706911"> <a href="#%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1">IM架构设计<label class="task-list-item-label" for="task-item-8706911"> [IM架构设计](#架构设计)</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-81954"> <a href="#%E6%B6%88%E6%81%AFID%E7%94%9F%E6%88%90%E6%9C%BA%E5%88%B6">分布式ID设计<label class="task-list-item-label" for="task-item-81954"> [分布式ID设计](#消息ID生成机制)</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-6463069"> <a href="#%E6%A0%B8%E5%BF%83%E8%A1%A8%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1">IM表结构设计<label class="task-list-item-label" for="task-item-6463069"> [IM表结构设计](#核心表结构设计)</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-8093672"><label class="task-list-item-label" for="task-item-8093672"> TCP网关设计</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-549252"><label class="task-list-item-label" for="task-item-549252"> HTTP网关设计</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-5213118"> <a href="#%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1">IM架构设计<label class="task-list-item-label" for="task-item-5213118"> [IM架构设计](#架构设计)</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-7203403"> <a href="#%E6%B6%88%E6%81%AFID%E7%94%9F%E6%88%90%E6%9C%BA%E5%88%B6">分布式ID设计<label class="task-list-item-label" for="task-item-7203403"> [分布式ID设计](#消息ID生成机制)</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-5534194"> <a href="#%E6%A0%B8%E5%BF%83%E8%A1%A8%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1">IM表结构设计<label class="task-list-item-label" for="task-item-5534194"> [IM表结构设计](#核心表结构设计)</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-4392122"><label class="task-list-item-label" for="task-item-4392122"> TCP网关设计</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-7217729"><label class="task-list-item-label" for="task-item-7217729"> HTTP网关设计</label></li>
 </ul>
 <h3 id="2-功能">2. 功能</h3>
 <ul class="contains-task-list">
-<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-8810145"><label class="task-list-item-label" for="task-item-8810145"> 单聊</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-632109"><label class="task-list-item-label" for="task-item-632109"> 群聊</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-2763830"><label class="task-list-item-label" for="task-item-2763830"> 心跳保活，断线自动重连</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-1486510"> <a href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E9%80%9A%E8%AE%AF%E5%8D%8F%E8%AE%AE+Protobuf%E5%BA%8F%E5%88%97%E5%8C%96">自定义通讯协议 + Protobuf序列化<label class="task-list-item-label" for="task-item-1486510"> [自定义通讯协议 + Protobuf序列化](#自定义通讯协议+Protobuf序列化)</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-1575348"> <a href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%9C%AAack%E6%B6%88%E6%81%AF%E9%87%8D%E8%AF%95">客户端未ack消息重试<label class="task-list-item-label" for="task-item-1575348"> [客户端未ack消息重试](#客户端未ack消息重试)</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-9946391"><label class="task-list-item-label" for="task-item-9946391"> 消息未读计数</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-2779020"><label class="task-list-item-label" for="task-item-2779020"> 聊天记录存储和查询</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-8965359"><label class="task-list-item-label" for="task-item-8965359"> 登录、登出</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-8982692"><label class="task-list-item-label" for="task-item-8982692"> 通讯协议支持HTTP/2</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-8973903"> <a href="#%E5%AE%A2%E6%88%B7%E7%AB%AFSDK">客户端SDK<label class="task-list-item-label" for="task-item-8973903"> [客户端SDK](#客户端SDK)</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-9932560"><label class="task-list-item-label" for="task-item-9932560"> 多端消息同步和消息漫游</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-6522502"><label class="task-list-item-label" for="task-item-6522502"> 唯一设备踢出</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-7076023"><label class="task-list-item-label" for="task-item-7076023"> 文件图片发送</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-8590491"><label class="task-list-item-label" for="task-item-8590491"> 消息加密</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-496796"><label class="task-list-item-label" for="task-item-496796"> 群红包</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-5936458"><label class="task-list-item-label" for="task-item-5936458"> 消息撤回</label></li>
-<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-1886316"><label class="task-list-item-label" for="task-item-1886316"> 消息已读</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-3138008"><label class="task-list-item-label" for="task-item-3138008"> 单聊</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-1830966"><label class="task-list-item-label" for="task-item-1830966"> 群聊</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-3301367"><label class="task-list-item-label" for="task-item-3301367"> 心跳保活，断线自动重连</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-9048051"> <a href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E9%80%9A%E8%AE%AF%E5%8D%8F%E8%AE%AE+Protobuf%E5%BA%8F%E5%88%97%E5%8C%96">自定义通讯协议 + Protobuf序列化<label class="task-list-item-label" for="task-item-9048051"> [自定义通讯协议 + Protobuf序列化](#自定义通讯协议+Protobuf序列化)</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-2605961"> <a href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%9C%AAack%E6%B6%88%E6%81%AF%E9%87%8D%E8%AF%95">客户端未ack消息重试<label class="task-list-item-label" for="task-item-2605961"> [客户端未ack消息重试](#客户端未ack消息重试)</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-8606000"><label class="task-list-item-label" for="task-item-8606000"> 消息未读计数</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-2569701"><label class="task-list-item-label" for="task-item-2569701"> 聊天记录存储和查询</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-5454944"><label class="task-list-item-label" for="task-item-5454944"> 登录、登出</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-6704156"><label class="task-list-item-label" for="task-item-6704156"> 通讯协议支持HTTP/2</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" checked="" disabled="" type="checkbox" id="task-item-2379038"> <a href="#%E5%AE%A2%E6%88%B7%E7%AB%AFSDK">客户端SDK<label class="task-list-item-label" for="task-item-2379038"> [客户端SDK](#客户端SDK)</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-4760191"><label class="task-list-item-label" for="task-item-4760191"> 多端消息同步和消息漫游</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-5666416"><label class="task-list-item-label" for="task-item-5666416"> 唯一设备踢出</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-977308"><label class="task-list-item-label" for="task-item-977308"> 文件图片发送</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-5215870"><label class="task-list-item-label" for="task-item-5215870"> 消息加密</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-6632902"><label class="task-list-item-label" for="task-item-6632902"> 群红包</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-3174431"><label class="task-list-item-label" for="task-item-3174431"> 消息撤回</label></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox" id="task-item-1511314"><label class="task-list-item-label" for="task-item-1511314"> 消息已读</label></li>
 </ul>
 <h2 id="二-系统设计">二、系统设计</h2>
 <h3 id="1-im架构图">1. IM架构图</h3>
