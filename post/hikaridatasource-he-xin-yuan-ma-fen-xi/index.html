@@ -9,7 +9,7 @@
 <meta name="description" content="生死看淡，不服就干">
 <meta name="theme-color" content="#000">
 <title>HikariDataSource核心源码分析 | will</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1648715461080">
+<link rel="shortcut icon" href="/favicon.ico?v=1648865693738">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
 <link
@@ -1398,39 +1398,8 @@ public void requite(final T bagEntry){
       
       <div class="item">
         <a class="result-title" style="opacity: 0;" href="https://zhangyaoo.github.io/post/ji-yu-netty-ji-shi-tong-xun-xi-tong-she-ji-yu-shi-xian/"" data-c="
-          &lt;h2 id=&#34;fastim&#34;&gt;FastIM&lt;/h2&gt;
-&lt;blockquote&gt;
-&lt;p&gt;🚀基于Netty高可用分布式即时通讯系统，支持长连接网关管理、单聊、群聊、登录登出、聊天记录查询、离线消息存储、消息推送、心跳、分布式唯一ID、红包、消息同步和漫游等功能，支持集群部署的分布式架构。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&#34;一-功能&#34;&gt;一、功能&lt;/h2&gt;
-&lt;h3 id=&#34;1-设计&#34;&gt;1. 设计&lt;/h3&gt;
-&lt;ul class=&#34;contains-task-list&#34;&gt;
-&lt;li class=&#34;task-list-item&#34;&gt;&lt;input class=&#34;task-list-item-checkbox&#34; checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34; id=&#34;task-item-3516157&#34;&gt; &lt;a href=&#34;#%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1&#34;&gt;IM架构设计&lt;label class=&#34;task-list-item-label&#34; for=&#34;task-item-3516157&#34;&gt; [IM架构设计](#架构设计)&lt;/label&gt;&lt;/li&gt;
-&lt;li class=&#34;task-list-item&#34;&gt;&lt;input class=&#34;task-list-item-checkbox&#34; checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34; id=&#34;task-item-5020453&#34;&gt; &lt;a href=&#34;#%E6%B6%88%E6%81%AFID%E7%94%9F%E6%88%90%E6%9C%BA%E5%88%B6&#34;&gt;分布式ID设计&lt;label class=&#34;task-list-item-label&#34; for=&#34;task-item-5020453&#34;&gt; [分布式ID设计](#消息ID生成机制)&lt;/label&gt;&lt;/li&gt;
-&lt;li class=&#34;task-list-item&#34;&gt;&lt;input class=&#34;task-list-item-checkbox&#34; checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34; id=&#34;task-item-7669253&#34;&gt; &lt;a href=&#34;#%E6%A0%B8%E5%BF%83%E8%A1%A8%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1&#34;&gt;IM表结构设计&lt;label class=&#34;task-list-item-label&#34; for=&#34;task-item-7669253&#34;&gt; [IM表结构设计](#核心表结构设计)&lt;/label&gt;&lt;/li&gt;
-&lt;li class=&#34;task-list-item&#34;&gt;&lt;input class=&#34;task-list-item-checkbox&#34; disabled=&#34;&#34; type=&#34;checkbox&#34; id=&#34;task-item-9247461&#34;&gt;&lt;label class=&#34;task-list-item-label&#34; for=&#34;task-item-9247461&#34;&gt; TCP网关设计&lt;/label&gt;&lt;/li&gt;
-&lt;li class=&#34;task-list-item&#34;&gt;&lt;input class=&#34;task-list-item-checkbox&#34; disabled=&#34;&#34; type=&#34;checkbox&#34; id=&#34;task-item-1971622&#34;&gt;&lt;label class=&#34;task-list-item-label&#34; for=&#34;task-item-1971622&#34;&gt; HTTP网关设计&lt;/label&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;2-功能&#34;&gt;2. 功能&lt;/h3&gt;
-&lt;ul class=&#34;contains-task-list&#34;&gt;
-&lt;li class=&#34;task-list-item&#34;&gt;&lt;input class=&#34;task-list-item-checkbox&#34; disabled=&#34;&#34; type=&#34;checkbox&#34; id=&#34;task-item-298044&#34;&gt;&lt;label class=&#34;task-list-item-label&#34; for=&#34;task-item-298044&#34;&gt; 单聊&lt;/label&gt;&lt;/li&gt;
-&lt;li class=&#34;task-list-item&#34;&gt;&lt;input class=&#34;task-list-item-checkbox&#34; disabled=&#34;&#34; type=&#34;checkbox&#34; id=&#34;task-item-4293091&#34;&gt;&lt;label class=&#34;task-list-item-label&#34; for=&#34;task-item-4293091&#34;&gt; 群聊&lt;/label&gt;&lt;/li&gt;
-&lt;li class=&#34;task-list-item&#34;&gt;&lt;input class=&#34;task-list-item-checkbox&#34; disabled=&#34;&#34; type=&#34;checkbox&#34; id=&#34;task-item-8417817&#34;&gt;&lt;label class=&#34;task-list-item-label&#34; for=&#34;task-item-8417817&#34;&gt; 心跳保活，断线自动重连&lt;/label&gt;&lt;/li&gt;
-&lt;li class=&#34;task-list-item&#34;&gt;&lt;input class=&#34;task-list-item-checkbox&#34; checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34; id=&#34;task-item-215823&#34;&gt; &lt;a href=&#34;#%E8%87%AA%E5%AE%9A%E4%B9%89%E9%80%9A%E8%AE%AF%E5%8D%8F%E8%AE%AE+Protobuf%E5%BA%8F%E5%88%97%E5%8C%96&#34;&gt;自定义通讯协议 + Protobuf序列化&lt;label class=&#34;task-list-item-label&#34; for=&#34;task-item-215823&#34;&gt; [自定义通讯协议 + Protobuf序列化](#自定义通讯协议+Protobuf序列化)&lt;/label&gt;&lt;/li&gt;
-&lt;li class=&#34;task-list-item&#34;&gt;&lt;input class=&#34;task-list-item-checkbox&#34; checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34; id=&#34;task-item-4200907&#34;&gt; &lt;a href=&#34;#%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%9C%AAack%E6%B6%88%E6%81%AF%E9%87%8D%E8%AF%95&#34;&gt;客户端未ack消息重试&lt;label class=&#34;task-list-item-label&#34; for=&#34;task-item-4200907&#34;&gt; [客户端未ack消息重试](#客户端未ack消息重试)&lt;/label&gt;&lt;/li&gt;
-&lt;li class=&#34;task-list-item&#34;&gt;&lt;input class=&#34;task-list-item-checkbox&#34; disabled=&#34;&#34; type=&#34;checkbox&#34; id=&#34;task-item-7522919&#34;&gt;&lt;label class=&#34;task-list-item-label&#34; for=&#34;task-item-7522919&#34;&gt; 消息未读计数&lt;/label&gt;&lt;/li&gt;
-&lt;li class=&#34;task-list-item&#34;&gt;&lt;input class=&#34;task-list-item-checkbox&#34; disabled=&#34;&#34; type=&#34;checkbox&#34; id=&#34;task-item-4811149&#34;&gt;&lt;label class=&#34;task-list-item-label&#34; for=&#34;task-item-4811149&#34;&gt; 聊天记录存储和查询&lt;/label&gt;&lt;/li&gt;
-&lt;li class=&#34;task-list-item&#34;&gt;&lt;input class=&#34;task-list-item-checkbox&#34; disabled=&#34;&#34; type=&#34;checkbox&#34; id=&#34;task-item-9561088&#34;&gt;&lt;label class=&#34;task-list-item-label&#34; for=&#34;task-item-9561088&#34;&gt; 登录、登出&lt;/label&gt;&lt;/li&gt;
-&lt;li class=&#34;task-list-item&#34;&gt;&lt;input class=&#34;task-list-item-checkbox&#34; disabled=&#34;&#34; type=&#34;checkbox&#34; id=&#34;task-item-4205703&#34;&gt;&lt;label class=&#34;task-list-item-label&#34; for=&#34;task-item-4205703&#34;&gt; 通讯协议支持HTTP/2&lt;/label&gt;&lt;/li&gt;
-&lt;li class=&#34;task-list-item&#34;&gt;&lt;input class=&#34;task-list-item-checkbox&#34; checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34; id=&#34;task-item-2138903&#34;&gt; &lt;a href=&#34;#%E5%AE%A2%E6%88%B7%E7%AB%AFSDK&#34;&gt;客户端SDK&lt;label class=&#34;task-list-item-label&#34; for=&#34;task-item-2138903&#34;&gt; [客户端SDK](#客户端SDK)&lt;/label&gt;&lt;/li&gt;
-&lt;li class=&#34;task-list-item&#34;&gt;&lt;input class=&#34;task-list-item-checkbox&#34; disabled=&#34;&#34; type=&#34;checkbox&#34; id=&#34;task-item-2968781&#34;&gt;&lt;label class=&#34;task-list-item-label&#34; for=&#34;task-item-2968781&#34;&gt; 多端消息同步和消息漫游&lt;/label&gt;&lt;/li&gt;
-&lt;li class=&#34;task-list-item&#34;&gt;&lt;input class=&#34;task-list-item-checkbox&#34; disabled=&#34;&#34; type=&#34;checkbox&#34; id=&#34;task-item-736732&#34;&gt;&lt;label class=&#34;task-list-item-label&#34; for=&#34;task-item-736732&#34;&gt; 唯一设备踢出&lt;/label&gt;&lt;/li&gt;
-&lt;li class=&#34;task-list-item&#34;&gt;&lt;input class=&#34;task-list-item-checkbox&#34; disabled=&#34;&#34; type=&#34;checkbox&#34; id=&#34;task-item-7458345&#34;&gt;&lt;label class=&#34;task-list-item-label&#34; for=&#34;task-item-7458345&#34;&gt; 文件图片发送&lt;/label&gt;&lt;/li&gt;
-&lt;li class=&#34;task-list-item&#34;&gt;&lt;input class=&#34;task-list-item-checkbox&#34; disabled=&#34;&#34; type=&#34;checkbox&#34; id=&#34;task-item-443778&#34;&gt;&lt;label class=&#34;task-list-item-label&#34; for=&#34;task-item-443778&#34;&gt; 消息加密&lt;/label&gt;&lt;/li&gt;
-&lt;li class=&#34;task-list-item&#34;&gt;&lt;input class=&#34;task-list-item-checkbox&#34; disabled=&#34;&#34; type=&#34;checkbox&#34; id=&#34;task-item-1756299&#34;&gt;&lt;label class=&#34;task-list-item-label&#34; for=&#34;task-item-1756299&#34;&gt; 群红包&lt;/label&gt;&lt;/li&gt;
-&lt;li class=&#34;task-list-item&#34;&gt;&lt;input class=&#34;task-list-item-checkbox&#34; disabled=&#34;&#34; type=&#34;checkbox&#34; id=&#34;task-item-4153938&#34;&gt;&lt;label class=&#34;task-list-item-label&#34; for=&#34;task-item-4153938&#34;&gt; 消息撤回&lt;/label&gt;&lt;/li&gt;
-&lt;li class=&#34;task-list-item&#34;&gt;&lt;input class=&#34;task-list-item-checkbox&#34; disabled=&#34;&#34; type=&#34;checkbox&#34; id=&#34;task-item-7257877&#34;&gt;&lt;label class=&#34;task-list-item-label&#34; for=&#34;task-item-7257877&#34;&gt; 消息已读&lt;/label&gt;&lt;/li&gt;
-&lt;/ul&gt;
+          &lt;h2 id=&#34;一-功能&#34;&gt;一、功能&lt;/h2&gt;
+&lt;p&gt;简介：🚀FastIM是基于Netty高可用分布式即时通讯系统，支持长连接网关管理、单聊、群聊、聊天记录查询、离线消息存储、消息推送、心跳、分布式唯一ID、红包、消息同步等功能，支持集群部署的分布式架构。&lt;/p&gt;
 &lt;h2 id=&#34;二-系统设计&#34;&gt;二、系统设计&lt;/h2&gt;
 &lt;h3 id=&#34;1-im架构图&#34;&gt;1. IM架构图&lt;/h3&gt;
 &lt;p&gt;基于可扩展性高可用原则，把网关层、路由层、逻辑层、数据层分离，并且支持分布式部署&lt;br&gt;
@@ -1545,6 +1514,8 @@ public void requite(final T bagEntry){
 &lt;li&gt;多个存储系统的实现，统一cache层&lt;/li&gt;
 &lt;li&gt;向上游屏蔽存储引擎，提供友好的接口&lt;/li&gt;
 &lt;/ol&gt;
+&lt;h4 id=&#34;26-网关层和服务层请求交互设计&#34;&gt;2.6 网关层和服务层请求交互设计：&lt;/h4&gt;
+&lt;p&gt;正确的逻辑处理：网关层到服务层，只需要单向传输发请求，网关层不需要关心调用的结果。而客户端想要的ack或者notify请求是由router层发送数据到网关层，router层也不需要关心调用的结果，最后网关层只转发数据，不做额外的逻辑处理&lt;/p&gt;
 &lt;h3 id=&#34;3-协议设计&#34;&gt;3. 协议设计&lt;/h3&gt;
 &lt;h4 id=&#34;30-目标&#34;&gt;3.0 目标&lt;/h4&gt;
 &lt;ol&gt;
@@ -2458,6 +2429,10 @@ public void requite(final T bagEntry){
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;A：如果维护在每个gate层内存的话，router层无法知晓目标的用户会话在哪个gate层，只能通过MQ或者广播到gate层，然后gate层做过滤处理。这种处理方式的缺点就是会多消耗网络资源，好处也明显，不需要中央维护资源，高并发查询下会增加性能。如果维护在中央存储的话，相比各自存储不需要消耗太多的网络资源，但缺点就是需要维护中央存储的redis&lt;/p&gt;
+&lt;ol start=&#34;11&#34;&gt;
+&lt;li&gt;Q：网关层和服务层以及Router层和网关层请求模型具体是怎样的？&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;A：因为IM业务特殊性问题，网关层到服务层，只需要单向传输发请求，网关层不需要关心调用的结果。而客户端想要的ack或者notify请求是由router层发送数据到网关层，router层也不需要关心调用的结果，最后网关层只转发数据，不做额外的逻辑处理&lt;/p&gt;
 &lt;h3 id=&#34;2-技术细节&#34;&gt;2 技术细节&lt;/h3&gt;
 &lt;ol&gt;
 &lt;li&gt;
@@ -2486,7 +2461,7 @@ public void requite(final T bagEntry){
 &lt;li&gt;网站：zhangyaoo.github.io&lt;/li&gt;
 &lt;li&gt;微信：will_zhangyao&lt;/li&gt;
 &lt;/ul&gt;
-">基于Netty即时通讯系统设计与实现</a>
+">基于Netty的IM系统设计与实现</a>
       </div>
       
       <div class="item">
