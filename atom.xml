@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://zhangyaoo.github.io</id>
     <title>will</title>
-    <updated>2022-04-04T10:13:27.756Z</updated>
+    <updated>2022-04-04T10:17:07.339Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://zhangyaoo.github.io"/>
     <link rel="self" href="https://zhangyaoo.github.io/atom.xml"/>
@@ -664,7 +664,19 @@ A：在保证消息实时性的前提下，对于单聊，直接推送。对于�
 A：IM协议简单最好，如果让其他的业务请求混进IM协议中，会让其IM变的更复杂，比如查找离线消息记录拉取走http通道避免tcp 通道压力过大，影响即时消息下发效率。在比如上传图片和大文件，可以利用HTTP的断点上传和分段上传特性</p>
 </li>
 </ol>
-<h2 id="四-contact">四、Contact</h2>
+<h2 id="四-im系列文章">四、IM系列文章</h2>
+<ol>
+<li>IM系统业务认知,微博信息流业务与直播业务区别</li>
+<li>IM架构设计与实现，架构设计难点</li>
+<li>IM架构设计与实现，HTTPDNS和LSB负载均衡设计</li>
+<li>IM架构设计与实现，长连接网关设计和实现</li>
+<li>消息可靠性、即时性、顺序性如何保证，消息通知机制</li>
+<li>自定义协议架构和设计,全双工和网络收发模型</li>
+<li>未读数如何设计,系统未读数和群聊未读数如何设计</li>
+<li>群聊设计与实现，性能问题读扩散or写扩散</li>
+<li>IM系统高可用如何实现</li>
+</ol>
+<h2 id="五-contact">五、Contact</h2>
 <ul>
 <li>网站：zhangyaoo.github.io</li>
 <li>微信：will_zhangyao</li>
