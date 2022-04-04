@@ -9,7 +9,7 @@
 <meta name="description" content="生死看淡，不服就干">
 <meta name="theme-color" content="#000">
 <title>will</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1649065619941">
+<link rel="shortcut icon" href="/favicon.ico?v=1649067205243">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
 <link
@@ -871,7 +871,8 @@
 &lt;/ol&gt;
 &lt;h5 id=&#34;911-技术点&#34;&gt;9.1.1 技术点：&lt;/h5&gt;
 &lt;ul&gt;
-&lt;li&gt;自定义协议以及序列化&lt;/li&gt;
+&lt;li&gt;支持自定义协议以及序列化&lt;/li&gt;
+&lt;li&gt;支持websocket协议&lt;/li&gt;
 &lt;li&gt;通道连接自定义保活以及心跳检测&lt;/li&gt;
 &lt;li&gt;本地缓存channel&lt;/li&gt;
 &lt;li&gt;责任链&lt;/li&gt;
@@ -939,14 +940,27 @@
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
+&lt;h5 id=&#34;1002-代码优化&#34;&gt;10.0.2 代码优化&lt;/h5&gt;
+&lt;ul&gt;
+&lt;li&gt;本地会话信息由一个hashmap保持，导致锁机制严重，按照用户标识进行hash,讲会话信息存在多个map中，减少锁竞争&lt;/li&gt;
+&lt;li&gt;利用双buffer机制，避免未读计数写入阻塞&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h5 id=&#34;1003-推拉结合优化合并&#34;&gt;10.0.3 推拉结合优化合并&lt;/h5&gt;
+&lt;ol&gt;
+&lt;li&gt;背景：消息下发到群聊服务后，需要发送拉取通知给接收者，具体逻辑是群聊服务同步消息到路由层，路由层发送消息给接收者，接收者再来拉取消息。&lt;/li&gt;
+&lt;li&gt;问题：如果消息连续发送或者对同一个接收者连续发送消息频率过高，会有许多的通知消息发送给路由层，消息量过大，可能会导致logic线程堆积，请求路由层阻塞。&lt;/li&gt;
+&lt;li&gt;解决：发送者发送消息到逻辑层持久化后，将通知消息先存放一个队列中，相同的接收者接收消息通知消息后，更新相应的最新消息通知时间，然后轮训线程会轮训队列，将多个消息会合并为一个通知拉取发送至路由层，降低了客户端与服务端的网络消耗和服务器内部网络消耗。&lt;/li&gt;
+&lt;li&gt;好处：保证同一时刻，下发线程一轮只会向同一用户发送一个通知拉取，一轮的时间可以自行控制&lt;br&gt;
+&lt;img src=&#34;https://github.com/zhangyaoo/fastim/blob/master/pic/notifymerge.png&#34; alt=&#34;客户端序列号&#34; loading=&#34;lazy&#34;&gt;&lt;/li&gt;
+&lt;/ol&gt;
 &lt;h4 id=&#34;101-高可用设计&#34;&gt;10.1 高可用设计&lt;/h4&gt;
-&lt;h3 id=&#34;1010-心跳设计&#34;&gt;10.1.0 心跳设计&lt;/h3&gt;
+&lt;h5 id=&#34;1010-心跳设计&#34;&gt;10.1.0 心跳设计&lt;/h5&gt;
 &lt;ol&gt;
 &lt;li&gt;服务端检测到某个客户端迟迟没有心跳过来可以主动关闭通道，让它下线，并且清除在线信息和路由信息；&lt;/li&gt;
 &lt;li&gt;客户端检测到某个服务端迟迟没有响应心跳也能重连获取一个新的连接。&lt;/li&gt;
 &lt;li&gt;智能心跳策略，比如正在发包的时候，不需要发送心跳。等待发包完毕后在开启心跳。并且自适应心跳策略调整。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3 id=&#34;1011-异常场景设计&#34;&gt;10.1.1 异常场景设计&lt;/h3&gt;
+&lt;h5 id=&#34;1011-异常场景设计&#34;&gt;10.1.1 异常场景设计&lt;/h5&gt;
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;gate层重启升级或者意外down机有以下问题：&lt;/p&gt;
@@ -964,7 +978,7 @@
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;h4 id=&#34;1012-系统稳定性设计&#34;&gt;10.1.2 系统稳定性设计&lt;/h4&gt;
+&lt;h5 id=&#34;1012-系统稳定性设计&#34;&gt;10.1.2 系统稳定性设计&lt;/h5&gt;
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;背景：高峰期系统压力大，偶发的网络波动或者机器过载，都有可能导致大量的系统失败。加上IM系统要求实时性，不能用异步处理实时发过来的消息。所以有了柔性保护机制防止雪崩&lt;/p&gt;
