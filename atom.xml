@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://zhangyaoo.github.io</id>
     <title>will</title>
-    <updated>2022-04-04T10:17:07.339Z</updated>
+    <updated>2022-04-04T10:26:10.311Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://zhangyaoo.github.io"/>
     <link rel="self" href="https://zhangyaoo.github.io/atom.xml"/>
@@ -16,7 +16,19 @@
         <link href="https://zhangyaoo.github.io/post/ji-yu-netty-ji-shi-tong-xun-xi-tong-she-ji-yu-shi-xian/">
         </link>
         <updated>2021-12-01T04:02:35.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="一-功能">一、功能</h2>
+        <content type="html"><![CDATA[<h2 id="im系列文章">IM系列文章</h2>
+<ol>
+<li><a href="#1-im%E6%9E%B6%E6%9E%84%E5%9B%BE">IM系统业务认知,微博信息流业务与直播业务区别</a></li>
+<li><a href="#1-im%E6%9E%B6%E6%9E%84%E5%9B%BE">IM架构设计与实现，架构设计难点</a></li>
+<li><a href="#1-im%E6%9E%B6%E6%9E%84%E5%9B%BE">IM架构设计与实现，HTTPDNS和LSB负载均衡设计</a></li>
+<li><a href="#1-im%E6%9E%B6%E6%9E%84%E5%9B%BE">IM架构设计与实现，长连接网关设计和实现</a></li>
+<li><a href="#1-im%E6%9E%B6%E6%9E%84%E5%9B%BE">消息可靠性、即时性、顺序性如何保证，消息通知机制</a></li>
+<li><a href="#1-im%E6%9E%B6%E6%9E%84%E5%9B%BE">自定义协议架构和设计,全双工和网络收发模型</a></li>
+<li><a href="#1-im%E6%9E%B6%E6%9E%84%E5%9B%BE">未读数如何设计,系统未读数和群聊未读数如何设计</a></li>
+<li><a href="#1-im%E6%9E%B6%E6%9E%84%E5%9B%BE">群聊设计与实现，性能问题读扩散or写扩散</a></li>
+<li><a href="#1-im%E6%9E%B6%E6%9E%84%E5%9B%BE">IM系统高可用如何实现</a></li>
+</ol>
+<h2 id="一-功能">一、功能</h2>
 <p>简介：🚀FastIM是基于Netty高可用分布式即时通讯系统，支持长连接网关管理、单聊、群聊、聊天记录查询、离线消息存储、消息推送、心跳、分布式唯一ID、红包、消息同步等功能，支持集群部署的分布式架构。</p>
 <h2 id="二-系统设计">二、系统设计</h2>
 <h3 id="1-im架构图">1. IM架构图</h3>
@@ -406,7 +418,7 @@
 <li>问题：如果消息连续发送或者对同一个接收者连续发送消息频率过高，会有许多的通知消息发送给路由层，消息量过大，可能会导致logic线程堆积，请求路由层阻塞。</li>
 <li>解决：发送者发送消息到逻辑层持久化后，将通知消息先存放一个队列中，相同的接收者接收消息通知消息后，更新相应的最新消息通知时间，然后轮训线程会轮训队列，将多个消息会合并为一个通知拉取发送至路由层，降低了客户端与服务端的网络消耗和服务器内部网络消耗。</li>
 <li>好处：保证同一时刻，下发线程一轮只会向同一用户发送一个通知拉取，一轮的时间可以自行控制<br>
-<img src="https://github.com/zhangyaoo/fastim/blob/master/pic/notifymerge.png" alt="客户端序列号" loading="lazy"></li>
+<img src="https://zhangyaoo.github.io/post-images/notifymerge.png" alt="客户端序列号" loading="lazy"></li>
 </ol>
 <h4 id="101-高可用设计">10.1 高可用设计</h4>
 <h5 id="1010-心跳设计">10.1.0 心跳设计</h5>
@@ -664,19 +676,7 @@ A：在保证消息实时性的前提下，对于单聊，直接推送。对于�
 A：IM协议简单最好，如果让其他的业务请求混进IM协议中，会让其IM变的更复杂，比如查找离线消息记录拉取走http通道避免tcp 通道压力过大，影响即时消息下发效率。在比如上传图片和大文件，可以利用HTTP的断点上传和分段上传特性</p>
 </li>
 </ol>
-<h2 id="四-im系列文章">四、IM系列文章</h2>
-<ol>
-<li>IM系统业务认知,微博信息流业务与直播业务区别</li>
-<li>IM架构设计与实现，架构设计难点</li>
-<li>IM架构设计与实现，HTTPDNS和LSB负载均衡设计</li>
-<li>IM架构设计与实现，长连接网关设计和实现</li>
-<li>消息可靠性、即时性、顺序性如何保证，消息通知机制</li>
-<li>自定义协议架构和设计,全双工和网络收发模型</li>
-<li>未读数如何设计,系统未读数和群聊未读数如何设计</li>
-<li>群聊设计与实现，性能问题读扩散or写扩散</li>
-<li>IM系统高可用如何实现</li>
-</ol>
-<h2 id="五-contact">五、Contact</h2>
+<h2 id="四-contact">四、Contact</h2>
 <ul>
 <li>网站：zhangyaoo.github.io</li>
 <li>微信：will_zhangyao</li>
