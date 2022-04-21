@@ -9,7 +9,7 @@
 <meta name="description" content="生死看淡，不服就干">
 <meta name="theme-color" content="#000">
 <title>O(1)时间复杂度下，双向链表实现LRU | will</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1649745021422">
+<link rel="shortcut icon" href="/favicon.ico?v=1650512393242">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
 <link
@@ -1703,7 +1703,6 @@ public class LRUCacheV3&lt;K, V&gt;{
 &lt;li&gt;容错网关down机处理&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h5 id=&#34;912-设计方案&#34;&gt;9.1.2 设计方案：&lt;/h5&gt;
-&lt;p&gt;参考&lt;a href=&#34;https://github.com/zhangyaoo/fastim/blob/master/fastim-gate/fastim-gate-tcp/README.md&#34;&gt;基于Netty的长连接网关设计与实现&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;一个Notify包的数据经网关的线程模型图：&lt;br&gt;
 &lt;img src=&#34;https://zhangyaoo.github.io/post-images/TCP-Gate-ThreadModel.png&#34; alt=&#34;TCP网关线程模型&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
 &lt;h4 id=&#34;92-应用层api网关设计&#34;&gt;9.2 应用层API网关设计&lt;/h4&gt;
@@ -1728,7 +1727,6 @@ public class LRUCacheV3&lt;K, V&gt;{
 &lt;li&gt;泛化调用&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h5 id=&#34;922-设计方案&#34;&gt;9.2.2 设计方案：&lt;/h5&gt;
-&lt;p&gt;参考&lt;a href=&#34;https://github.com/zhangyaoo/fastim/blob/master/fastim-gate/fastim-gate-http/README.md&#34;&gt;基于Netty的API网关设计与实现&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;一个请求包的数据经网关的架构图：&lt;br&gt;
 &lt;img src=&#34;https://zhangyaoo.github.io/post-images/HTTP-gate.png&#34; alt=&#34;网关的架构图&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;10-高并发-高可用设计&#34;&gt;10. 高并发、高可用设计&lt;/h3&gt;
@@ -1781,25 +1779,7 @@ public class LRUCacheV3&lt;K, V&gt;{
 &lt;li&gt;客户端检测到某个服务端迟迟没有响应心跳也能重连获取一个新的连接。&lt;/li&gt;
 &lt;li&gt;智能心跳策略，比如正在发包的时候，不需要发送心跳。等待发包完毕后在开启心跳。并且自适应心跳策略调整。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h5 id=&#34;1011-异常场景设计&#34;&gt;10.1.1 异常场景设计&lt;/h5&gt;
-&lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;gate层重启升级或者意外down机有以下问题：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;客户端和gate意外丢失长连接，导致 客户端在发送消息的时候导致消息超时等待以及客户端重试等无意义操作&lt;/li&gt;
-&lt;li&gt;发送给客户端的消息，从Msg消息层转发给gate的消息丢失，导致消息超时等待以及重试。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;解决方案如下：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;重启升级时候，向客户端发送重新连接指令，让客户端重新请求LSB获取IP直连。&lt;/li&gt;
-&lt;li&gt;当gate层down机异常停止时候，增加hook钩子，向客户端发送重新连接指令。&lt;/li&gt;
-&lt;li&gt;额外增加hook，向Msg消息层发送请求清空路由消息和在线状态&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h5 id=&#34;1012-系统稳定性设计&#34;&gt;10.1.2 系统稳定性设计&lt;/h5&gt;
+&lt;h5 id=&#34;1011-系统稳定性设计&#34;&gt;10.1.1 系统稳定性设计&lt;/h5&gt;
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;背景：高峰期系统压力大，偶发的网络波动或者机器过载，都有可能导致大量的系统失败。加上IM系统要求实时性，不能用异步处理实时发过来的消息。所以有了柔性保护机制防止雪崩&lt;/p&gt;
@@ -1817,6 +1797,49 @@ public class LRUCacheV3&lt;K, V&gt;{
 &lt;ul&gt;
 &lt;li&gt;当开启了柔性保护机制，逻辑层hold住多余的请求，返回前端成功，不显示发送失败，后端异步重试，直至成功；&lt;/li&gt;
 &lt;li&gt;为了避免重试加剧系统过载，指数时间延迟重试&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h5 id=&#34;1012-异常场景设计&#34;&gt;10.1.2 异常场景设计&lt;/h5&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;gate层重启升级或者意外down机有以下问题：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;客户端和gate意外丢失长连接，导致 客户端在发送消息的时候导致消息超时等待以及客户端重试等无意义操作&lt;/li&gt;
+&lt;li&gt;发送给客户端的消息，从Msg消息层转发给gate的消息丢失，导致消息超时等待以及重试。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;解决方案如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;重启升级时候，向客户端发送重新连接指令，让客户端重新请求LSB获取IP直连。&lt;/li&gt;
+&lt;li&gt;当gate层down机异常停止时候，增加hook钩子，向客户端发送重新连接指令。&lt;/li&gt;
+&lt;li&gt;额外增加hook，向Msg消息层发送请求清空路由消息和在线状态，并且清除redis的路由信息。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h5 id=&#34;1013-redis宕机高可用设计&#34;&gt;10.1.3 Redis宕机高可用设计&lt;/h5&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Redis作用背景&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;当用户链接上网关后，网关会将用户的userId和机器信息存入redis，用作这个user接收消息时候，消息的路由&lt;/li&gt;
+&lt;li&gt;消息服务在发消息给user时候，会查询Redis的路由信息，用来发送消息给哪个一个网关&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;如果Redis宕机，会造成下面结果&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;消息中转不过去，所有的用户可以发送消息，但是都接收不了消息&lt;/li&gt;
+&lt;li&gt;如果有在线机制，那么系统都认为是离线状态，会走手机消息通道推送&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Redis宕机兜底处理策略&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;消息服务定时任务同步路由信息到本地缓存，如果redis挂了，从本地缓存拿消息&lt;/li&gt;
+&lt;li&gt;网关服务在收到用户侧的上线和下线后，会同步广播本地的路由信息给各个消息服务，消息服务接收后更新本地环境数据&lt;/li&gt;
+&lt;li&gt;网络交互次数多，以及消息服务多，可以用批量或者定时的方式同步广播路由消息给各个消息服务&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
@@ -1915,12 +1938,7 @@ public class LRUCacheV3&lt;K, V&gt;{
 &lt;h3 id=&#34;12-核心业务流程&#34;&gt;12 核心业务流程&lt;/h3&gt;
 &lt;h4 id=&#34;120-用户a发消息给用户b-单聊&#34;&gt;12.0 用户A发消息给用户B 【单聊】&lt;/h4&gt;
 &lt;ul&gt;
-&lt;li&gt;A通过账号密码登录获取token，以及接入层IP和port信息&lt;/li&gt;
-&lt;li&gt;接入层IP和port信息进行远程TCP连接，接入层维护登录状态&lt;/li&gt;
-&lt;li&gt;服务层校验token，token校验通过&lt;/li&gt;
-&lt;li&gt;A打包数据发送给服务端， 服务端检测A用户是否风险用户&lt;/li&gt;
-&lt;li&gt;服务端对消息进行敏感词检查，以及发送频率的限制检查&lt;/li&gt;
-&lt;li&gt;服务端接收消息后，根据接收消息的sequence_id来进行客户端发送消息的去重，并且生成递增的消息ID，将发送的信息和ID打包一块入库，入库成功后返回ACK，ACK包带上服务端生成的消息ID&lt;/li&gt;
+&lt;li&gt;A打包数据发送给服务端，服务端接收消息后，根据接收消息的sequence_id来进行客户端发送消息的去重，并且生成递增的消息ID，将发送的信息和ID打包一块入库，入库成功后返回ACK，ACK包带上服务端生成的消息ID&lt;/li&gt;
 &lt;li&gt;服务端检测接收用户B是否在线，在线直接推送给用户B&lt;/li&gt;
 &lt;li&gt;如果没有本地消息ID则存入，并且返回接入层ACK信息；如果有则拿本地sequence_id和推送过来的sequence_id大小对比，并且去重，进行展现时序进行排序展示，并且记录最新一条消息ID。最后返回接入层ack&lt;/li&gt;
 &lt;li&gt;服务端接收ACK后，将消息标为已送达&lt;/li&gt;
@@ -1950,7 +1968,14 @@ public class LRUCacheV3&lt;K, V&gt;{
 &lt;li&gt;这里还需要保证一个用户只能领取一次，并且保持幂等&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id=&#34;三-qa&#34;&gt;三、Q&amp;amp;A&lt;/h2&gt;
-&lt;ol&gt;
+&lt;ol start=&#34;0&#34;&gt;
+&lt;li&gt;
+&lt;p&gt;Q：相比传统HTTP请求的业务系统，IM业务系统的有哪些不一样的设计难点？&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;在线状态维护。相比于HTTP请求的业务系统，接入层有状态，必须维持心跳和会话状态，加大了系统设计复杂度。&lt;/li&gt;
+&lt;li&gt;请求通信模型不一样。相比于HTTP请求一个request等待一个response通信模型，IM系统则是一个数据包在全双工长连接通道双传输，客户端和服务端消息交互的信令数据包设计复杂。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;Q：对于单聊和群聊的实时性消息，是否需要MQ来作为通信的中间件来代替rpc？&lt;/p&gt;
 &lt;p&gt;A：MQ作为解耦可以有以下好处：&lt;/p&gt;
@@ -1966,8 +1991,7 @@ public class LRUCacheV3&lt;K, V&gt;{
 &lt;li&gt;需要考虑到运维的成本&lt;/li&gt;
 &lt;li&gt;当用消息中间代替路由层的时候，gate层需要广播消费消息，这个时候gate层会接收大部分的无效消息，因为这个消息的接收者channel不在本机维护的session中&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;综上，是否考虑使用MQ需要架构师去考量，比如考虑业务是否允许、或者系统的流量等等影响因素。&lt;br&gt;
-本项目基于使用成本、耦合成本和运维成本考虑，采用netty作为底层自定义通信方案来实现，也能同样实现层级解耦。&lt;/p&gt;
+&lt;p&gt;综上，是否考虑使用MQ需要架构师去考量，比如考虑业务是否允许、或者系统的流量、或者高可用设计等等影响因素。本项目基于使用成本、耦合成本和运维成本考虑，采用Netty作为底层自定义通信方案来实现，也能同样实现层级调用。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;Q：为什么接入层用LSB返回的IP来做接入呢？&lt;/p&gt;
@@ -1994,8 +2018,12 @@ public class LRUCacheV3&lt;K, V&gt;{
 &lt;p&gt;A：gate会接收客户端的连接请求（被动），需要外网监听端口；entry会主动给logic发请求（主动）；entry会接收服务端给它的通知请求（被动），需要内网监听端口。一个端口对内，一个端口对外。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;Q：用户的路由信息，是维护在中央存储的redis中，还是维护在每个msg层内存中？&lt;br&gt;
-A：维护在每个msg层内存中有状态：多级缓存避免和中间件多次交互, 并发高。维护在中央存储的redis中，msg层无状态：在业务初期，性能瓶颈在redis和网络和带宽&lt;/p&gt;
+&lt;p&gt;Q：用户的路由信息，是维护在中央存储的redis中，还是维护在每个msg层内存中？&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;维护在每个msg层内存中有状态：多级缓存避免和中间件多次交互, 并发高&lt;/li&gt;
+&lt;li&gt;维护在中央存储的redis中，msg层无状态，redis压力大，每次交互IO网络请求大&lt;br&gt;
+业务初期为了减少复杂度，可以维护在Redis中&lt;/li&gt;
+&lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;Q：网关层和服务层以及msg层和网关层请求模型具体是怎样的？&lt;/p&gt;
@@ -2023,6 +2051,10 @@ A：在保证消息实时性的前提下，对于单聊，直接推送。对于�
 &lt;li&gt;
 &lt;p&gt;Q：为什么除了单聊 群聊 推送 离线拉取等实时性业务，其他的业务都走http协议？&lt;br&gt;
 A：IM协议简单最好，如果让其他的业务请求混进IM协议中，会让其IM变的更复杂，比如查找离线消息记录拉取走http通道避免tcp 通道压力过大，影响即时消息下发效率。在比如上传图片和大文件，可以利用HTTP的断点上传和分段上传特性&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Q：机集群机器要考虑到哪些优化？&lt;br&gt;
+A：网络宽带；最大文件句柄；每个tcp的内存占用；Linux系统内核tcp参数优化配置；网络IO模型；网络网络协议解析效率；心跳频率；会话数据一致性保证；服务集群动态扩容缩容&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id=&#34;四-contact&#34;&gt;四、Contact&lt;/h2&gt;
